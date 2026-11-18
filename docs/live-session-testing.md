@@ -15,8 +15,11 @@ On Windows, run:
 ./scripts/run-cross-language-live-session.ps1
 ```
 
-The script starts the MSTest host in `CrossLanguageLiveSessionHostTests`, waits for its
+The script assembles the Kotlin unit-test client before starting the live host, so cold
+compilation does not consume its three-minute lifetime. It then starts the MSTest host
+in `CrossLanguageLiveSessionHostTests`, waits for its
 ephemeral loopback ports, and runs only `CrossLanguageLiveSessionTest` through Gradle.
+Only the test task is forced to rerun (`--rerun`); compiled dependencies remain up to date.
 No fixed port, device, ADB session, USB accessory, display driver, or GPU is required.
 
 Successful endpoints execute the production C# `PanelClientSession` and production

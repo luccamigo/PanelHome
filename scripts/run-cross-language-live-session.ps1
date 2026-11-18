@@ -7,6 +7,12 @@ param()
 
 $ErrorActionPreference = 'Stop'
 $repositoryRoot = Split-Path -Parent $PSScriptRoot
+# Keep cold Kotlin compilation outside the live host's three-minute lifetime.
+& (Join-Path $repositoryRoot 'gradlew.bat') assembleDebugUnitTest
+if ($LASTEXITCODE -ne 0) {
+    throw "Kotlin live-session client build failed with exit code $LASTEXITCODE."
+}
+
 $runRoot = Join-Path $repositoryRoot ("build\cross-language-live-" + [guid]::NewGuid().ToString('n'))
 $runRoot = [IO.Path]::GetFullPath($runRoot)
 $allowedRoot = [IO.Path]::GetFullPath((Join-Path $repositoryRoot 'build'))
@@ -54,7 +60,7 @@ try {
     & (Join-Path $repositoryRoot 'gradlew.bat') `
         testDebugUnitTest `
         --tests 'com.panelos.panelhome.integration.CrossLanguageLiveSessionTest' `
-        --rerun-tasks
+        --rerun
     $clientExit = $LASTEXITCODE
 }
 finally {
