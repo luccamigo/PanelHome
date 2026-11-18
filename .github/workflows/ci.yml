@@ -91,6 +91,10 @@ jobs:
           ./scripts/verify-build-identity.ps1 -IntendedApkBuildIdentity 'PanelHome/1.0+1'
 
   android-instrumented-smoke:
+    strategy:
+      fail-fast: false
+      matrix:
+        api: [28, 35]
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -114,11 +118,12 @@ jobs:
       - name: Activity and Service smoke on emulator
         uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
         with:
-          api-level: 35
+          api-level: ${{ matrix.api }}
           arch: x86_64
           profile: pixel_2
           disable-animations: true
-          script: ./gradlew connectedDebugAndroidTest
+          # Partition the suite: the Android 9 Keystore/TLS proof asserts SDK 28.
+          script: ./gradlew connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.${{ matrix.api == 28 && 'class' || 'notClass' }}=com.panelos.panelhome.data.wifi.WifiApi28InstrumentedTest
 
   # PanelDisplayDriver is intentionally excluded: it needs the repository's
   # documented Windows SDK/WDK 10.0.28000 toolchain and a dedicated runner.

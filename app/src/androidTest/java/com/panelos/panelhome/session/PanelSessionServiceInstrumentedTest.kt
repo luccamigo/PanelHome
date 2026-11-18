@@ -172,7 +172,15 @@ class PanelSessionServiceInstrumentedTest {
             ),
         )
         assertTrue("Service binding timed out", latch.await(10, TimeUnit.SECONDS))
-        return Binding(connection, requireNotNull(binder))
+        val connectedBinder = requireNotNull(binder)
+        // Binding completes before Wi-Fi restore and the IO session start finish.
+        // Every caller must observe an established session, not the 0 -> 1 startup.
+        val deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(10)
+        while (connectedBinder.sessionGeneration == 0L && System.nanoTime() < deadline) {
+            Thread.sleep(10)
+        }
+        assertTrue("Initial session did not start", connectedBinder.sessionGeneration > 0L)
+        return Binding(connection, connectedBinder)
     }
 
     private data class Binding(
