@@ -1,0 +1,1 @@
+{"name": "invalid-open-payload", "description": "OPEN with a payload; must be rejected.", "hex": "504c4d580201020003000000020000007a31c28800000000616263"}

@@ -1,0 +1,670 @@
+﻿<UserControl x:Class="PanelOS.ControlCenter.Views.StreamDeckView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:PanelOS.ControlCenter.Controls"
+             xmlns:res="clr-namespace:PanelOS.ControlCenter.Resources">
+    <!--
+        One bar of chrome, then two columns: what the panel will look like, and
+        the properties of the one button selected. The left column is the same
+        grid the user arranges and the tablet draws, framed in the panel's
+        proportions, so there is never a second idea of "the layout" - which is
+        also why the chrome is kept to a single row: every pixel it takes is a
+        pixel off the preview.
+
+        Only the button editor scrolls, and exactly once: the page itself is a
+        fixed grid, so nothing here nests a scroll region inside another one.
+    -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- ================= Profile bar ================= -->
+        <!--
+            Which profile is open in the editor and which one the tablet is
+            showing are two different facts. The caption states the second one
+            so browsing a profile can never be mistaken for publishing it.
+        -->
+        <Border Grid.Row="0"
+                Style="{StaticResource PanelCard}"
+                Padding="16,12"
+                Margin="0,0,0,12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <WrapPanel Grid.Column="0">
+                    <StackPanel Margin="0,0,16,6">
+                        <TextBlock Style="{StaticResource PanelCardLabelText}"
+                                   Margin="0,0,0,5">
+                            <Run Text="{res:Loc StreamDeckActiveProfileLabel}" />
+                            <Run Text="{Binding ActiveProfileName, Mode=OneWay}"
+                                 Foreground="{StaticResource PanelAccentBrush}"
+                                 FontWeight="SemiBold" />
+                        </TextBlock>
+                        <ComboBox ItemsSource="{Binding Profiles}"
+                                  SelectedItem="{Binding SelectedProfile, Mode=TwoWay}"
+                                  IsSynchronizedWithCurrentItem="False"
+                                  MinWidth="210"
+                                  AutomationProperties.Name="{res:Loc StreamDeckProfilesTitle}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0"
+                                                   Text="{Binding Name}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   VerticalAlignment="Center" />
+                                        <Border Grid.Column="1"
+                                                Background="{StaticResource PanelAccentBrush}"
+                                                CornerRadius="{StaticResource RadiusXs}"
+                                                Padding="7,2"
+                                                Margin="10,0,0,0"
+                                                VerticalAlignment="Center">
+                                            <Border.Visibility>
+                                                <MultiBinding Converter="{StaticResource EqualStringsToVisibility}">
+                                                    <Binding Path="Id" />
+                                                    <Binding Path="DataContext.ActiveProfileId"
+                                                             RelativeSource="{RelativeSource AncestorType=UserControl}" />
+                                                </MultiBinding>
+                                            </Border.Visibility>
+                                            <TextBlock Text="{res:Loc StreamDeckOnTabletBadge}"
+                                                       Foreground="{StaticResource PanelOnAccentBrush}"
+                                                       FontSize="10"
+                                                       FontWeight="SemiBold" />
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Width="180" Margin="0,0,16,6">
+                        <TextBlock Text="{res:Loc StreamDeckProfileNameLabel}"
+                                   Style="{StaticResource PanelCardLabelText}"
+                                   Margin="0,0,0,5" />
+                        <TextBox Text="{Binding ProfileName, UpdateSourceTrigger=PropertyChanged}"
+                                 IsEnabled="{Binding CanEdit}" />
+                    </StackPanel>
+
+                    <StackPanel VerticalAlignment="Bottom" Margin="0,0,0,6">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="{res:Loc StreamDeckUseOnTablet}"
+                                    Command="{Binding SetActiveProfileCommand}"
+                                    Style="{StaticResource PanelPrimaryButton}"
+                                    ToolTip="{res:Loc StreamDeckAlreadyOnTablet}"
+                                    Margin="0,0,12,0" />
+                            <Button Content="{res:Loc ActionNew}"
+                                    Command="{Binding AddProfileCommand}"
+                                    Style="{StaticResource PanelToolbarButton}"
+                                    Margin="0,0,6,0" />
+                            <Button Content="{res:Loc ActionDuplicate}"
+                                    Command="{Binding DuplicateProfileCommand}"
+                                    Style="{StaticResource PanelToolbarButton}"
+                                    Margin="0,0,6,0" />
+                            <Button Content="{res:Loc ActionDelete}"
+                                    Command="{Binding DeleteProfileCommand}"
+                                    Style="{StaticResource PanelToolbarDangerButton}" />
+                        </StackPanel>
+                    </StackPanel>
+                </WrapPanel>
+
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Bottom"
+                            Margin="16,0,0,6">
+                    <controls:StatusBadge Level="{Binding SaveStateLevel}"
+                                          Text="{Binding SaveStateText}"
+                                          Margin="0,0,14,0" />
+                    <Button Content="{res:Loc ActionReload}"
+                            Command="{Binding ReloadCommand}"
+                            Style="{StaticResource PanelButton}"
+                            Margin="0,0,8,0" />
+                    <Button Content="{res:Loc ActionSave}"
+                            Command="{Binding SaveCommand}"
+                            Style="{StaticResource PanelPrimaryButton}" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1"
+                Style="{StaticResource PanelCard}"
+                Padding="14,12"
+                Margin="0,0,0,12"
+                Background="{StaticResource PanelStatusWarningSoftBrush}"
+                BorderBrush="{StaticResource PanelStatusWarningBrush}"
+                Visibility="{Binding IsReadOnly,
+                                     Converter={StaticResource BooleanToVisibility}}">
+            <TextBlock Text="{res:Loc StreamDeckReadOnlyBanner}"
+                       Style="{StaticResource PanelBodyText}" />
+        </Border>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="300" />
+                <ColumnDefinition Width="340" MinWidth="300" />
+            </Grid.ColumnDefinitions>
+
+            <!-- ================= Pages and grid ================= -->
+            <Grid Grid.Column="0" Margin="0,0,14,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Pages are tabs: they are what the panel flips between. -->
+                <ListBox Grid.Row="0"
+                         ItemsSource="{Binding Pages}"
+                         SelectedItem="{Binding SelectedPage, Mode=TwoWay}"
+                         ItemContainerStyle="{StaticResource PanelPageTab}"
+                         IsSynchronizedWithCurrentItem="False"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         Margin="0,0,0,6"
+                         AutomationProperties.Name="{res:Loc StreamDeckPagesTitle}"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"
+                                       TextTrimming="CharacterEllipsis"
+                                       MaxWidth="150" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <!--
+                    Everything that belongs to the page currently open, on one
+                    line. Labels sit beside the controls rather than above them
+                    so this row costs the preview as little height as possible;
+                    a WrapPanel keeps the actions on screen at the narrowest
+                    supported window instead of clipping them.
+                -->
+                <Border Grid.Row="1"
+                        Style="{StaticResource PanelCard}"
+                        Padding="14,10"
+                        Margin="0,0,0,12">
+                    <WrapPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,18,4">
+                            <TextBlock Text="{res:Loc StreamDeckPageNameLabel}"
+                                       Style="{StaticResource PanelMutedText}"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,8,0" />
+                            <TextBox Text="{Binding PageName, UpdateSourceTrigger=PropertyChanged}"
+                                     IsEnabled="{Binding CanEdit}"
+                                     Width="150" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,0,18,4">
+                            <TextBlock Text="{res:Loc StreamDeckGridLabel}"
+                                       Style="{StaticResource PanelMutedText}"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,8,0" />
+                            <ComboBox ItemsSource="{Binding GridSizeOptions}"
+                                      SelectedItem="{Binding Rows, Mode=TwoWay}"
+                                      IsSynchronizedWithCurrentItem="False"
+                                      ToolTip="{res:Loc StreamDeckRowsTooltip}"
+                                      AutomationProperties.Name="{res:Loc StreamDeckRowsTooltip}"
+                                      IsEnabled="{Binding CanEdit}"
+                                      MinWidth="72" />
+                            <TextBlock Text="×"
+                                       Style="{StaticResource PanelMutedText}"
+                                       VerticalAlignment="Center"
+                                       Margin="8,0" />
+                            <ComboBox ItemsSource="{Binding GridSizeOptions}"
+                                      SelectedItem="{Binding Columns, Mode=TwoWay}"
+                                      IsSynchronizedWithCurrentItem="False"
+                                      ToolTip="{res:Loc StreamDeckColumnsTooltip}"
+                                      AutomationProperties.Name="{res:Loc StreamDeckColumnsTooltip}"
+                                      IsEnabled="{Binding CanEdit}"
+                                      MinWidth="72" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <Button Content="{res:Loc ActionNewFeminine}"
+                                    Command="{Binding AddPageCommand}"
+                                    Style="{StaticResource PanelToolbarButton}"
+                                    Margin="0,0,6,0" />
+                            <Button Content="{res:Loc ActionDuplicate}"
+                                    Command="{Binding DuplicatePageCommand}"
+                                    Style="{StaticResource PanelToolbarButton}"
+                                    Margin="0,0,6,0" />
+                            <Button Content="{res:Loc ActionDelete}"
+                                    Command="{Binding DeletePageCommand}"
+                                    Style="{StaticResource PanelToolbarDangerButton}" />
+                        </StackPanel>
+                    </WrapPanel>
+                </Border>
+
+                <!-- ================= Tablet preview ================= -->
+                <Viewbox Grid.Row="2"
+                         Stretch="Uniform"
+                         StretchDirection="DownOnly"
+                         HorizontalAlignment="Center">
+                    <Border Style="{StaticResource PanelTabletFrame}"
+                            Width="800"
+                            Height="500">
+                        <ListBox ItemsSource="{Binding Cells}"
+                                 SelectedItem="{Binding SelectedCell, Mode=TwoWay}"
+                                 ItemContainerStyle="{StaticResource PanelDeckCell}"
+                                 IsSynchronizedWithCurrentItem="False"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 AutomationProperties.Name="{res:Loc StreamDeckPreviewTitle}"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Rows="{Binding Rows}"
+                                                 Columns="{Binding Columns}" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <!--
+                                            An empty slot is an invitation, not
+                                            a control: a quiet plus, and picking
+                                            it selects the slot so the right
+                                            column can configure it.
+                                        -->
+                                        <TextBlock Text="+"
+                                                   Foreground="{StaticResource PanelOutlineBrush}"
+                                                   FontSize="22"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Visibility="{Binding IsEmpty,
+                                                                        Converter={StaticResource BooleanToVisibility}}" />
+
+                                        <StackPanel Visibility="{Binding IsEmpty,
+                                                                         Converter={StaticResource InverseBooleanToVisibility}}">
+                                            <Image Source="{Binding IconPath}"
+                                                   Width="42"
+                                                   Height="42"
+                                                   Margin="0,0,0,6"
+                                                   RenderOptions.BitmapScalingMode="HighQuality"
+                                                   Visibility="{Binding IconPath,
+                                                                        Converter={StaticResource NotNullToVisibility}}" />
+                                            <TextBlock Text="{Binding Label}"
+                                                       Style="{StaticResource PanelBodyText}"
+                                                       TextAlignment="Center"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       FontWeight="SemiBold" />
+                                            <TextBlock Text="{Binding ActionSummary}"
+                                                       Style="{StaticResource PanelCaptionText}"
+                                                       TextAlignment="Center"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       Margin="0,4,0,0" />
+                                            <TextBlock Text="{res:Loc StreamDeckDisabledBadge}"
+                                                       Style="{StaticResource PanelCaptionText}"
+                                                       TextAlignment="Center"
+                                                       Foreground="{StaticResource PanelStatusWarningBrush}"
+                                                       Visibility="{Binding IsDisabled,
+                                                                            Converter={StaticResource BooleanToVisibility}}" />
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                </Viewbox>
+
+                <TextBlock Grid.Row="3"
+                           Text="{res:Loc StreamDeckPreviewCaption}"
+                           Style="{StaticResource PanelCaptionText}"
+                           HorizontalAlignment="Center"
+                           Margin="0,10,0,0" />
+            </Grid>
+
+            <!-- ================= Button editor ================= -->
+            <Border Grid.Column="1" Style="{StaticResource PanelCard}" Padding="0">
+                <DockPanel LastChildFill="True">
+                    <StackPanel DockPanel.Dock="Top" Margin="18,18,18,12">
+                        <TextBlock Text="{res:Loc StreamDeckButtonTitle}"
+                                   Style="{StaticResource PanelCardTitleText}" />
+                        <TextBlock Text="{res:Loc StreamDeckSelectButton}"
+                                   Style="{StaticResource PanelCaptionText}"
+                                   Margin="0,3,0,0"
+                                   Visibility="{Binding HasSelectedButton,
+                                                        Converter={StaticResource InverseBooleanToVisibility}}" />
+                    </StackPanel>
+
+                    <ScrollViewer Style="{StaticResource PanelScrollViewer}"
+                                  Padding="18,0,12,18">
+                        <StackPanel>
+                            <!-- An empty slot offers the one thing it can do. -->
+                            <Button Content="{res:Loc ActionAddButton}"
+                                    Command="{Binding AddButtonCommand}"
+                                    Style="{StaticResource PanelPrimaryButton}"
+                                    HorizontalAlignment="Left"
+                                    Visibility="{Binding IsSelectedCellEmpty,
+                                                         Converter={StaticResource BooleanToVisibility}}" />
+
+                            <!--
+                                Preview first: the button as the tablet will
+                                draw it, so a label or an icon can be judged
+                                without looking away from the field. It sits
+                                outside the editor's template so the actions
+                                that move and remove the slot - which belong to
+                                the grid's view model - can follow it directly.
+                            -->
+                            <StackPanel Visibility="{Binding HasSelectedButton,
+                                                             Converter={StaticResource BooleanToVisibility}}">
+                                <Border Style="{StaticResource PanelWell}" Padding="14">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <Image Source="{Binding ButtonEditor.IconPreviewPath}"
+                                               Width="44"
+                                               Height="44"
+                                               Margin="0,0,0,8"
+                                               RenderOptions.BitmapScalingMode="HighQuality"
+                                               Visibility="{Binding ButtonEditor.IconPreviewPath,
+                                                                    Converter={StaticResource NotNullToVisibility}}" />
+                                        <TextBlock Text="{Binding ButtonEditor.Label}"
+                                                   Style="{StaticResource PanelBodyText}"
+                                                   FontWeight="SemiBold"
+                                                   TextAlignment="Center"
+                                                   TextTrimming="CharacterEllipsis" />
+                                        <TextBlock Text="{Binding ButtonEditor.ActionSummary}"
+                                                   Style="{StaticResource PanelCaptionText}"
+                                                   TextAlignment="Center"
+                                                   Margin="0,4,0,0"
+                                                   TextTrimming="CharacterEllipsis" />
+                                    </StackPanel>
+                                </Border>
+
+                                <WrapPanel Margin="0,10,0,0">
+                                    <Button Content="{res:Loc ActionRemoveButton}"
+                                            Command="{Binding RemoveButtonCommand}"
+                                            Style="{StaticResource PanelToolbarDangerButton}"
+                                            Margin="0,0,14,6" />
+                                    <Button Content="←"
+                                            Command="{Binding MoveLeftCommand}"
+                                            Style="{StaticResource PanelIconButton}"
+                                            ToolTip="{res:Loc ActionMoveLeft}"
+                                            AutomationProperties.Name="{res:Loc ActionMoveLeft}"
+                                            Margin="0,0,6,6" />
+                                    <Button Content="→"
+                                            Command="{Binding MoveRightCommand}"
+                                            Style="{StaticResource PanelIconButton}"
+                                            ToolTip="{res:Loc ActionMoveRight}"
+                                            AutomationProperties.Name="{res:Loc ActionMoveRight}"
+                                            Margin="0,0,6,6" />
+                                    <Button Content="↑"
+                                            Command="{Binding MoveUpCommand}"
+                                            Style="{StaticResource PanelIconButton}"
+                                            ToolTip="{res:Loc ActionMoveUp}"
+                                            AutomationProperties.Name="{res:Loc ActionMoveUp}"
+                                            Margin="0,0,6,6" />
+                                    <Button Content="↓"
+                                            Command="{Binding MoveDownCommand}"
+                                            Style="{StaticResource PanelIconButton}"
+                                            ToolTip="{res:Loc ActionMoveDown}"
+                                            AutomationProperties.Name="{res:Loc ActionMoveDown}"
+                                            Margin="0,0,0,6" />
+                                </WrapPanel>
+                            </StackPanel>
+
+                            <ContentControl Content="{Binding ButtonEditor}">
+                                <ContentControl.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel IsEnabled="{Binding DataContext.CanEdit,
+                                                                        RelativeSource={RelativeSource AncestorType=UserControl}}">
+                                            <!-- ===== Appearance ===== -->
+                                            <TextBlock Text="{res:Loc ButtonEditorAppearance}"
+                                                       Style="{StaticResource PanelSectionTitleText}"
+                                                       Margin="0,18,0,0" />
+
+                                            <TextBlock Text="{res:Loc ButtonEditorLabel}"
+                                                       Style="{StaticResource PanelFieldLabelText}"
+                                                       Margin="0,0,0,5" />
+                                            <TextBox Text="{Binding Label, UpdateSourceTrigger=PropertyChanged}" />
+                                            <TextBlock Text="{res:Loc ButtonEditorLabelHint}"
+                                                       Style="{StaticResource PanelCaptionText}"
+                                                       Margin="0,5,0,0" />
+
+                                            <TextBlock Text="{res:Loc ButtonEditorIcon}"
+                                                       Style="{StaticResource PanelFieldLabelText}" />
+                                            <ComboBox ItemsSource="{Binding IconKinds}"
+                                                      SelectedItem="{Binding SelectedIconKind, Mode=TwoWay}"
+                                                      IsSynchronizedWithCurrentItem="False"
+                                                      AutomationProperties.Name="{res:Loc ButtonEditorIcon}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Label}" />
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                            <StackPanel Visibility="{Binding IsCustomIcon,
+                                                                             Converter={StaticResource BooleanToVisibility}}">
+                                                <TextBlock Text="{Binding IconDescription}"
+                                                           Style="{StaticResource PanelCaptionText}"
+                                                           Margin="0,8,0,0" />
+                                                <WrapPanel Margin="0,8,0,0">
+                                                    <Button Content="{res:Loc ButtonEditorChooseImage}"
+                                                            Command="{Binding BrowseIconCommand}"
+                                                            Style="{StaticResource PanelToolbarButton}"
+                                                            Margin="0,0,6,6" />
+                                                    <Button Content="{res:Loc ButtonEditorUseAppIcon}"
+                                                            Command="{Binding UseApplicationIconCommand}"
+                                                            Style="{StaticResource PanelToolbarButton}"
+                                                            Margin="0,0,0,6" />
+                                                </WrapPanel>
+                                            </StackPanel>
+
+                                            <CheckBox Style="{StaticResource PanelSwitch}"
+                                                      Content="{res:Loc ButtonEditorEnabled}"
+                                                      controls:PanelUi.Description="{res:Loc ButtonEditorEnabledHint}"
+                                                      IsChecked="{Binding Enabled, Mode=TwoWay}"
+                                                      Margin="0,16,0,0" />
+
+                                            <!-- ===== Action ===== -->
+                                            <Border Style="{StaticResource PanelDivider}" />
+
+                                            <TextBlock Text="{res:Loc ButtonEditorAction}"
+                                                       Style="{StaticResource PanelSectionTitleText}" />
+
+                                            <TextBlock Text="{res:Loc ButtonEditorActionType}"
+                                                       Style="{StaticResource PanelFieldLabelText}"
+                                                       Margin="0,0,0,5" />
+                                            <ComboBox ItemsSource="{Binding ActionKinds}"
+                                                      SelectedItem="{Binding SelectedActionKind, Mode=TwoWay}"
+                                                      IsSynchronizedWithCurrentItem="False"
+                                                      AutomationProperties.Name="{res:Loc ButtonEditorActionType}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Label}" />
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+
+                                            <!--
+                                                Only the settings of the chosen
+                                                action are on screen. Showing a
+                                                URL field beside a shortcut
+                                                field asks the user to work out
+                                                which one this button uses.
+                                            -->
+                                            <StackPanel Visibility="{Binding IsLaunchApplication,
+                                                                             Converter={StaticResource BooleanToVisibility}}">
+                                                <TextBlock Text="{res:Loc ButtonEditorExecutable}"
+                                                           Style="{StaticResource PanelFieldLabelText}" />
+                                                <TextBox Text="{Binding ExecutablePath, UpdateSourceTrigger=LostFocus}" />
+                                                <Button Content="{res:Loc ButtonEditorBrowse}"
+                                                        Command="{Binding BrowseApplicationCommand}"
+                                                        Style="{StaticResource PanelToolbarButton}"
+                                                        HorizontalAlignment="Left"
+                                                        Margin="0,8,0,0" />
+                                                <TextBlock Text="{res:Loc ButtonEditorArguments}"
+                                                           Style="{StaticResource PanelFieldLabelText}" />
+                                                <TextBox Text="{Binding Arguments, UpdateSourceTrigger=LostFocus}" />
+                                                <TextBlock Text="{res:Loc ButtonEditorWorkingDirectory}"
+                                                           Style="{StaticResource PanelFieldLabelText}" />
+                                                <TextBox Text="{Binding WorkingDirectory, UpdateSourceTrigger=LostFocus}" />
+                                            </StackPanel>
+
+                                            <StackPanel Visibility="{Binding IsOpenUrl,
+                                                                             Converter={StaticResource BooleanToVisibility}}">
+                                                <TextBlock Text="{res:Loc ButtonEditorUrl}"
+                                                           Style="{StaticResource PanelFieldLabelText}" />
+                                                <TextBox Text="{Binding Url, UpdateSourceTrigger=LostFocus}" />
+                                            </StackPanel>
+
+                                            <StackPanel Visibility="{Binding IsKeyboardShortcut,
+                                                                             Converter={StaticResource BooleanToVisibility}}">
+                                                <TextBlock Text="{res:Loc ButtonEditorModifiers}"
+                                                           Style="{StaticResource PanelFieldLabelText}" />
+                                                <WrapPanel>
+                                                    <CheckBox Content="Ctrl"
+                                                              IsChecked="{Binding ModifierControl, Mode=TwoWay}"
+                                                              Margin="0,4,14,0" />
+                                                    <CheckBox Content="Shift"
+                                                              IsChecked="{Binding ModifierShift, Mode=TwoWay}"
+                                                              Margin="0,4,14,0" />
+                                                    <CheckBox Content="Alt"
+                                                              IsChecked="{Binding ModifierAlt, Mode=TwoWay}"
+                                                              Margin="0,4,14,0" />
+                                                    <CheckBox Content="Win"
+                                                              IsChecked="{Binding ModifierWindows, Mode=TwoWay}"
+                                                              Margin="0,4,0,0" />
+                                                </WrapPanel>
+                                                <TextBlock Text="{res:Loc ButtonEditorKey}"
+                                                           Style="{StaticResource PanelFieldLabelText}" />
+                                                <ComboBox ItemsSource="{Binding Keys}"
+                                                          SelectedItem="{Binding ShortcutKey, Mode=TwoWay}"
+                                                          IsSynchronizedWithCurrentItem="False"
+                                                          AutomationProperties.Name="{res:Loc ButtonEditorKey}" />
+                                                <TextBlock Text="{res:Loc ButtonEditorShortcutPreview}"
+                                                           Style="{StaticResource PanelFieldLabelText}" />
+                                                <Border Style="{StaticResource PanelWell}"
+                                                        Padding="11,9">
+                                                    <TextBlock Text="{Binding ShortcutPreview}"
+                                                               Style="{StaticResource PanelBodyText}" />
+                                                </Border>
+                                            </StackPanel>
+
+                                            <StackPanel Visibility="{Binding IsMediaCommand,
+                                                                             Converter={StaticResource BooleanToVisibility}}">
+                                                <TextBlock Text="{res:Loc ButtonEditorMediaCommand}"
+                                                           Style="{StaticResource PanelFieldLabelText}" />
+                                                <ComboBox ItemsSource="{Binding MediaCommands}"
+                                                          SelectedItem="{Binding MediaCommand, Mode=TwoWay}"
+                                                          IsSynchronizedWithCurrentItem="False"
+                                                          AutomationProperties.Name="{res:Loc ButtonEditorMediaCommand}" />
+                                            </StackPanel>
+
+                                            <StackPanel Visibility="{Binding IsVolumeCommand,
+                                                                             Converter={StaticResource BooleanToVisibility}}">
+                                                <TextBlock Text="{res:Loc ButtonEditorVolumeCommand}"
+                                                           Style="{StaticResource PanelFieldLabelText}" />
+                                                <ComboBox ItemsSource="{Binding VolumeCommands}"
+                                                          SelectedItem="{Binding VolumeCommand, Mode=TwoWay}"
+                                                          IsSynchronizedWithCurrentItem="False"
+                                                          AutomationProperties.Name="{res:Loc ButtonEditorVolumeCommand}" />
+                                            </StackPanel>
+
+                                            <StackPanel Visibility="{Binding IsPanelMode,
+                                                                             Converter={StaticResource BooleanToVisibility}}">
+                                                <TextBlock Text="{res:Loc ButtonEditorPanelMode}"
+                                                           Style="{StaticResource PanelFieldLabelText}" />
+                                                <ComboBox ItemsSource="{Binding PanelModes}"
+                                                          SelectedItem="{Binding PanelMode, Mode=TwoWay}"
+                                                          IsSynchronizedWithCurrentItem="False"
+                                                          AutomationProperties.Name="{res:Loc ButtonEditorPanelMode}" />
+                                                <TextBlock Text="{Binding PanelModeNotice}"
+                                                           Style="{StaticResource PanelCaptionText}"
+                                                           Margin="0,8,0,0" />
+                                            </StackPanel>
+
+                                            <TextBlock Text="{res:Loc ButtonEditorUnknownAction}"
+                                                       Style="{StaticResource PanelCaptionText}"
+                                                       Margin="0,12,0,0"
+                                                       Visibility="{Binding IsUnknownAction,
+                                                                            Converter={StaticResource BooleanToVisibility}}" />
+
+                                            <Border Style="{StaticResource PanelDivider}" />
+
+                                            <controls:FactRow Label="{res:Loc ButtonEditorIdLabel}"
+                                                              Value="{Binding ButtonId}"
+                                                              LabelWidth="92"
+                                                              IsMono="True"
+                                                              Hint="{res:Loc ButtonEditorSafetyNote}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ContentControl.ContentTemplate>
+                            </ContentControl>
+
+                            <!-- Test runs here on the PC and answers in place. -->
+                            <StackPanel Visibility="{Binding ButtonEditor,
+                                                             Converter={StaticResource NotNullToVisibility}}">
+                                <StackPanel Orientation="Horizontal" Margin="0,14,0,0">
+                                    <Button Content="{res:Loc ActionTestAction}"
+                                            Command="{Binding TestActionCommand}"
+                                            Style="{StaticResource PanelButton}"
+                                            Margin="0,0,8,0" />
+                                    <Button Content="{res:Loc ActionSave}"
+                                            Command="{Binding SaveCommand}"
+                                            Style="{StaticResource PanelPrimaryButton}" />
+                                </StackPanel>
+
+                                <controls:StatusBadge Level="{Binding TestStatusLevel}"
+                                                      Text="{Binding TestStatusMessage}"
+                                                      HorizontalAlignment="Left"
+                                                      Margin="0,12,0,0"
+                                                      Visibility="{Binding TestStatusMessage,
+                                                                           Converter={StaticResource TextToVisibility}}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
+        </Grid>
+
+        <!-- ================= Footer ================= -->
+        <Grid Grid.Row="3" Margin="0,14,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0"
+                       Text="{Binding StatusMessage}"
+                       Style="{StaticResource PanelMutedText}"
+                       VerticalAlignment="Center"
+                       Visibility="{Binding StatusMessage,
+                                            Converter={StaticResource TextToVisibility}}" />
+
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        Margin="16,0,0,0">
+                <TextBlock Text="{Binding ConfigurationLocation}"
+                           Style="{StaticResource PanelMonoText}"
+                           VerticalAlignment="Center"
+                           TextTrimming="CharacterEllipsis"
+                           MaxWidth="420"
+                           ToolTip="{Binding ConfigurationLocation}" />
+                <TextBlock Style="{StaticResource PanelMonoText}"
+                           VerticalAlignment="Center"
+                           Margin="12,0,0,0"
+                           ToolTip="{res:Loc StreamDeckRevisionLabel}">
+                    <Run Text="·" />
+                    <Run Text="{Binding LayoutRevision, Mode=OneWay}" />
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

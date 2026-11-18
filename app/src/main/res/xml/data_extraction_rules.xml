@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- API 31 and above: neither cloud backup nor device-to-device transfer may carry the WiFi pairing. -->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="file" path="panelos-wifi" />
+        <exclude domain="sharedpref" path="panelos_wifi.xml" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="file" path="panelos-wifi" />
+        <exclude domain="sharedpref" path="panelos_wifi.xml" />
+    </device-transfer>
+</data-extraction-rules>

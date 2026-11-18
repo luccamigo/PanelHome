@@ -1,0 +1,121 @@
+<UserControl x:Class="PanelOS.ControlCenter.Views.IntegrationsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:PanelOS.ControlCenter.Controls">
+    <Grid>
+        <ScrollViewer x:Name="PageContent" Padding="0,0,10,0">
+            <ScrollViewer.Style>
+                <Style TargetType="ScrollViewer" BasedOn="{StaticResource PanelScrollViewer}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding DialogOpen}" Value="True"><Setter Property="IsEnabled" Value="False" /></DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ScrollViewer.Style>
+            <StackPanel>
+                <HeaderedContentControl Header="Claude Code · pedidos de permissão no tablet" Style="{StaticResource PanelSectionCard}">
+                    <StackPanel>
+                        <controls:StatusBadge Text="{Binding HookStatus}" Margin="0,0,0,10" />
+                        <TextBlock Text="Quando o Claude Code pedir permissão, o tablet mostra um resumo com Permitir, Negar e Deixar no PC. Permitir autoriza o Claude Code a executar a ação neste PC. Comandos longos aparecem cortados e o conteúdo de edições não aparece; na dúvida, toque em Deixar no PC. Se o tablet ou o PanelHost estiver fora, o pedido fica no terminal, como sempre."
+                                   Style="{StaticResource PanelMutedText}" TextWrapping="Wrap" />
+                        <WrapPanel Margin="0,14,0,0">
+                            <Button Content="Instalar…" Command="{Binding PreviewInstallCommand}" Style="{StaticResource PanelPrimaryButton}" Margin="0,0,10,8" />
+                            <Button Content="Remover" Command="{Binding PreviewRemovalCommand}" Style="{StaticResource PanelButton}" Margin="0,0,10,8" />
+                            <Button Content="Enviar pedido de teste" Command="{Binding TestPermissionCommand}" Style="{StaticResource PanelButton}" Margin="0,0,10,8" />
+                            <Button Content="Ver o que foi gravado" Command="{Binding ViewHookCommand}" Style="{StaticResource PanelButton}" Margin="0,0,0,8" />
+                        </WrapPanel>
+                        <TextBlock Text="Prazo para responder" Style="{StaticResource PanelBodyText}" Margin="0,10,0,5" />
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox ItemsSource="{Binding TimeoutOptions}" SelectedItem="{Binding PermissionTimeout}" MinWidth="100" AutomationProperties.Name="Prazo para responder, em segundos" />
+                            <Button Content="Aplicar prazo" Command="{Binding ApplyTimeoutCommand}" Style="{StaticResource PanelButton}" Margin="10,0,0,0" />
+                        </StackPanel>
+                        <TextBlock Text="Depois deste prazo o Claude Code pergunta no terminal. O tablet usa o mesmo prazo."
+                                   Style="{StaticResource PanelMutedText}" TextWrapping="Wrap" Margin="0,6,0,0" />
+                        <TextBlock Text="{Binding Backup, StringFormat=Backup guardado em {0}}" TextWrapping="Wrap" Margin="0,8,0,0">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource PanelCaptionText}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Backup}" Value=""><Setter Property="Visibility" Value="Collapsed" /></DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </StackPanel>
+                </HeaderedContentControl>
+
+                <HeaderedContentControl Header="Avisos de outros programas" Style="{StaticResource PanelSectionCard}" Margin="0,16,0,0">
+                    <StackPanel>
+                        <controls:StatusBadge Text="{Binding NoticeStatus}" Level="{Binding NoticeLevel}" Margin="0,0,0,10" />
+                        <TextBlock Text="Programas neste PC (scripts, Zelador, CI) podem mostrar avisos e valores no tablet. Só aceita pedidos feitos neste PC."
+                                   Style="{StaticResource PanelMutedText}" TextWrapping="Wrap" />
+                        <CheckBox Content="Receber avisos" IsChecked="{Binding NoticesEnabled, Mode=OneWay}" Command="{Binding ToggleNoticesCommand}"
+                                  Style="{StaticResource PanelSwitch}" Margin="0,14,0,0" controls:PanelUi.Description="{Binding NoticeDetail}" />
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="127.0.0.1:" Style="{StaticResource PanelBodyText}" VerticalAlignment="Center" />
+                            <TextBox Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Width="80" MaxLength="5" AutomationProperties.Name="Porta local dos avisos" />
+                            <Button Content="Aplicar porta" Command="{Binding ApplyPortCommand}" Style="{StaticResource PanelButton}" Margin="10,0,0,0" />
+                            <TextBlock Text="só este PC" Style="{StaticResource PanelMutedText}" VerticalAlignment="Center" Margin="10,0,0,0" />
+                        </StackPanel>
+                        <WrapPanel Margin="0,12,0,0">
+                            <TextBlock Text="{Binding KeyLabel}" Style="{StaticResource PanelBodyText}" FontFamily="Consolas" VerticalAlignment="Center" Margin="0,0,16,0" />
+                            <Button Content="Gerar nova chave" Command="{Binding RotateKeyCommand}" Style="{StaticResource PanelButton}" />
+                        </WrapPanel>
+                        <Border Style="{StaticResource PanelCardRaised}" Margin="0,12,0,0" Visibility="{Binding HasOneTimeKey, Converter={StaticResource BooleanToVisibility}}">
+                            <StackPanel>
+                                <TextBlock Text="Esta é a única vez que a chave aparece inteira. Copie agora e guarde onde seu script possa ler. Se o histórico da área de transferência estiver ligado, apague a chave de lá depois de colar."
+                                           Style="{StaticResource PanelBodyText}" TextWrapping="Wrap" />
+                                <TextBox Text="{Binding OneTimeKey, Mode=OneWay}" IsReadOnly="True" FontFamily="Consolas" TextWrapping="Wrap" Margin="0,10,0,10" AutomationProperties.Name="Chave dos avisos, exibida uma vez" />
+                                <WrapPanel>
+                                    <Button Content="Copiar" Command="{Binding CopyKeyCommand}" Style="{StaticResource PanelButton}" />
+                                    <Button Content="Já copiei" Command="{Binding DismissKeyCommand}" Style="{StaticResource PanelPrimaryButton}" Margin="10,0,0,0" />
+                                </WrapPanel>
+                            </StackPanel>
+                        </Border>
+                        <TextBlock Text="Exemplos" Style="{StaticResource PanelBodyText}" Margin="0,16,0,6" />
+                        <ComboBox ItemsSource="{Binding ExampleKinds}" SelectedItem="{Binding ExampleKind}" HorizontalAlignment="Left" MinWidth="160" AutomationProperties.Name="Linguagem do exemplo" />
+                        <Border Style="{StaticResource PanelWell}" Margin="0,8,0,8">
+                            <TextBox Text="{Binding Example, Mode=OneWay}" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Consolas"
+                                     TextWrapping="Wrap" AutomationProperties.Name="Exemplo de envio, com chave substituída por marcador" />
+                        </Border>
+                        <TextBlock Text="O Zelador no servidor não consegue chamar este endereço. Use este exemplo em um script local no PC."
+                                   Style="{StaticResource PanelMutedText}" TextWrapping="Wrap" />
+                        <WrapPanel Margin="0,10,0,0">
+                            <Button Content="Copiar exemplo" Command="{Binding CopyExampleCommand}" Style="{StaticResource PanelButton}" Margin="0,0,10,0" />
+                            <Button Content="Enviar aviso de teste" Command="{Binding TestNoticeCommand}" Style="{StaticResource PanelButton}" />
+                        </WrapPanel>
+                        <TextBlock Text="{Binding LastRequest, StringFormat=Último pedido: {0}}" Style="{StaticResource PanelCaptionText}" Margin="0,12,0,0" />
+                        <TextBlock Text="{Binding RejectedToday, StringFormat=Recusados por chave errada hoje: {0}}" Style="{StaticResource PanelCaptionText}" />
+                        <TextBlock Text="Até 8 KB por pedido; excesso de pedidos é recusado." Style="{StaticResource PanelMutedText}" Margin="0,8,0,0" />
+                    </StackPanel>
+                </HeaderedContentControl>
+
+                <HeaderedContentControl Header="Processos · encerrar pelo tablet" Style="{StaticResource PanelSectionCard}" Margin="0,16,0,0">
+                    <StackPanel>
+                        <CheckBox Content="Permitir encerrar processos pelo tablet" Style="{StaticResource PanelSwitch}"
+                                  IsChecked="{Binding ProcessesEnabled, Mode=OneWay}" Command="{Binding ToggleProcessesCommand}"
+                                  controls:PanelUi.Description="{Binding ProcessReason}" />
+                        <TextBlock Text="Quando liberado, o tablet pode pedir ao PC para encerrar um processo do seu usuário, segurando o botão por mais de 1 segundo."
+                                   Style="{StaticResource PanelMutedText}" TextWrapping="Wrap" />
+                    </StackPanel>
+                </HeaderedContentControl>
+                <TextBlock Text="{Binding Outcome}" Style="{StaticResource PanelBodyText}" TextWrapping="Wrap" Margin="0,14,0,0" AutomationProperties.LiveSetting="Polite" />
+            </StackPanel>
+        </ScrollViewer>
+        <Border x:Name="HookDialog" Background="#99000000" Padding="24" Focusable="True" KeyboardNavigation.TabNavigation="Cycle"
+                Visibility="{Binding DialogOpen, Converter={StaticResource BooleanToVisibility}}">
+            <Border Style="{StaticResource PanelCardRaised}" VerticalAlignment="Center" MaxWidth="800">
+                <Grid>
+                    <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
+                    <TextBlock Text="{Binding DialogTitle}" Style="{StaticResource PanelCardTitleText}" AutomationProperties.LiveSetting="Polite" />
+                    <TextBlock Grid.Row="1" Text="{Binding DialogBody}" Style="{StaticResource PanelMutedText}" TextWrapping="Wrap" Margin="0,10,0,12" />
+                    <TextBox Grid.Row="2" Text="{Binding PreviewFilesText, Mode=OneWay}" FontFamily="Consolas" IsReadOnly="True" TextWrapping="Wrap" Margin="0,0,0,10"
+                             Visibility="{Binding HasPreviewFiles, Converter={StaticResource BooleanToVisibility}}" AutomationProperties.Name="Arquivos do hook com SHA-256, selecionável" />
+                    <TextBox Grid.Row="3" Text="{Binding PreviewText, Mode=OneWay}" FontFamily="Consolas" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" MaxHeight="300" AutomationProperties.Name="Texto exato da prévia, selecionável" />
+                    <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+                        <Button x:Name="CancelHook" Content="Cancelar" Command="{Binding CancelHookCommand}" Style="{StaticResource PanelButton}" IsCancel="True" />
+                        <Button Content="{Binding DialogAction}" Command="{Binding ConfirmHookCommand}" Style="{StaticResource PanelPrimaryButton}" Margin="10,0,0,0" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Border>
+    </Grid>
+</UserControl>

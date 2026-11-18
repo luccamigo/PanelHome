@@ -1,0 +1,297 @@
+<UserControl x:Class="PanelOS.ControlCenter.Views.OverviewView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:PanelOS.ControlCenter.Controls"
+             xmlns:res="clr-namespace:PanelOS.ControlCenter.Resources">
+    <!--
+        The landing page answers, in this order: is it working, what is wrong,
+        what is each component doing, and what can I do from here. Nothing on it
+        requires opening another screen to learn the basic state of the system.
+    -->
+    <ScrollViewer Style="{StaticResource PanelScrollViewer}" Padding="0,0,10,0">
+        <StackPanel>
+
+            <!-- ================= Verdict ================= -->
+            <Border Style="{StaticResource PanelCardRaised}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Path Grid.Column="0"
+                          Data="{Binding HealthLevel,
+                                         Converter={StaticResource StatusLevelToGeometry}}"
+                          Fill="{Binding HealthLevel,
+                                         Converter={StaticResource StatusLevelToBrush}}"
+                          Width="26"
+                          Height="26"
+                          Stretch="Uniform"
+                          VerticalAlignment="Top"
+                          Margin="0,2,16,0" />
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding HealthText}"
+                                   Style="{StaticResource PanelPageTitleText}"
+                                   FontSize="18" />
+                        <TextBlock Text="{Binding HealthDetail}"
+                                   Style="{StaticResource PanelMutedText}"
+                                   Margin="0,5,0,0" />
+                    </StackPanel>
+
+                    <!--
+                        The agent's lifecycle is the one action this page is
+                        for. Only what the current state allows is on screen:
+                        an agent someone else started can be seen but never
+                        stopped from here, so its buttons are absent rather
+                        than greyed out.
+                    -->
+                    <StackPanel Grid.Column="2"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                Margin="16,0,0,0">
+                        <Button Content="{res:Loc ActionStartHost}"
+                                Command="{Binding Device.StartPanelHostCommand}"
+                                Style="{StaticResource PanelPrimaryButton}"
+                                Margin="0,0,8,0"
+                                Visibility="{Binding Device.CanStartPanelHost,
+                                                     Converter={StaticResource BooleanToVisibility}}" />
+                        <Button Content="{res:Loc ActionRestartHost}"
+                                Command="{Binding Device.RestartPanelHostCommand}"
+                                Style="{StaticResource PanelButton}"
+                                Margin="0,0,8,0"
+                                Visibility="{Binding Device.CanRestartPanelHost,
+                                                     Converter={StaticResource BooleanToVisibility}}" />
+                        <Button Content="{res:Loc ActionStopHost}"
+                                Command="{Binding Device.StopPanelHostCommand}"
+                                Style="{StaticResource PanelDangerButton}"
+                                Visibility="{Binding Device.CanStopPanelHost,
+                                                     Converter={StaticResource BooleanToVisibility}}" />
+                        <TextBlock Text="{Binding Device.PanelHostBusyText}"
+                                   Style="{StaticResource PanelBodyText}"
+                                   Foreground="{StaticResource PanelStatusWarningBrush}"
+                                   VerticalAlignment="Center"
+                                   Visibility="{Binding Device.PanelHostBusyText,
+                                                        Converter={StaticResource TextToVisibility}}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ================= What needs attention ================= -->
+            <HeaderedContentControl Style="{StaticResource PanelSectionCard}"
+                                    Header="{res:Loc OverviewProblemsTitle}"
+                                    controls:PanelUi.Caption="{res:Loc OverviewProblemsCaption}"
+                                    controls:PanelUi.IconKey="IconDiagnostics"
+                                    Margin="0,14,0,0">
+                <Grid>
+                    <TextBlock Text="{res:Loc OverviewNoProblems}"
+                               Style="{StaticResource PanelMutedText}"
+                               Visibility="{Binding Problems.Count,
+                                                    Converter={StaticResource EmptyCountToVisibility}}" />
+
+                    <ItemsControl ItemsSource="{Binding Problems}"
+                                  Visibility="{Binding Problems.Count,
+                                                       Converter={StaticResource CountToVisibility}}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource PanelWell}"
+                                        Background="{Binding Level,
+                                                             Converter={StaticResource StatusLevelToSoftBrush}}"
+                                        Padding="14,12"
+                                        Margin="0,0,0,8">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Path Grid.Column="0"
+                                              Data="{Binding Level,
+                                                             Converter={StaticResource StatusLevelToGeometry}}"
+                                              Fill="{Binding Level,
+                                                             Converter={StaticResource StatusLevelToBrush}}"
+                                              Width="14"
+                                              Height="14"
+                                              Stretch="Uniform"
+                                              VerticalAlignment="Top"
+                                              Margin="0,2,11,0" />
+
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="{Binding Title}"
+                                                       Style="{StaticResource PanelBodyText}"
+                                                       FontWeight="SemiBold" />
+                                            <TextBlock Text="{Binding Detail}"
+                                                       Style="{StaticResource PanelMutedText}"
+                                                       Margin="0,4,0,0" />
+
+                                            <!-- The raw form, present and closed. -->
+                                            <Expander Style="{StaticResource PanelDisclosure}"
+                                                      Header="{res:Loc ActionDetails}"
+                                                      Visibility="{Binding HasTechnical,
+                                                                           Converter={StaticResource BooleanToVisibility}}">
+                                                <TextBlock Text="{Binding Technical}"
+                                                           Style="{StaticResource PanelMonoText}"
+                                                           TextWrapping="Wrap" />
+                                            </Expander>
+                                        </StackPanel>
+
+                                        <Button Grid.Column="2"
+                                                Content="{Binding ActionLabel}"
+                                                Command="{Binding Action}"
+                                                Style="{StaticResource PanelButton}"
+                                                VerticalAlignment="Top"
+                                                Margin="14,0,0,0"
+                                                Visibility="{Binding HasAction,
+                                                                     Converter={StaticResource BooleanToVisibility}}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </HeaderedContentControl>
+
+            <!-- ================= Components ================= -->
+            <TextBlock Text="{res:Loc OverviewComponentsTitle}"
+                       Style="{StaticResource PanelSectionTitleText}"
+                       Margin="{StaticResource GapPageSection}" />
+
+            <UniformGrid Columns="4">
+                <!-- Agent -->
+                <Border Style="{StaticResource PanelCard}" Margin="0,0,7,0">
+                    <StackPanel>
+                        <TextBlock Text="{res:Loc ShellStatusHost}"
+                                   Style="{StaticResource PanelCardLabelText}" />
+                        <controls:StatusBadge Level="{Binding Device.PanelHostLevel}"
+                                              Text="{Binding Device.PanelHostStateText}" />
+                        <TextBlock Text="{Binding Device.PanelHostProcessText}"
+                                   Style="{StaticResource PanelMutedText}"
+                                   Margin="0,10,0,0" />
+                        <TextBlock Text="{Binding Device.PanelHostUptimeText}"
+                                   Style="{StaticResource PanelCaptionText}"
+                                   Margin="0,3,0,0" />
+                    </StackPanel>
+                </Border>
+
+                <!-- Tablet -->
+                <Border Style="{StaticResource PanelCard}" Margin="7,0,7,0">
+                    <StackPanel>
+                        <TextBlock Text="{res:Loc ShellStatusTablet}"
+                                   Style="{StaticResource PanelCardLabelText}" />
+                        <controls:StatusBadge Level="{Binding Device.TabletLevel}"
+                                              Text="{Binding Device.TabletStatusText}" />
+                        <TextBlock Text="{Binding Device.TabletProtocolText}"
+                                   Style="{StaticResource PanelMutedText}"
+                                   Margin="0,10,0,0" />
+                        <TextBlock Text="{Binding Device.TabletFeaturesText}"
+                                   Style="{StaticResource PanelCaptionText}"
+                                   Margin="0,3,0,0"
+                                   TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+                </Border>
+
+                <!-- Display -->
+                <Border Style="{StaticResource PanelCard}" Margin="7,0,7,0">
+                    <StackPanel>
+                        <TextBlock Text="{res:Loc ShellStatusDisplay}"
+                                   Style="{StaticResource PanelCardLabelText}" />
+                        <controls:StatusBadge Level="{Binding Device.MonitorLevel}"
+                                              Text="{Binding Device.MonitorText}" />
+                        <TextBlock Text="{Binding Device.ResolutionText}"
+                                   Style="{StaticResource PanelMutedText}"
+                                   Margin="0,10,0,0" />
+                        <TextBlock Text="{Binding Device.RefreshRateText}"
+                                   Style="{StaticResource PanelCaptionText}"
+                                   Margin="0,3,0,0" />
+                    </StackPanel>
+                </Border>
+
+                <!-- Video -->
+                <Border Style="{StaticResource PanelCard}" Margin="7,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="{res:Loc ShellStatusVideo}"
+                                   Style="{StaticResource PanelCardLabelText}" />
+                        <controls:StatusBadge Level="{Binding Device.VideoLevel}"
+                                              Text="{Binding Device.VideoStatusText}" />
+                        <TextBlock Text="{Binding Device.VideoSendFpsText}"
+                                   Style="{StaticResource PanelMetricText}"
+                                   FontSize="18"
+                                   Margin="0,8,0,0" />
+                        <TextBlock Text="{res:Loc VideoSendFpsLabel}"
+                                   Style="{StaticResource PanelCaptionText}"
+                                   Margin="0,2,0,0" />
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
+
+            <!-- ================= Stream Deck ================= -->
+            <HeaderedContentControl Style="{StaticResource PanelSectionCard}"
+                                    Header="{res:Loc OverviewStreamDeckTitle}"
+                                    controls:PanelUi.Caption="{res:Loc OverviewStreamDeckCaption}"
+                                    controls:PanelUi.IconKey="IconStreamDeck"
+                                    Margin="0,14,0,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <controls:StatusBadge Level="{Binding Device.StreamDeckLevel}"
+                                              Text="{Binding Device.StreamDeckStatusText}"
+                                              HorizontalAlignment="Left" />
+                        <TextBlock Text="{Binding Device.StreamDeckDetail}"
+                                   Style="{StaticResource PanelMutedText}"
+                                   Margin="0,10,0,0" />
+                        <TextBlock Text="{Binding Device.StreamDeckRevisionText}"
+                                   Style="{StaticResource PanelCaptionText}"
+                                   Margin="0,3,0,0" />
+                    </StackPanel>
+
+                    <Button Grid.Column="1"
+                            Content="{res:Loc OverviewOpenStreamDeck}"
+                            Command="{Binding Device.OpenStreamDeckCommand}"
+                            Style="{StaticResource PanelButton}"
+                            VerticalAlignment="Top"
+                            Margin="14,0,0,0" />
+                </Grid>
+            </HeaderedContentControl>
+
+            <!-- ================= Quick actions ================= -->
+            <TextBlock Text="{res:Loc OverviewQuickActionsTitle}"
+                       Style="{StaticResource PanelSectionTitleText}"
+                       Margin="{StaticResource GapPageSection}" />
+
+            <Border Style="{StaticResource PanelCard}">
+                <StackPanel>
+                    <WrapPanel>
+                        <Button Content="{res:Loc ActionRefreshState}"
+                                Command="{Binding Device.RefreshCommand}"
+                                Style="{StaticResource PanelButton}"
+                                Margin="0,0,8,8" />
+                        <Button Content="{res:Loc OverviewOpenDevice}"
+                                Command="{Binding Device.OpenDeviceCommand}"
+                                Style="{StaticResource PanelButton}"
+                                Margin="0,0,8,8" />
+                        <Button Content="{res:Loc OverviewOpenStreamDeck}"
+                                Command="{Binding Device.OpenStreamDeckCommand}"
+                                Style="{StaticResource PanelButton}"
+                                Margin="0,0,8,8" />
+                        <Button Content="{res:Loc OverviewOpenDiagnostics}"
+                                Command="{Binding Device.OpenLogsCommand}"
+                                Style="{StaticResource PanelButton}"
+                                Margin="0,0,8,8" />
+                    </WrapPanel>
+
+                    <TextBlock Text="{Binding Device.StatusMessage}"
+                               Style="{StaticResource PanelMutedText}"
+                               Margin="0,6,0,0"
+                               Visibility="{Binding Device.StatusMessage,
+                                                    Converter={StaticResource TextToVisibility}}" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

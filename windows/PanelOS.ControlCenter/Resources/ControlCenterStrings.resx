@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- ================================================================== -->
+  <!-- Product                                                            -->
+  <!-- ================================================================== -->
+  <data name="AppTitle" xml:space="preserve"><value>PanelOS Control Center</value></data>
+  <data name="AppName" xml:space="preserve"><value>PanelOS</value></data>
+  <data name="AppSubtitle" xml:space="preserve"><value>Control Center</value></data>
+  <data name="ControlCenterName" xml:space="preserve"><value>Control Center</value></data>
+  <data name="PanelHostName" xml:space="preserve"><value>PanelHost</value></data>
+  <data name="ShellVersionFormat" xml:space="preserve"><value>PanelOS Control Center {0}</value></data>
+
+  <!-- ================================================================== -->
+  <!-- Navigation                                                         -->
+  <!-- ================================================================== -->
+  <data name="NavOverview" xml:space="preserve"><value>Visão geral</value></data>
+  <data name="NavLoopMedia" xml:space="preserve"><value>Mídia em tela cheia</value></data>
+  <data name="NavLoopMediaDescription" xml:space="preserve"><value>Escolha um GIF ou MP4 para a última página do carrossel no tablet.</value></data>
+  <data name="LoopMediaCurrent" xml:space="preserve"><value>Mídia atual</value></data>
+  <data name="LoopMediaHint" xml:space="preserve"><value>GIF ou MP4, até 64 MiB. Reprodução em loop e sem áudio no tablet.</value></data>
+  <data name="LoopMediaChoose" xml:space="preserve"><value>Escolher arquivo…</value></data>
+  <data name="LoopMediaRemove" xml:space="preserve"><value>Remover</value></data>
+  <data name="LoopMediaNone" xml:space="preserve"><value>Nenhuma mídia configurada</value></data>
+  <data name="NavOverviewDescription" xml:space="preserve"><value>O estado do PanelOS em uma tela e o que fazer quando algo não está certo.</value></data>
+  <data name="NavDevice" xml:space="preserve"><value>Dispositivo</value></data>
+  <data name="NavDeviceDescription" xml:space="preserve"><value>Agente, tablet, display virtual e vídeo, com os controles de cada um.</value></data>
+  <data name="NavStreamDeck" xml:space="preserve"><value>Stream Deck</value></data>
+  <data name="NavStreamDeckDescription" xml:space="preserve"><value>Monte os atalhos que aparecem no tablet.</value></data>
+  <data name="NavDiagnostics" xml:space="preserve"><value>Diagnóstico</value></data>
+  <data name="NavDiagnosticsDescription" xml:space="preserve"><value>Valores medidos, métricas de vídeo e a saída capturada do agente.</value></data>
+  <data name="NavSettings" xml:space="preserve"><value>Configurações</value></data>
+  <data name="NavSettingsDescription" xml:space="preserve"><value>Preferências do Control Center, do PanelHost e do modo de desenvolvimento.</value></data>
+
+  <!-- ================================================================== -->
+  <!-- Shell status strip                                                 -->
+  <!-- ================================================================== -->
+  <data name="ShellStatusHost" xml:space="preserve"><value>Agente</value></data>
+  <data name="ShellStatusTablet" xml:space="preserve"><value>Tablet</value></data>
+  <data name="ShellStatusDisplay" xml:space="preserve"><value>Display</value></data>
+  <data name="ShellStatusVideo" xml:space="preserve"><value>Vídeo</value></data>
+
+  <!-- ================================================================== -->
+  <!-- Shared vocabulary                                                  -->
+  <!-- ================================================================== -->
+  <data name="NotAvailableSymbol" xml:space="preserve"><value>—</value></data>
+  <data name="Querying" xml:space="preserve"><value>Consultando…</value></data>
+  <data name="Connected" xml:space="preserve"><value>Conectado</value></data>
+  <data name="Disconnected" xml:space="preserve"><value>Desconectado</value></data>
+  <data name="AccessDenied" xml:space="preserve"><value>Acesso negado</value></data>
+  <data name="Unavailable" xml:space="preserve"><value>Indisponível</value></data>
+  <data name="Error" xml:space="preserve"><value>Erro</value></data>
+  <data name="ConnectedLower" xml:space="preserve"><value>conectado</value></data>
+  <data name="DisconnectedLower" xml:space="preserve"><value>desconectado</value></data>
+  <data name="UnavailableLower" xml:space="preserve"><value>indisponível</value></data>
+  <data name="ErrorLower" xml:space="preserve"><value>erro</value></data>
+  <data name="NotFoundLower" xml:space="preserve"><value>não encontrado</value></data>
+  <data name="NotFoundFeminineLower" xml:space="preserve"><value>não encontrada</value></data>
+  <data name="NotInstalledLower" xml:space="preserve"><value>não instalado</value></data>
+  <data name="AccessDeniedLower" xml:space="preserve"><value>acesso negado</value></data>
+  <data name="QueryFailedLower" xml:space="preserve"><value>falha na consulta</value></data>
+  <data name="PathWithSourceFormat" xml:space="preserve"><value>{0} ({1})</value></data>
+  <data name="DiagnosticsHostDisplayFormat" xml:space="preserve"><value>{0}, {1} × {2}</value></data>
+  <data name="DiagnosticsHostDisplayRefreshFormat" xml:space="preserve"><value>{0} @ {1} Hz</value></data>
+  <data name="DiagnosticsNegotiatedVideoFormat" xml:space="preserve"><value>{0}, {1} × {2}, {3} FPS</value></data>
+  <data name="ResolutionFormat" xml:space="preserve"><value>{0} × {1}</value></data>
+  <data name="RefreshRateFormat" xml:space="preserve"><value>{0} Hz</value></data>
+  <data name="FpsFormat" xml:space="preserve"><value>{0:0.0} FPS</value></data>
+  <data name="FpsWholeFormat" xml:space="preserve"><value>{0} FPS</value></data>
+  <data name="ActionRefresh" xml:space="preserve"><value>Atualizar</value></data>
+  <data name="ActionRefreshState" xml:space="preserve"><value>Atualizar estado</value></data>
+  <data name="ActionCopy" xml:space="preserve"><value>Copiar</value></data>
+  <data name="ActionDetails" xml:space="preserve"><value>Detalhes técnicos</value></data>
+
+  <!-- ================================================================== -->
+  <!-- Errors                                                             -->
+  <!-- ================================================================== -->
+  <data name="UnexpectedError" xml:space="preserve"><value>Ocorreu um erro inesperado:&#xA;&#xA;{0}: {1}</value></data>
+  <data name="UnexpectedFailure" xml:space="preserve"><value>Falha inesperada: {0}: {1}</value></data>
+  <data name="PreferencesSaveFailed" xml:space="preserve"><value>Não foi possível salvar as preferências: {0}</value></data>
+
+  <!-- ================================================================== -->
+  <!-- Driver                                                             -->
+  <!-- ================================================================== -->
+  <data name="DriverNotFound" xml:space="preserve"><value>PanelDisplayDriver não encontrado.</value></data>
+  <data name="DriverAccessDenied" xml:space="preserve"><value>Acesso negado pelo driver. Execute o Control Center como administrador.</value></data>
+  <data name="DriverNotReady" xml:space="preserve"><value>O driver ainda está inicializando.</value></data>
+  <data name="DriverElevationDeclined" xml:space="preserve"><value>A elevação não foi aprovada. Aprove o aviso do Windows (UAC) e tente conectar de novo.</value></data>
+  <data name="DriverUnavailable" xml:space="preserve"><value>Driver indisponível</value></data>
+  <data name="DriverInstalled" xml:space="preserve"><value>Instalado</value></data>
+  <data name="DriverNotFoundShort" xml:space="preserve"><value>PanelDisplayDriver não encontrado</value></data>
+  <data name="DriverStateReady" xml:space="preserve"><value>Pronto</value></data>
+  <data name="DriverStateInitializing" xml:space="preserve"><value>Inicializando</value></data>
+  <data name="DriverStateStopped" xml:space="preserve"><value>Parado</value></data>
+  <data name="DriverProtocolFormat" xml:space="preserve"><value>Protocolo v{0}</value></data>
+  <data name="DriverSourceNote" xml:space="preserve"><value>PanelDisplayDriver, consultado por IOCTL.</value></data>
+  <data name="DriverStatusQuerying" xml:space="preserve"><value>Consultando driver…</value></data>
+  <data name="DriverStatusNotFound" xml:space="preserve"><value>Driver não encontrado</value></data>
+  <data name="DriverStatusAccessDenied" xml:space="preserve"><value>Driver sem acesso</value></data>
+  <data name="DriverStatusDisplayConnected" xml:space="preserve"><value>Display conectado</value></data>
+  <data name="DriverStatusReady" xml:space="preserve"><value>Driver pronto</value></data>
+  <data name="DriverStatusInitializing" xml:space="preserve"><value>Driver inicializando</value></data>
+  <data name="DriverStatusStopped" xml:space="preserve"><value>Driver parado</value></data>
+  <data name="DriverStatusInstalled" xml:space="preserve"><value>Driver instalado</value></data>
+  <data name="MonitorChanged" xml:space="preserve"><value>Monitor virtual {0}.</value></data>
+  <data name="MonitorAlreadyChanged" xml:space="preserve"><value>O monitor virtual já estava {0}.</value></data>
+  <data name="MonitorChangeFailed" xml:space="preserve"><value>Não foi possível {0} o monitor virtual.{1}</value></data>
+  <data name="MonitorVerbConnected" xml:space="preserve"><value>conectado</value></data>
+  <data name="MonitorVerbDisconnected" xml:space="preserve"><value>desconectado</value></data>
+  <data name="MonitorVerbConnect" xml:space="preserve"><value>conectar</value></data>
+  <data name="MonitorVerbDisconnect" xml:space="preserve"><value>desconectar</value></data>
+
+  <!-- ================================================================== -->
+  <!-- PanelHost                                                          -->
+  <!-- ================================================================== -->
+  <data name="HostUnavailable" xml:space="preserve"><value>PanelHost indisponível</value></data>
+  <data name="HostStateRunning" xml:space="preserve"><value>Em execução</value></data>
+  <data name="HostStateStarting" xml:space="preserve"><value>Iniciando…</value></data>
+  <data name="HostStateStopping" xml:space="preserve"><value>Encerrando…</value></data>
+  <data name="HostStateStopped" xml:space="preserve"><value>Parado</value></data>
+  <data name="HostProcessFormat" xml:space="preserve"><value>PID {0}</value></data>
+  <data name="HostProcessVersionFormat" xml:space="preserve"><value>PID {0} • v{1}</value></data>
+  <data name="HostOwnershipManaged" xml:space="preserve"><value>Gerenciado pelo Control Center</value></data>
+  <data name="HostOwnershipExternal" xml:space="preserve"><value>Iniciado externamente</value></data>
+  <data name="HostManagementConnectedFormat" xml:space="preserve"><value>IPC de gerenciamento v{0} conectado.</value></data>
+  <data name="HostUptimeSecondsFormat" xml:space="preserve"><value>{0}s no ar</value></data>
+  <data name="HostUptimeMinutesFormat" xml:space="preserve"><value>{0}min no ar</value></data>
+  <data name="HostUptimeHoursFormat" xml:space="preserve"><value>{0}h {1}min no ar</value></data>
+  <data name="HostUptimeDaysFormat" xml:space="preserve"><value>{0}d {1}h no ar</value></data>
+  <data name="PanelHostExecutableNotFound" xml:space="preserve"><value>PanelHost.exe não foi encontrado.</value></data>
+  <data name="HostRunningManaged" xml:space="preserve"><value>em execução (PID {0}), gerenciado</value></data>
+  <data name="HostRunningExternal" xml:space="preserve"><value>em execução (PID {0}), externo</value></data>
+  <data name="HostExitWithDuration" xml:space="preserve"><value>código {0}, após {1:0.0} s</value></data>
+  <data name="HostExitCode" xml:space="preserve"><value>código {0}</value></data>
+  <data name="ActionStartHost" xml:space="preserve"><value>Iniciar</value></data>
+  <data name="ActionStopHost" xml:space="preserve"><value>Parar</value></data>
+  <data name="ActionRestartHost" xml:space="preserve"><value>Reiniciar</value></data>
+
+  <!-- ================================================================== -->
+  <!-- Tablet                                                             -->
+  <!-- ================================================================== -->
+  <data name="TabletStateConnected" xml:space="preserve"><value>Conectado</value></data>
+  <data name="TabletStateControlOnly" xml:space="preserve"><value>Controle conectado</value></data>
+  <data name="TabletStateVideoOnly" xml:space="preserve"><value>Vídeo conectado</value></data>
+  <data name="TabletStateDisconnected" xml:space="preserve"><value>Desconectado</value></data>
+  <data name="TabletNotObservable" xml:space="preserve"><value>O Control Center não fala o protocolo de controle, então o estado do tablet não é observável aqui. Um PanelHost em execução não significa que há um tablet conectado.</value></data>
+  <data name="TabletNoSnapshot" xml:space="preserve"><value>Sem snapshot do IPC local; nenhum estado antigo é exibido.</value></data>
+  <data name="TabletNoSession" xml:space="preserve"><value>Nenhuma sessão de controle ou vídeo conectada.</value></data>
+  <data name="TabletDetailFormat" xml:space="preserve"><value>{0} • {1} • vídeo {2}</value></data>
+  <data name="TabletProtocolFormat" xml:space="preserve"><value>Protocolo v{0}</value></data>
+  <data name="TabletProtocolLabel" xml:space="preserve"><value>Protocolo do painel</value></data>
+  <data name="TabletProtocolUnknown" xml:space="preserve"><value>Protocolo —</value></data>
+  <data name="TabletNoFeatures" xml:space="preserve"><value>sem recursos negociados</value></data>
+  <data name="TabletVideoActiveLower" xml:space="preserve"><value>ativo</value></data>
+  <data name="TabletVideoInactiveLower" xml:space="preserve"><value>inativo</value></data>
+  <data name="TabletControlLabel" xml:space="preserve"><value>Sessão de controle</value></data>
+  <data name="TabletVideoLabel" xml:space="preserve"><value>Sessão de vídeo</value></data>
+  <data name="TabletFeaturesLabel" xml:space="preserve"><value>Recursos negociados</value></data>
+  <data name="TabletSessionLabel" xml:space="preserve"><value>Sessões desde o início</value></data>
+  <data name="TabletSessionFormat" xml:space="preserve"><value>controle {0} • vídeo {1}</value></data>
+  <data name="TabletTransportLabel" xml:space="preserve"><value>Transporte</value></data>
+  <data name="TabletTransportUnpublished" xml:space="preserve"><value>Não publicado pelo Management v1</value></data>
+  <data name="TabletTransportHint" xml:space="preserve"><value>O agente aceita a sessão por TCP local; qual caminho físico o tablet usou (USB nativo ou rede) não faz parte do snapshot de gerenciamento, então não é afirmado aqui.</value></data>
+
+  <!-- ================================================================== -->
+  <!-- Video                                                              -->
+  <!-- ================================================================== -->
+  <data name="VideoStateActive" xml:space="preserve"><value>Ativo</value></data>
+  <data name="VideoStateInactive" xml:space="preserve"><value>Inativo</value></data>
+  <data name="VideoNoSession" xml:space="preserve"><value>Nenhuma sessão de vídeo conectada.</value></data>
+  <data name="VideoSessionDetail" xml:space="preserve"><value>{0}; configurado {1} FPS; negociado {2} FPS</value></data>
+  <data name="VideoCodecLabel" xml:space="preserve"><value>Codec</value></data>
+  <data name="VideoEncoderLabel" xml:space="preserve"><value>Encoder</value></data>
+  <data name="VideoResolutionLabel" xml:space="preserve"><value>Resolução</value></data>
+  <data name="VideoConfiguredFpsLabel" xml:space="preserve"><value>FPS configurado</value></data>
+  <data name="VideoNegotiatedFpsLabel" xml:space="preserve"><value>FPS negociado</value></data>
+  <data name="VideoCaptureFpsLabel" xml:space="preserve"><value>Captura do driver</value></data>
+  <data name="VideoReceiveFpsLabel" xml:space="preserve"><value>Recebido pelo host</value></data>
+  <data name="VideoSendFpsLabel" xml:space="preserve"><value>Enviado ao tablet</value></data>
+  <data name="VideoRenderFpsLabel" xml:space="preserve"><value>Renderizado no tablet</value></data>
+  <data name="VideoRenderFpsUnpublished" xml:space="preserve"><value>O tablet não publica a taxa de renderização pelo Management v1; nenhum número é inventado aqui.</value></data>
+  <data name="VideoDropsLabel" xml:space="preserve"><value>Frames perdidos</value></data>
+  <data name="VideoDropsFormat" xml:space="preserve"><value>{0} frames</value></data>
+  <data name="CodecUnknown" xml:space="preserve"><value>codec —</value></data>
+  <data name="VideoEncoderUnknown" xml:space="preserve"><value>Encoder não informado.</value></data>
+  <data name="VideoBytesSentDetail" xml:space="preserve"><value>Bytes enviados pelo pipeline de vídeo.</value></data>
+  <data name="VideoCaptureToSendDetail" xml:space="preserve"><value>Média entre timestamp de captura e envio.</value></data>
+  <data name="VideoSequenceGapDetail" xml:space="preserve"><value>Frames ausentes na sequência durante a janela.</value></data>
+
+  <!-- ================================================================== -->
+  <!-- Display                                                            -->
+  <!-- ================================================================== -->
+  <data name="DisplayStateConnecting" xml:space="preserve"><value>Conectando…</value></data>
+  <data name="DisplayStateDisconnecting" xml:space="preserve"><value>Desconectando…</value></data>
+  <data name="DisplayResolutionLabel" xml:space="preserve"><value>Resolução</value></data>
+  <data name="DisplayRefreshLabel" xml:space="preserve"><value>Taxa de atualização</value></data>
+  <data name="DisplayDriverLabel" xml:space="preserve"><value>Driver</value></data>
+  <data name="DisplayDriverProtocolLabel" xml:space="preserve"><value>Protocolo do driver</value></data>
+  <data name="ActionConnectDisplay" xml:space="preserve"><value>Conectar</value></data>
+  <data name="ActionDisconnectDisplay" xml:space="preserve"><value>Desconectar</value></data>
+
+  <!-- ================================================================== -->
+  <!-- Overview                                                           -->
+  <!-- ================================================================== -->
+  <data name="OverviewHealthTitle" xml:space="preserve"><value>Estado do sistema</value></data>
+  <data name="OverviewHealthy" xml:space="preserve"><value>Tudo em ordem</value></data>
+  <data name="OverviewHealthyDetail" xml:space="preserve"><value>Nenhum componente essencial está faltando.</value></data>
+  <data name="OverviewDegraded" xml:space="preserve"><value>Funcionando com ressalvas</value></data>
+  <data name="OverviewDegradedDetail" xml:space="preserve"><value>Algo está incompleto, mas nada impede o uso.</value></data>
+  <data name="OverviewBroken" xml:space="preserve"><value>Precisa de atenção</value></data>
+  <data name="OverviewBrokenDetail" xml:space="preserve"><value>Um componente essencial não está disponível.</value></data>
+  <data name="OverviewProblemsTitle" xml:space="preserve"><value>O que precisa de atenção</value></data>
+  <data name="OverviewProblemsCaption" xml:space="preserve"><value>Cada item diz o que fazer; os detalhes técnicos ficam recolhidos.</value></data>
+  <data name="OverviewNoProblems" xml:space="preserve"><value>Nada a resolver no momento.</value></data>
+  <data name="OverviewComponentsTitle" xml:space="preserve"><value>Componentes</value></data>
+  <data name="OverviewQuickActionsTitle" xml:space="preserve"><value>Ações rápidas</value></data>
+  <data name="OverviewOpenDevice" xml:space="preserve"><value>Abrir Dispositivo</value></data>
+  <data name="OverviewOpenStreamDeck" xml:space="preserve"><value>Abrir Stream Deck</value></data>
+  <data name="OverviewOpenDiagnostics" xml:space="preserve"><value>Abrir Diagnóstico</value></data>
+  <data name="OverviewStreamDeckTitle" xml:space="preserve"><value>Stream Deck</value></data>
+  <data name="OverviewStreamDeckCaption" xml:space="preserve"><value>Perfil que o PanelHost publica para o tablet.</value></data>
+
+  <!-- Problems -->
+  <data name="ProblemDriverMissingTitle" xml:space="preserve"><value>O driver de display do PanelOS não foi encontrado</value></data>
+  <data name="ProblemDriverMissingDetail" xml:space="preserve"><value>Sem o PanelDisplayDriver não há monitor virtual, então o tablet não recebe imagem. Instale o driver e volte a esta tela.</value></data>
+  <data name="ProblemDriverAccessTitle" xml:space="preserve"><value>Não foi possível consultar o driver: acesso negado</value></data>
+  <data name="ProblemDriverAccessDetail" xml:space="preserve"><value>O driver está instalado, mas esta sessão não tem permissão para abri-lo. Execute o Control Center como administrador.</value></data>
+  <data name="ProblemDriverErrorTitle" xml:space="preserve"><value>A consulta ao driver falhou</value></data>
+  <data name="ProblemDriverStoppedTitle" xml:space="preserve"><value>O driver está parado</value></data>
+  <data name="ProblemDriverStoppedDetail" xml:space="preserve"><value>O driver está instalado mas não está pronto para criar o monitor virtual.</value></data>
+  <data name="ProblemHostErrorTitle" xml:space="preserve"><value>O PanelHost não está em execução</value></data>
+  <data name="ProblemHostStoppedTitle" xml:space="preserve"><value>O agente PanelHost está parado</value></data>
+  <data name="ProblemHostStoppedDetail" xml:space="preserve"><value>Sem o agente, o tablet não tem com quem falar. Inicie o PanelHost para usar o painel.</value></data>
+  <data name="ProblemManagementTitle" xml:space="preserve"><value>O PanelHost está no ar, mas o IPC local não respondeu</value></data>
+  <data name="ProblemManagementDetail" xml:space="preserve"><value>Sem o canal de gerenciamento não há estado ao vivo do tablet, do display nem do vídeo. Um agente iniciado por fora com outra versão pode não expor o canal.</value></data>
+  <data name="ProblemTabletTitle" xml:space="preserve"><value>Nenhum tablet conectado</value></data>
+  <data name="ProblemTabletDetail" xml:space="preserve"><value>O agente está pronto e aguardando uma sessão. Abra o PanelHome no tablet.</value></data>
+  <data name="ProblemDisplayTitle" xml:space="preserve"><value>O display virtual está desconectado</value></data>
+  <data name="ProblemDisplayDetail" xml:space="preserve"><value>O driver está pronto, mas o monitor virtual não foi criado, então não há o que capturar.</value></data>
+  <data name="ProblemVideoGapTitle" xml:space="preserve"><value>Frames de vídeo estão sendo perdidos</value></data>
+  <data name="ProblemVideoGapDetail" xml:space="preserve"><value>A sequência enviada ao tablet tem buracos na última janela medida. Em geral é o encoder ou o transporte não acompanhando a taxa negociada.</value></data>
+  <data name="ProblemStreamDeckTitle" xml:space="preserve"><value>Nenhum perfil do Stream Deck publicado</value></data>
+  <data name="ProblemStreamDeckDetail" xml:space="preserve"><value>O agente está em execução mas não publicou um perfil ativo, então o tablet não mostra botões.</value></data>
+  <data name="ProblemActionStartHost" xml:space="preserve"><value>Iniciar o PanelHost</value></data>
+  <data name="ProblemActionConnectDisplay" xml:space="preserve"><value>Conectar o display</value></data>
+  <data name="ProblemActionOpenStreamDeck" xml:space="preserve"><value>Abrir o editor</value></data>
+  <data name="ProblemActionOpenDiagnostics" xml:space="preserve"><value>Ver diagnóstico</value></data>
+
+  <!-- ================================================================== -->
+  <!-- Device page                                                        -->
+  <!-- ================================================================== -->
+  <data name="DeviceHostTitle" xml:space="preserve"><value>Agente PanelHost</value></data>
+  <data name="DeviceHostCaption" xml:space="preserve"><value>O processo Windows que atende o tablet e comanda o display virtual.</value></data>
+  <data name="DeviceTabletTitle" xml:space="preserve"><value>Tablet</value></data>
+  <data name="DeviceTabletCaption" xml:space="preserve"><value>Sessões que o agente aceitou, como ele as relata.</value></data>
+  <data name="DeviceDisplayTitle" xml:space="preserve"><value>Display virtual</value></data>
+  <data name="DeviceDisplayCaption" xml:space="preserve"><value>O monitor que o PanelDisplayDriver cria para o tablet espelhar.</value></data>
+  <data name="DeviceVideoTitle" xml:space="preserve"><value>Vídeo</value></data>
+  <data name="DeviceVideoCaption" xml:space="preserve"><value>Taxas medidas pelo agente. Uma métrica ausente aparece como ausente.</value></data>
+  <data name="DeviceHostStateLabel" xml:space="preserve"><value>Estado</value></data>
+  <data name="DeviceHostProcessLabel" xml:space="preserve"><value>Processo</value></data>
+  <data name="DeviceHostUptimeLabel" xml:space="preserve"><value>Tempo no ar</value></data>
+  <data name="DeviceHostOwnershipLabel" xml:space="preserve"><value>Origem</value></data>
+  <data name="DeviceHostManagementLabel" xml:space="preserve"><value>IPC de gerenciamento</value></data>
+  <data name="DeviceHostExternalNote" xml:space="preserve"><value>Este agente foi iniciado por fora do Control Center, então ele é observado aqui mas não é parado nem reiniciado daqui.</value></data>
+
+  <!-- ================================================================== -->
+  <!-- Stream Deck editor                                                 -->
+  <!-- ================================================================== -->
+  <data name="StreamDeckProfilesTitle" xml:space="preserve"><value>Perfis</value></data>
+  <data name="StreamDeckProfilesCaption" xml:space="preserve"><value>O perfil marcado é o que o tablet mostra; editar outro não troca o painel.</value></data>
+  <data name="StreamDeckPagesTitle" xml:space="preserve"><value>Páginas</value></data>
+  <data name="StreamDeckLayoutTitle" xml:space="preserve"><value>Layout</value></data>
+  <data name="StreamDeckButtonTitle" xml:space="preserve"><value>Botão</value></data>
+  <data name="StreamDeckActiveProfileLabel" xml:space="preserve"><value>No tablet</value></data>
+  <data name="StreamDeckEditingLabel" xml:space="preserve"><value>Editando</value></data>
+  <data name="StreamDeckOnTabletBadge" xml:space="preserve"><value>no tablet</value></data>
+  <data name="StreamDeckUseOnTablet" xml:space="preserve"><value>Usar no tablet</value></data>
+  <data name="StreamDeckAlreadyOnTablet" xml:space="preserve"><value>Este perfil já é o que o tablet mostra.</value></data>
+  <data name="StreamDeckActiveProfileSetFormat" xml:space="preserve"><value>O tablet passa a mostrar "{0}".</value></data>
+  <data name="StreamDeckProfileNameLabel" xml:space="preserve"><value>Nome do perfil</value></data>
+  <data name="StreamDeckPageNameLabel" xml:space="preserve"><value>Nome da página</value></data>
+  <data name="StreamDeckGridLabel" xml:space="preserve"><value>Grid</value></data>
+  <data name="StreamDeckGridHint" xml:space="preserve"><value>linhas × colunas</value></data>
+  <data name="StreamDeckRowsTooltip" xml:space="preserve"><value>Linhas</value></data>
+  <data name="StreamDeckColumnsTooltip" xml:space="preserve"><value>Colunas</value></data>
+  <data name="StreamDeckPreviewTitle" xml:space="preserve"><value>Preview do tablet</value></data>
+  <data name="StreamDeckPreviewCaption" xml:space="preserve"><value>O mesmo grid que o painel desenha. Selecione um slot para configurá-lo.</value></data>
+  <data name="StreamDeckDisabledBadge" xml:space="preserve"><value>desativado</value></data>
+  <data name="StreamDeckEmptyCell" xml:space="preserve"><value>Vazio</value></data>
+  <data name="StreamDeckSelectButton" xml:space="preserve"><value>Selecione um slot do preview para criar ou editar um botão.</value></data>
+  <data name="StreamDeckNewProfile" xml:space="preserve"><value>Novo perfil</value></data>
+  <data name="StreamDeckNewPage" xml:space="preserve"><value>Nova página</value></data>
+  <data name="StreamDeckNewButton" xml:space="preserve"><value>Novo botão</value></data>
+  <data name="StreamDeckFirstPage" xml:space="preserve"><value>Principal</value></data>
+  <data name="StreamDeckCopySuffixFormat" xml:space="preserve"><value>{0} (cópia)</value></data>
+  <data name="StreamDeckDeleteProfileTitle" xml:space="preserve"><value>Excluir perfil</value></data>
+  <data name="StreamDeckDeleteProfileMessage" xml:space="preserve"><value>Excluir o perfil "{0}" e todas as suas páginas?</value></data>
+  <data name="StreamDeckDeletePageTitle" xml:space="preserve"><value>Excluir página</value></data>
+  <data name="StreamDeckDeletePageMessage" xml:space="preserve"><value>Excluir a página "{0}" e seus botões?</value></data>
+  <data name="StreamDeckDefaultsLoaded" xml:space="preserve"><value>Nenhuma configuração salva ainda; mostrando o profile padrão.</value></data>
+  <data name="StreamDeckRecoveredFormat" xml:space="preserve"><value>A configuração salva era inválida. {0}</value></data>
+  <data name="StreamDeckUnsupportedFormat" xml:space="preserve"><value>{0} A edição está bloqueada para não sobrescrevê-la.</value></data>
+  <data name="StreamDeckReadOnlyBanner" xml:space="preserve"><value>A configuração salva foi escrita por uma versão mais nova do PanelOS. A edição está bloqueada para não sobrescrevê-la.</value></data>
+  <data name="StreamDeckSavedFormat" xml:space="preserve"><value>Configuração salva em {0}.</value></data>
+  <data name="StreamDeckGridRangeFormat" xml:space="preserve"><value>O grid precisa ter de {0} a {1} linhas e de {2} a {3} colunas.</value></data>
+  <data name="StreamDeckDisplacedFormat" xml:space="preserve"><value>Remova ou mova {0} botão(ões) fora do novo grid antes de reduzi-lo.</value></data>
+  <data name="StreamDeckTestRunning" xml:space="preserve"><value>Executando…</value></data>
+  <data name="StreamDeckTestSucceeded" xml:space="preserve"><value>Executado</value></data>
+  <data name="StreamDeckNoProfileConfigured" xml:space="preserve"><value>Nenhum perfil configurado</value></data>
+  <data name="StreamDeckSummaryFormat" xml:space="preserve"><value>{0} • {1} • {2}</value></data>
+  <data name="StreamDeckPageSingular" xml:space="preserve"><value>{0} página</value></data>
+  <data name="StreamDeckPagePlural" xml:space="preserve"><value>{0} páginas</value></data>
+  <data name="StreamDeckActionSingular" xml:space="preserve"><value>{0} ação</value></data>
+  <data name="StreamDeckActionPlural" xml:space="preserve"><value>{0} ações</value></data>
+  <data name="StreamDeckStatusPublished" xml:space="preserve"><value>Publicado no Host</value></data>
+  <data name="StreamDeckStatusConfigured" xml:space="preserve"><value>Configurado</value></data>
+  <data name="StreamDeckStatusNoProfile" xml:space="preserve"><value>Sem perfil</value></data>
+  <data name="StreamDeckRuntimeDetailFormat" xml:space="preserve"><value>{0}: {1}, {2}</value></data>
+  <data name="StreamDeckNotPublished" xml:space="preserve"><value>O PanelHost não publicou um perfil ativo.</value></data>
+  <data name="StreamDeckRevisionShortFormat" xml:space="preserve"><value>Revisão {0}</value></data>
+  <data name="StreamDeckButtonCountSingular" xml:space="preserve"><value>{0} botão</value></data>
+  <data name="StreamDeckButtonCountPlural" xml:space="preserve"><value>{0} botões</value></data>
+  <data name="StreamDeckConfigurationFileLabel" xml:space="preserve"><value>Arquivo da configuração</value></data>
+  <data name="StreamDeckRevisionLabel" xml:space="preserve"><value>Revisão do layout</value></data>
+  <data name="StreamDeckUnsavedChanges" xml:space="preserve"><value>Alterações não salvas</value></data>
+  <data name="StreamDeckSaved" xml:space="preserve"><value>Tudo salvo</value></data>
+  <data name="ActionSave" xml:space="preserve"><value>Salvar</value></data>
+  <data name="ActionReload" xml:space="preserve"><value>Recarregar</value></data>
+  <data name="ActionNew" xml:space="preserve"><value>Novo</value></data>
+  <data name="ActionNewFeminine" xml:space="preserve"><value>Nova</value></data>
+  <data name="ActionDuplicate" xml:space="preserve"><value>Duplicar</value></data>
+  <data name="ActionDelete" xml:space="preserve"><value>Excluir</value></data>
+  <data name="ActionAddButton" xml:space="preserve"><value>Adicionar botão</value></data>
+  <data name="ActionRemoveButton" xml:space="preserve"><value>Remover botão</value></data>
+  <data name="ActionTestAction" xml:space="preserve"><value>Testar ação</value></data>
+  <data name="ActionMoveLeft" xml:space="preserve"><value>Mover para a esquerda</value></data>
+  <data name="ActionMoveRight" xml:space="preserve"><value>Mover para a direita</value></data>
+  <data name="ActionMoveUp" xml:space="preserve"><value>Mover para cima</value></data>
+  <data name="ActionMoveDown" xml:space="preserve"><value>Mover para baixo</value></data>
+
+  <!-- Button editor -->
+  <data name="ButtonEditorAppearance" xml:space="preserve"><value>Aparência</value></data>
+  <data name="ButtonEditorAction" xml:space="preserve"><value>Ação</value></data>
+  <data name="ButtonEditorLabel" xml:space="preserve"><value>Nome</value></data>
+  <data name="ButtonEditorLabelHint" xml:space="preserve"><value>É o texto que aparece no botão do tablet.</value></data>
+  <data name="ButtonEditorIcon" xml:space="preserve"><value>Ícone</value></data>
+  <data name="ButtonEditorEnabled" xml:space="preserve"><value>Botão habilitado</value></data>
+  <data name="ButtonEditorEnabledHint" xml:space="preserve"><value>Desligado, o botão continua configurado mas recusa executar.</value></data>
+  <data name="ButtonEditorActionType" xml:space="preserve"><value>Tipo de ação</value></data>
+  <data name="ButtonEditorExecutable" xml:space="preserve"><value>Executável</value></data>
+  <data name="ButtonEditorArguments" xml:space="preserve"><value>Argumentos</value></data>
+  <data name="ButtonEditorWorkingDirectory" xml:space="preserve"><value>Diretório de trabalho</value></data>
+  <data name="ButtonEditorUrl" xml:space="preserve"><value>URL (http, https ou mailto)</value></data>
+  <data name="ButtonEditorModifiers" xml:space="preserve"><value>Modificadores</value></data>
+  <data name="ButtonEditorKey" xml:space="preserve"><value>Tecla</value></data>
+  <data name="ButtonEditorShortcutPreview" xml:space="preserve"><value>Atalho resultante</value></data>
+  <data name="ButtonEditorMediaCommand" xml:space="preserve"><value>Comando de mídia</value></data>
+  <data name="ButtonEditorVolumeCommand" xml:space="preserve"><value>Comando de volume</value></data>
+  <data name="ButtonEditorPanelMode" xml:space="preserve"><value>Modo do painel</value></data>
+  <data name="ButtonEditorBrowse" xml:space="preserve"><value>Procurar…</value></data>
+  <data name="ButtonEditorChooseImage" xml:space="preserve"><value>Escolher imagem…</value></data>
+  <data name="ButtonEditorUseAppIcon" xml:space="preserve"><value>Usar ícone do app</value></data>
+  <data name="ButtonEditorIdLabel" xml:space="preserve"><value>Identificador</value></data>
+  <data name="ButtonEditorSafetyNote" xml:space="preserve"><value>O tablet envia apenas o identificador do botão. O que será executado é decidido aqui, no PC.</value></data>
+  <data name="ButtonEditorUnknownAction" xml:space="preserve"><value>Esta ação foi criada por uma versão mais nova e é preservada como está.</value></data>
+  <data name="ButtonEditorPanelModeNotice" xml:space="preserve"><value>O modo do painel será aplicado quando o PanelHost expuser o Stream Deck ao tablet. Testar esta ação agora responde "não suportada".</value></data>
+  <data name="IconKindActionDefault" xml:space="preserve"><value>Padrão da ação</value></data>
+  <data name="IconKindNone" xml:space="preserve"><value>Nenhum</value></data>
+  <data name="IconKindCustom" xml:space="preserve"><value>Imagem própria</value></data>
+  <data name="IconNoneImported" xml:space="preserve"><value>Nenhuma imagem importada.</value></data>
+  <data name="IconImportedImage" xml:space="preserve"><value>imagem importada</value></data>
+  <data name="IconDescriptionFormat" xml:space="preserve"><value>{0} ({1})</value></data>
+
+  <!-- Action vocabulary -->
+  <data name="ActionKindNone" xml:space="preserve"><value>Sem ação</value></data>
+  <data name="ActionKindLaunchApplication" xml:space="preserve"><value>Abrir aplicativo</value></data>
+  <data name="ActionKindOpenUrl" xml:space="preserve"><value>Abrir URL</value></data>
+  <data name="ActionKindKeyboardShortcut" xml:space="preserve"><value>Atalho de teclado</value></data>
+  <data name="ActionKindMediaCommand" xml:space="preserve"><value>Comando de mídia</value></data>
+  <data name="ActionKindVolumeCommand" xml:space="preserve"><value>Comando de volume</value></data>
+  <data name="ActionKindPanelMode" xml:space="preserve"><value>Modo do painel</value></data>
+  <data name="ActionKindUnknown" xml:space="preserve"><value>Desconhecida</value></data>
+  <data name="ActionUnknownFormat" xml:space="preserve"><value>Ação desconhecida ({0})</value></data>
+  <data name="ActionApplicationNotConfigured" xml:space="preserve"><value>Aplicativo não configurado</value></data>
+  <data name="ActionUrlNotConfigured" xml:space="preserve"><value>URL não configurada</value></data>
+  <data name="ActionShortcutNotConfigured" xml:space="preserve"><value>Atalho não configurado</value></data>
+  <data name="ActionMediaFormat" xml:space="preserve"><value>Mídia · {0}</value></data>
+  <data name="ActionVolumeFormat" xml:space="preserve"><value>Volume · {0}</value></data>
+  <data name="ActionPanelModeFormat" xml:space="preserve"><value>Modo · {0}</value></data>
+
+  <!-- File pickers -->
+  <data name="PickerIconTitle" xml:space="preserve"><value>Escolher ícone</value></data>
+  <data name="PickerIconFilter" xml:space="preserve"><value>Imagens|*.png;*.jpg;*.jpeg;*.bmp;*.ico|Todos os arquivos|*.*</value></data>
+  <data name="PickerApplicationTitle" xml:space="preserve"><value>Escolher aplicativo</value></data>
+  <data name="PickerApplicationFilter" xml:space="preserve"><value>Aplicativos|*.exe</value></data>
+
+  <!-- ================================================================== -->
+  <!-- Diagnostics                                                        -->
+  <!-- ================================================================== -->
+  <data name="DiagnosticsTabSummary" xml:space="preserve"><value>Resumo</value></data>
+  <data name="DiagnosticsTabHost" xml:space="preserve"><value>Host</value></data>
+  <data name="DiagnosticsTabTransport" xml:space="preserve"><value>Transporte</value></data>
+  <data name="DiagnosticsTabDisplay" xml:space="preserve"><value>Display</value></data>
+  <data name="DiagnosticsTabVideo" xml:space="preserve"><value>Vídeo</value></data>
+  <data name="DiagnosticsTabStreamDeck" xml:space="preserve"><value>Stream Deck</value></data>
+  <data name="DiagnosticsTabFiles" xml:space="preserve"><value>Arquivos</value></data>
+  <data name="DiagnosticsTabLogs" xml:space="preserve"><value>Logs</value></data>
+  <data name="DiagnosticsLogStreamAll" xml:space="preserve"><value>Todas as linhas</value></data>
+  <data name="DiagnosticsLogStreamError" xml:space="preserve"><value>Somente erros</value></data>
+  <data name="DiagnosticsLogStreamOutput" xml:space="preserve"><value>Saída do agente</value></data>
+  <data name="DiagnosticsLogStreamManager" xml:space="preserve"><value>Control Center</value></data>
+  <data name="SummaryDriverLabel" xml:space="preserve"><value>Driver de display</value></data>
+  <data name="SummaryDriverOk" xml:space="preserve"><value>Instalado e respondendo.</value></data>
+  <data name="SummaryDriverMissing" xml:space="preserve"><value>Não foi possível encontrar o PanelDisplayDriver neste PC.</value></data>
+  <data name="SummaryDriverDenied" xml:space="preserve"><value>Não foi possível abrir o driver: acesso negado.</value></data>
+  <data name="SummaryDriverFailed" xml:space="preserve"><value>Não foi possível consultar o driver.</value></data>
+  <data name="SummaryHostLabel" xml:space="preserve"><value>Agente PanelHost</value></data>
+  <data name="SummaryHostRunning" xml:space="preserve"><value>Em execução.</value></data>
+  <data name="SummaryHostStopped" xml:space="preserve"><value>Não está em execução.</value></data>
+  <data name="SummaryHostError" xml:space="preserve"><value>Terminou com erro.</value></data>
+  <data name="SummaryManagementLabel" xml:space="preserve"><value>Canal de gerenciamento</value></data>
+  <data name="SummaryManagementOk" xml:space="preserve"><value>Conectado; o estado ao vivo vem daqui.</value></data>
+  <data name="SummaryManagementMissing" xml:space="preserve"><value>Não foi possível conectar ao PanelHost pelo canal local.</value></data>
+  <data name="SummaryManagementTechnicalFormat" xml:space="preserve"><value>pipe \\.\pipe\{0}; estado {1}</value></data>
+  <data name="SummaryTabletLabel" xml:space="preserve"><value>Tablet</value></data>
+  <data name="SummaryTabletConnected" xml:space="preserve"><value>Com sessão de controle ativa.</value></data>
+  <data name="SummaryTabletWaiting" xml:space="preserve"><value>Nenhuma sessão; o agente está aguardando.</value></data>
+  <data name="SummaryVideoLabel" xml:space="preserve"><value>Vídeo</value></data>
+  <data name="SummaryTelemetryLabel" xml:space="preserve"><value>Telemetria</value></data>
+  <data name="SummaryMediaLabel" xml:space="preserve"><value>Mídia</value></data>
+  <data name="RuntimeServiceRunning" xml:space="preserve"><value>Em execução.</value></data>
+  <data name="RuntimeServiceDegraded" xml:space="preserve"><value>Indisponível; os serviços principais continuam ativos.</value></data>
+  <data name="ProblemTelemetryTitle" xml:space="preserve"><value>A telemetria de hardware está indisponível.</value></data>
+  <data name="ProblemTelemetryDetail" xml:space="preserve"><value>Controle, vídeo e gerenciamento continuam funcionando, mas os sensores não serão atualizados.</value></data>
+  <data name="ProblemMediaTitle" xml:space="preserve"><value>A integração de mídia está indisponível.</value></data>
+  <data name="ProblemMediaDetail" xml:space="preserve"><value>Controle, vídeo e gerenciamento continuam funcionando, mas os controles de mídia podem não responder.</value></data>
+  <data name="DiagnosticsGroupDriver" xml:space="preserve"><value>Driver</value></data>
+  <data name="DiagnosticsGroupFilesVersion" xml:space="preserve"><value>Arquivos e versão</value></data>
+  <data name="DiagnosticsSummaryTitle" xml:space="preserve"><value>Resumo</value></data>
+  <data name="DiagnosticsSummaryCaption" xml:space="preserve"><value>O que está errado, dito primeiro em português e depois em detalhe técnico.</value></data>
+  <data name="DiagnosticsEmptyGroup" xml:space="preserve"><value>Nada medido para esta seção.</value></data>
+  <data name="DiagnosticsDriverInterface" xml:space="preserve"><value>Interface do driver</value></data>
+  <data name="DiagnosticsInterfaceGuid" xml:space="preserve"><value>GUID da interface</value></data>
+  <data name="DiagnosticsDriverProtocol" xml:space="preserve"><value>Protocolo do driver</value></data>
+  <data name="DiagnosticsExpectedProtocol" xml:space="preserve"><value>Protocolo esperado</value></data>
+  <data name="DiagnosticsDriverLifecycle" xml:space="preserve"><value>Ciclo de vida do driver</value></data>
+  <data name="DiagnosticsVirtualMonitor" xml:space="preserve"><value>Monitor virtual</value></data>
+  <data name="DiagnosticsActiveMode" xml:space="preserve"><value>Modo ativo</value></data>
+  <data name="DiagnosticsAdvertisedModes" xml:space="preserve"><value>Modos anunciados</value></data>
+  <data name="DiagnosticsConnectionsSinceLoad" xml:space="preserve"><value>Conexões desde o load</value></data>
+  <data name="DiagnosticsHostExecutable" xml:space="preserve"><value>Executável do PanelHost</value></data>
+  <data name="DiagnosticsHostLastExit" xml:space="preserve"><value>Última saída do PanelHost</value></data>
+  <data name="DiagnosticsStreamDeckConfiguration" xml:space="preserve"><value>Configuração do Stream Deck</value></data>
+  <data name="DiagnosticsHostLogs" xml:space="preserve"><value>Logs do PanelHost</value></data>
+  <data name="DiagnosticsDetail" xml:space="preserve"><value>Detalhe</value></data>
+  <data name="DiagnosticsLocalIpc" xml:space="preserve"><value>IPC local</value></data>
+  <data name="DiagnosticsManagementProtocol" xml:space="preserve"><value>Protocolo de gerenciamento</value></data>
+  <data name="DiagnosticsTabletControl" xml:space="preserve"><value>Tablet / controle</value></data>
+  <data name="DiagnosticsTabletVideo" xml:space="preserve"><value>Tablet / vídeo</value></data>
+  <data name="DiagnosticsTabletFeatures" xml:space="preserve"><value>Recursos negociados</value></data>
+  <data name="DiagnosticsTabletSessions" xml:space="preserve"><value>Gerações de sessão</value></data>
+  <data name="DiagnosticsHostDisplay" xml:space="preserve"><value>Display publicado pelo Host</value></data>
+  <data name="DiagnosticsNegotiatedVideo" xml:space="preserve"><value>Vídeo negociado</value></data>
+  <data name="DiagnosticsPublishedStreamDeck" xml:space="preserve"><value>Stream Deck publicado</value></data>
+  <data name="DiagnosticsLogCountFiltered" xml:space="preserve"><value>{0} de {1} linhas</value></data>
+  <data name="DiagnosticsLogCount" xml:space="preserve"><value>{0} linhas</value></data>
+  <data name="DiagnosticsLogsTitle" xml:space="preserve"><value>Saída do PanelHost</value></data>
+  <data name="DiagnosticsLogsCaption" xml:space="preserve"><value>Só o que o Control Center capturou. Nenhuma decisão da interface depende destas linhas.</value></data>
+  <data name="DiagnosticsLogFilterLabel" xml:space="preserve"><value>Filtro</value></data>
+  <data name="DiagnosticsLogStreamLabel" xml:space="preserve"><value>Origem</value></data>
+  <data name="DiagnosticsLogFilterHint" xml:space="preserve"><value>Filtrar linhas capturadas…</value></data>
+  <data name="DiagnosticsLogEmpty" xml:space="preserve"><value>Nenhuma linha capturada ainda.</value></data>
+  <data name="DiagnosticsLogNoMatch" xml:space="preserve"><value>Nenhuma linha corresponde ao filtro.</value></data>
+  <data name="DiagnosticsLogClear" xml:space="preserve"><value>Limpar visualização</value></data>
+  <data name="DiagnosticsLogAutoScroll" xml:space="preserve"><value>Rolar automaticamente</value></data>
+  <data name="DiagnosticsLogExternalNote" xml:space="preserve"><value>Saída de um PanelHost iniciado pelo Control Center. Um agente iniciado por fora mantém o próprio console, então nada aparece aqui para ele.</value></data>
+  <data name="DiagnosticsLogDirectoryLabel" xml:space="preserve"><value>Arquivos de log</value></data>
+  <data name="DiagnosticsMetricsTitle" xml:space="preserve"><value>Métricas de vídeo do PanelHost</value></data>
+  <data name="DiagnosticsMetricsCaption" xml:space="preserve"><value>Valores estruturados publicados pelo IPC local. Ao perder a conexão, os cartões são limpos para não apresentar telemetria antiga como atual.</value></data>
+  <data name="IpcConnected" xml:space="preserve"><value>conectado ao PanelOS.Host.v1</value></data>
+  <data name="IpcReconnecting" xml:space="preserve"><value>reconectando…</value></data>
+  <data name="TabletConnectedProtocol" xml:space="preserve"><value>conectado, protocolo v{0}</value></data>
+  <data name="StreamDeckNoProfile" xml:space="preserve"><value>sem perfil</value></data>
+  <data name="StreamDeckRevision" xml:space="preserve"><value>{0}, revisão {1}</value></data>
+  <data name="RuntimeUnavailable" xml:space="preserve"><value>PanelHost/IPC indisponível; valor antigo removido.</value></data>
+  <data name="RuntimeDriverCaptureFps" xml:space="preserve"><value>Driver capture FPS</value></data>
+  <data name="RuntimeHostReceiveFps" xml:space="preserve"><value>Host receive FPS</value></data>
+  <data name="RuntimeSendFps" xml:space="preserve"><value>Send FPS</value></data>
+  <data name="RuntimeBandwidth" xml:space="preserve"><value>Bandwidth</value></data>
+  <data name="RuntimeEncodeLatency" xml:space="preserve"><value>Encode latency</value></data>
+  <data name="RuntimeCaptureToSend" xml:space="preserve"><value>Capture → send</value></data>
+  <data name="RuntimeSequenceGap" xml:space="preserve"><value>Sequence gap</value></data>
+
+  <!-- ================================================================== -->
+  <!-- Settings                                                           -->
+  <!-- ================================================================== -->
+  <data name="SettingsStartupTitle" xml:space="preserve"><value>Inicialização e bandeja</value></data>
+  <data name="SettingsStartupCaption" xml:space="preserve"><value>Quando o Control Center abre e o que acontece ao fechar a janela.</value></data>
+  <data name="SettingsStartWithWindows" xml:space="preserve"><value>Iniciar o Control Center com o Windows</value></data>
+  <data name="SettingsStartWithWindowsHint" xml:space="preserve"><value>Escreve apenas na chave Run do usuário atual; nada exige administrador.</value></data>
+  <data name="SettingsMinimizeToTray" xml:space="preserve"><value>Minimizar para a bandeja ao fechar</value></data>
+  <data name="SettingsMinimizeToTrayHint" xml:space="preserve"><value>Fechar a janela mantém o Control Center em execução na bandeja do sistema.</value></data>
+  <data name="SettingsHostTitle" xml:space="preserve"><value>Agente PanelHost</value></data>
+  <data name="SettingsHostCaption" xml:space="preserve"><value>Ciclo de vida do agente em relação a esta janela.</value></data>
+  <data name="SettingsStartHost" xml:space="preserve"><value>Iniciar o PanelHost com o Control Center</value></data>
+  <data name="SettingsStartHostHint" xml:space="preserve"><value>Sobe o agente ao abrir esta janela. Se já houver um em execução, nenhum segundo é iniciado.</value></data>
+  <data name="SettingsStopHost" xml:space="preserve"><value>Encerrar o PanelHost ao sair</value></data>
+  <data name="SettingsStopHostHint" xml:space="preserve"><value>Desligado, fechar o Control Center deixa o painel funcionando. Um PanelHost iniciado por fora nunca é encerrado.</value></data>
+  <data name="SettingsRestartHost" xml:space="preserve"><value>Reiniciar o PanelHost após uma queda</value></data>
+  <data name="SettingsRestartHostHint" xml:space="preserve"><value>No máximo 3 tentativas em 60 segundos; depois disso o reinício é pausado e o erro fica visível.</value></data>
+  <data name="SettingsTransportLabel" xml:space="preserve"><value>Transporte do tablet</value></data>
+  <data name="SettingsTransportHint" xml:space="preserve"><value>O carregador é fixado quando o agente sobe, então a troca vale a partir do próximo início.</value></data>
+  <data name="SettingsTransportUsb" xml:space="preserve"><value>USB nativo</value></data>
+  <data name="SettingsTransportUsbHint" xml:space="preserve"><value>O caminho do produto: o tablet conecta pelo próprio link USB. Não exige token nem adb.</value></data>
+  <data name="SettingsTransportAdb" xml:space="preserve"><value>ADB/TCP (desenvolvimento)</value></data>
+  <data name="SettingsTransportAdbHint" xml:space="preserve"><value>Exige um token de sessão e adb reverse; use "Iniciar desenvolvimento" para preparar os dois.</value></data>
+  <data name="SettingsDevelopmentTitle" xml:space="preserve"><value>Modo de desenvolvimento</value></data>
+  <data name="SettingsDevelopmentCaption" xml:space="preserve"><value>Transporte por ADB para testar o tablet ligado ao PC. O produto final não depende dele.</value></data>
+  <data name="SettingsDevelopmentMode" xml:space="preserve"><value>Ativar o modo de desenvolvimento</value></data>
+  <data name="SettingsDevelopmentModeHint" xml:space="preserve"><value>Mostra o transporte ADB/TCP usado durante o desenvolvimento. Ligar não executa nada sozinho.</value></data>
+  <data name="SettingsDevelopmentStepsTitle" xml:space="preserve"><value>O que "Iniciar desenvolvimento" faz</value></data>
+  <data name="SettingsDevelopmentStep1" xml:space="preserve"><value>Gera um token de autenticação só para esta sessão.</value></data>
+  <data name="SettingsDevelopmentStep2" xml:space="preserve"><value>Configura adb reverse nas portas do transporte.</value></data>
+  <data name="SettingsDevelopmentStep3" xml:space="preserve"><value>Inicia (ou reinicia) o PanelHost já com a sessão autenticada.</value></data>
+  <data name="SettingsDevelopmentTokenNote" xml:space="preserve"><value>O token nunca é exibido nem gravado em log; ele vive apenas nesta sessão.</value></data>
+  <data name="SettingsAdbTitle" xml:space="preserve"><value>Transporte ADB</value></data>
+  <data name="SettingsAdbNotProbed" xml:space="preserve"><value>Não consultado.</value></data>
+  <data name="SettingsAdbProbing" xml:space="preserve"><value>Consultando…</value></data>
+  <data name="SettingsAdbConfiguring" xml:space="preserve"><value>Configurando…</value></data>
+  <data name="SettingsAdbNotFound" xml:space="preserve"><value>adb.exe não encontrado</value></data>
+  <data name="SettingsAdbDeviceReadyFormat" xml:space="preserve"><value>Dispositivo pronto ({0})</value></data>
+  <data name="SettingsAdbUnauthorized" xml:space="preserve"><value>Dispositivo não autorizado</value></data>
+  <data name="SettingsAdbOffline" xml:space="preserve"><value>Dispositivo offline</value></data>
+  <data name="SettingsAdbMultiple" xml:space="preserve"><value>Vários dispositivos</value></data>
+  <data name="SettingsAdbNoDevice" xml:space="preserve"><value>Nenhum dispositivo</value></data>
+  <data name="SettingsAdbUnknown" xml:space="preserve"><value>Estado desconhecido</value></data>
+  <data name="SettingsAdbDetailFormat" xml:space="preserve"><value>{0} — {1}</value></data>
+  <data name="SettingsDevelopmentActiveFormat" xml:space="preserve"><value>Desenvolvimento autenticado ativo em {0}.</value></data>
+  <data name="SettingsDevelopmentHostFailed" xml:space="preserve"><value>Transporte preparado, mas o PanelHost não iniciou.</value></data>
+  <data name="SettingsProbeAdb" xml:space="preserve"><value>Verificar ADB</value></data>
+  <data name="SettingsStartDevelopment" xml:space="preserve"><value>Iniciar desenvolvimento</value></data>
+  <data name="SettingsFilesTitle" xml:space="preserve"><value>Arquivos</value></data>
+  <data name="SettingsFilesCaption" xml:space="preserve"><value>Onde o Control Center grava o que você configurou.</value></data>
+  <data name="SettingsPreferencesFileLabel" xml:space="preserve"><value>Preferências</value></data>
+  <data name="SettingsExecutableLabel" xml:space="preserve"><value>Executável do PanelHost</value></data>
+  <data name="UsbReverseFailed" xml:space="preserve"><value>Não foi possível configurar o USB reverse.</value></data>
+  <data name="AdbProbeFailed" xml:space="preserve"><value>Falha ao consultar o ADB</value></data>
+
+  <!-- ================================================================== -->
+  <!-- Startup registration                                               -->
+  <!-- ================================================================== -->
+  <data name="StartupExecutableNotFound" xml:space="preserve"><value>O executável não foi encontrado.</value></data>
+  <data name="StartupUnavailable" xml:space="preserve"><value>Início automático indisponível.</value></data>
+  <data name="StartupRunKeyUnavailable" xml:space="preserve"><value>Não foi possível abrir a chave Run do usuário.</value></data>
+  <data name="StartupControlCenterPathUnknown" xml:space="preserve"><value>O caminho do executável do Control Center não foi determinado.</value></data>
+  <data name="StartupEnabled" xml:space="preserve"><value>O Control Center passará a iniciar com o Windows.</value></data>
+  <data name="StartupDisabled" xml:space="preserve"><value>O Control Center não iniciará mais com o Windows.</value></data>
+  <data name="StartupChangeFailed" xml:space="preserve"><value>Não foi possível alterar o início automático: {0}</value></data>
+  <data name="StartupLegacyEntryRemoved" xml:space="preserve"><value>A entrada de início automático do PanelHost no logon foi removida; use "Iniciar o PanelHost com o Control Center".</value></data>
+
+  <!-- ================================================================== -->
+  <!-- Tray                                                               -->
+  <!-- ================================================================== -->
+  <data name="TrayOpen" xml:space="preserve"><value>Abrir o PanelOS</value></data>
+  <data name="TrayStartHost" xml:space="preserve"><value>Iniciar o PanelHost</value></data>
+  <data name="TrayRestartHost" xml:space="preserve"><value>Reiniciar o PanelHost</value></data>
+  <data name="TrayStopHost" xml:space="preserve"><value>Parar o PanelHost</value></data>
+  <data name="TrayConnectDisplay" xml:space="preserve"><value>Conectar o display virtual</value></data>
+  <data name="TrayDisconnectDisplay" xml:space="preserve"><value>Desconectar o display virtual</value></data>
+  <data name="TrayExit" xml:space="preserve"><value>Sair do PanelOS</value></data>
+  <data name="TrayHostRunning" xml:space="preserve"><value>PanelOS — PanelHost em execução</value></data>
+  <data name="TrayHostExternal" xml:space="preserve"><value>PanelOS — PanelHost externo</value></data>
+  <data name="TrayHostError" xml:space="preserve"><value>PanelOS — PanelHost com erro</value></data>
+  <data name="TrayStillRunning" xml:space="preserve"><value>O Control Center continua em execução na bandeja.</value></data>
+
+  <!-- ================================================================== -->
+  <!-- Wi-Fi pairing                                                      -->
+  <!-- ================================================================== -->
+  <data name="NavWifi" xml:space="preserve"><value>Wi-Fi</value></data>
+  <data name="NavWifiDescription" xml:space="preserve"><value>Pareie o tablet por Wi-Fi, confira a impressão digital e aprove ou revogue aparelhos.</value></data>
+  <data name="WifiOffTitle" xml:space="preserve"><value>O Wi-Fi está desligado</value></data>
+  <data name="WifiOffBody" xml:space="preserve"><value>Nada escuta na rede e o tablet usa o cabo USB, como sempre. O Wi-Fi é um recurso em teste: só liga numa janela de teste, iniciada com o PanelHost em modo --wifi-bench.</value></data>
+  <data name="WifiWindowFormat" xml:space="preserve"><value>Janela Wi-Fi aberta. Fecha em {0}.</value></data>
+  <data name="WifiEndpointFormat" xml:space="preserve"><value>Este PC em {0}, porta de sessão {1}.</value></data>
+  <data name="WifiAddDevice" xml:space="preserve"><value>Adicionar aparelho</value></data>
+  <data name="WifiUseTypedCode" xml:space="preserve"><value>Usar código digitado</value></data>
+  <data name="WifiCancelInvitation" xml:space="preserve"><value>Cancelar convite</value></data>
+  <data name="WifiInvitationExpiresFormat" xml:space="preserve"><value>O convite expira em {0}.</value></data>
+  <data name="WifiQrInstructionFormat" xml:space="preserve"><value>No tablet, abra Configurações, vá em Conexão com o PC e toque em Parear com um PC. Aponte a câmera para este QR, a uns 30 cm da tela (o comprimento de uma régua). Ele vale {0} e só funciona uma vez. Não tire foto nem compartilhe.</value></data>
+  <data name="WifiCodeInstructionFormat" xml:space="preserve"><value>No tablet, toque em Digitar código e digite os 100 caracteres abaixo, na ordem. Letras de A a Z e números de 2 a 7; espaços e traços são opcionais. Vale {0} e só funciona uma vez. Não compartilhe.</value></data>
+  <data name="WifiApproveTitle" xml:space="preserve"><value>Aprovar este aparelho?</value></data>
+  <data name="WifiApproveNameCaption" xml:space="preserve"><value>Nome que o aparelho informou (qualquer aparelho pode escolher qualquer nome)</value></data>
+  <data name="WifiApproveFingerprintCaption" xml:space="preserve"><value>Impressão digital da chave (SHA-256)</value></data>
+  <data name="WifiApproveCompare" xml:space="preserve"><value>Compare com a tela do tablet, bloco por bloco. Só aprove se os 8 blocos forem iguais.</value></data>
+  <data name="WifiApproveScope" xml:space="preserve"><value>Se você aprovar, o tablet poderá ver o painel por Wi-Fi. Nesta fase não há Desktop, Stream Deck nem controle do PC.</value></data>
+  <data name="WifiApproveRespondFormat" xml:space="preserve"><value>Responda em {0}.</value></data>
+  <data name="WifiApprove" xml:space="preserve"><value>Aprovar</value></data>
+  <data name="WifiDeny" xml:space="preserve"><value>Recusar</value></data>
+  <data name="WifiOutcomeApproved" xml:space="preserve"><value>Aparelho pareado. Ele já pode conectar por Wi-Fi.</value></data>
+  <data name="WifiOutcomeDenied" xml:space="preserve"><value>Pedido recusado ou sem resposta a tempo. Nada foi liberado.</value></data>
+  <data name="WifiOutcomeExpired" xml:space="preserve"><value>O convite expirou. Nada foi liberado.</value></data>
+  <data name="WifiOutcomeCancelled" xml:space="preserve"><value>Convite cancelado.</value></data>
+  <data name="WifiOutcomeTooMany" xml:space="preserve"><value>Convite encerrado por tentativas inválidas. Gere outro.</value></data>
+  <data name="WifiOutcomeAbandoned" xml:space="preserve"><value>O tablet desistiu do pedido antes da sua resposta. Nada foi liberado. Gere outro convite.</value></data>
+  <data name="WifiOutcomeLimit" xml:space="preserve"><value>Limite de aparelhos atingido. Nada foi liberado. Revogue um aparelho da lista e gere outro convite.</value></data>
+  <data name="WifiDevicesTitle" xml:space="preserve"><value>Aparelhos pareados</value></data>
+  <data name="WifiDevicesEmpty" xml:space="preserve"><value>Nenhum aparelho pareado nesta janela.</value></data>
+  <data name="WifiDeviceStateActive" xml:space="preserve"><value>Ativo</value></data>
+  <data name="WifiDeviceStateIssued" xml:space="preserve"><value>Pareado, ainda não conectou</value></data>
+  <data name="WifiDeviceStateRevoked" xml:space="preserve"><value>Revogado</value></data>
+  <data name="WifiDeviceConnected" xml:space="preserve"><value>Conectado</value></data>
+  <data name="WifiDeviceUnnamed" xml:space="preserve"><value>Aparelho sem nome</value></data>
+  <data name="WifiDeviceFingerprintCaption" xml:space="preserve"><value>Impressão digital</value></data>
+  <data name="WifiRevoke" xml:space="preserve"><value>Revogar</value></data>
+  <data name="WifiRevokeConfirmTitle" xml:space="preserve"><value>Revogar aparelho</value></data>
+  <data name="WifiRevokeConfirmFormat" xml:space="preserve"><value>Revogar “{0}”? Ele perde o acesso na hora e esta chave nunca mais será aceita. Para voltar, será preciso parear de novo.</value></data>
+  <data name="WifiErrorPairingOpen" xml:space="preserve"><value>Já existe um convite aberto. Cancele-o antes de gerar outro.</value></data>
+  <data name="WifiErrorNoRequest" xml:space="preserve"><value>Esse pedido não está mais aguardando aprovação.</value></data>
+  <data name="WifiErrorUnknownDevice" xml:space="preserve"><value>Aparelho desconhecido.</value></data>
+  <data name="WifiErrorWindowClosed" xml:space="preserve"><value>A janela Wi-Fi já fechou.</value></data>
+  <data name="WifiErrorInvalid" xml:space="preserve"><value>Pedido inválido.</value></data>
+  <data name="WifiErrorUnavailable" xml:space="preserve"><value>Sem resposta do Wi-Fi do PanelHost.</value></data>
+  <data name="WifiErrorFailed" xml:space="preserve"><value>A operação falhou. Nada foi liberado.</value></data>
+  <data name="NavAttentionHint" xml:space="preserve"><value>Há um pedido esperando a sua resposta.</value></data>
+  <data name="WifiQrHint" xml:space="preserve"><value>Não leu? Afaste ou aproxime o tablet devagar, ou toque em Ampliar. Se a câmera não ajudar, use o código digitado.</value></data>
+  <data name="WifiEnlarge" xml:space="preserve"><value>Ampliar</value></data>
+  <data name="WifiEnlargeBack" xml:space="preserve"><value>Esc para voltar</value></data>
+  <data name="WifiHostFingerprintCaption" xml:space="preserve"><value>Impressão digital deste PC (compare com a que o tablet mostra para o PC)</value></data>
+  <data name="WifiPendingAnnouncementFormat" xml:space="preserve"><value>Pedido de pareamento de {0}. Confira a impressão digital.</value></data>
+  <data name="WifiDevicesNotice" xml:space="preserve"><value>Nesta fase de teste, os aparelhos que se conectaram são revogados quando a janela fecha. Será preciso parear de novo.</value></data>
+  <data name="NavIntegrations" xml:space="preserve"><value>Integrações</value></data>
+  <data name="NavIntegrationsDescription" xml:space="preserve"><value>Conecte o PanelOS a outros programas: pedidos do Claude Code, avisos e encerrar processos pelo tablet.</value></data>
+</root>

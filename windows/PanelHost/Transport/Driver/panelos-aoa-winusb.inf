@@ -1,0 +1,32 @@
+[Version]
+Signature="$WINDOWS NT$"
+Class=USBDevice
+ClassGuid={88BAE032-5A81-49F0-BC3D-A4FF138216D6}
+Provider=%ProviderName%
+DriverVer=08/12/2026,1.0.0.0
+CatalogFile=panelos-aoa-winusb.cat
+PnpLockdown=1
+
+[Manufacturer]
+%ProviderName%=PanelOS,NTamd64
+
+[PanelOS.NTamd64]
+%AccessoryDevice%=WinUSB_Install,USB\VID_18D1&PID_2D01&MI_00
+
+[WinUSB_Install.NT]
+Include=winusb.inf
+Needs=WINUSB.NT
+
+[WinUSB_Install.NT.Services]
+Include=winusb.inf
+Needs=WINUSB.NT.Services
+
+[WinUSB_Install.NT.HW]
+AddReg=DeviceInterfaceGuid
+
+[DeviceInterfaceGuid]
+HKR,,DeviceInterfaceGUIDs,0x10000,"{4F9B4A5C-7A77-4B21-9E4A-5C4C54D98E9D}"
+
+[Strings]
+ProviderName="PanelOS"
+AccessoryDevice="PanelOS Android Open Accessory"

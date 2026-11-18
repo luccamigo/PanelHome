@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    API 30 and below. The WiFi pairing (host pin, certificate chain, encrypted metadata) must never be restored onto
+    another device or from a cloud copy: the keys do not travel, and a restored allowlist entry would be a trust
+    nobody approved. The directory already lives in noBackupFilesDir; these excludes make the rule explicit.
+-->
+<full-backup-content>
+    <exclude domain="file" path="panelos-wifi" />
+    <exclude domain="sharedpref" path="panelos_wifi.xml" />
+</full-backup-content>

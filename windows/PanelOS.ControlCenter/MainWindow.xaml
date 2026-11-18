@@ -1,0 +1,175 @@
+<Window x:Class="PanelOS.ControlCenter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:PanelOS.ControlCenter.Controls"
+        xmlns:res="clr-namespace:PanelOS.ControlCenter.Resources"
+        Title="{res:Loc AppTitle}"
+        Height="740"
+        Width="1280"
+        MinHeight="600"
+        MinWidth="1024"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource PanelBackgroundBrush}"
+        TextOptions.TextFormattingMode="Ideal"
+        UseLayoutRounding="True">
+    <!--
+        Shell: identity and the four component states on top, navigation on the
+        left, the page in the middle, and the two facts worth keeping visible
+        everywhere - which build this is and what the driver is doing - along
+        the bottom.
+
+        The shell does not scroll. Each page owns its own scrolling, which is
+        what keeps a page header pinned and stops a scroll region ever nesting
+        inside another one.
+    -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- ================= Header ================= -->
+        <Border Grid.Row="0"
+                Background="{StaticResource PanelSurfaceBrush}"
+                BorderBrush="{StaticResource PanelOutlineSubtleBrush}"
+                BorderThickness="0,0,0,1"
+                Padding="22,13">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <TextBlock Text="{res:Loc AppName}"
+                               Style="{StaticResource PanelPageTitleText}"
+                               FontSize="18" />
+                    <Border Background="{StaticResource PanelSurfaceElevatedBrush}"
+                            CornerRadius="{StaticResource RadiusSm}"
+                            Padding="9,3"
+                            Margin="10,1,0,0"
+                            VerticalAlignment="Center">
+                        <TextBlock Text="{res:Loc AppSubtitle}"
+                                   Style="{StaticResource PanelCaptionText}" />
+                    </Border>
+                </StackPanel>
+
+                <!--
+                    The status strip. It is the answer to "is the panel
+                    working?" without opening a page, which is the whole point
+                    of putting it in the chrome.
+                -->
+                <ItemsControl Grid.Column="1"
+                              ItemsSource="{Binding Statuses}"
+                              HorizontalAlignment="Right"
+                              VerticalAlignment="Center"
+                              Margin="16,0,0,0">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"
+                                       HorizontalAlignment="Right" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <controls:StatusBadge Caption="{Binding Label}"
+                                                  Text="{Binding Text}"
+                                                  Level="{Binding Level}"
+                                                  IsChip="True"
+                                                  Margin="6,3,0,3" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </Border>
+
+        <!-- ================= Body ================= -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="216" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0"
+                    Background="{StaticResource PanelBackgroundBrush}"
+                    BorderBrush="{StaticResource PanelOutlineSubtleBrush}"
+                    BorderThickness="0,0,1,0"
+                    Padding="10,14">
+                <ListBox ItemsSource="{Binding Sections}"
+                         SelectedItem="{Binding SelectedSection, Mode=TwoWay}"
+                         ItemContainerStyle="{StaticResource PanelSidebarItem}"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal"
+                                        ToolTip="{Binding Description}">
+                                <Path Data="{Binding IconKey,
+                                                     Converter={StaticResource ResourceKeyToGeometry}}"
+                                      Stroke="{Binding Foreground,
+                                                       RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                      Fill="Transparent"
+                                      StrokeThickness="1.4"
+                                      StrokeLineJoin="Round"
+                                      Width="19"
+                                      Height="19"
+                                      Stretch="Uniform"
+                                      VerticalAlignment="Center"
+                                      Margin="0,0,12,0" />
+                                <TextBlock Text="{Binding Name}"
+                                           VerticalAlignment="Center"
+                                           TextTrimming="CharacterEllipsis" />
+                                <!-- Something on this page waits for the operator (a Wi-Fi request to approve within 60 s). -->
+                                <Ellipse Width="8"
+                                         Height="8"
+                                         Margin="8,0,0,0"
+                                         VerticalAlignment="Center"
+                                         Fill="{StaticResource PanelStatusWarningBrush}"
+                                         ToolTip="{res:Loc NavAttentionHint}"
+                                         AutomationProperties.Name="{res:Loc NavAttentionHint}"
+                                         Visibility="{Binding HasAttention, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+
+            <DockPanel Grid.Column="1"
+                       Margin="{StaticResource PagePadding}"
+                       LastChildFill="True">
+                <!-- One page header, written once, for every section. -->
+                <StackPanel DockPanel.Dock="Top" Margin="0,0,0,18">
+                    <TextBlock Text="{Binding SelectedSection.Name}"
+                               Style="{StaticResource PanelPageTitleText}" />
+                    <TextBlock Text="{Binding SelectedSection.Description}"
+                               Style="{StaticResource PanelPageDescriptionText}" />
+                </StackPanel>
+
+                <ContentControl Content="{Binding SelectedSection.Content}" />
+            </DockPanel>
+        </Grid>
+
+        <!-- ================= Footer ================= -->
+        <Border Grid.Row="2"
+                Background="{StaticResource PanelSurfaceBrush}"
+                BorderBrush="{StaticResource PanelOutlineSubtleBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="22,8">
+            <Grid>
+                <TextBlock Style="{StaticResource PanelCaptionText}"
+                           VerticalAlignment="Center">
+                    <Run Text="{res:Loc AppTitle}" />
+                    <Run Text="{Binding ControlCenterVersion, Mode=OneWay}" />
+                </TextBlock>
+                <controls:StatusBadge HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"
+                                      Level="{Binding DriverStatusLevel}"
+                                      Text="{Binding DriverStatusText}" />
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

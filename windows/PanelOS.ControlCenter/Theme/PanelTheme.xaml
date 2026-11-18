@@ -1,0 +1,27 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--
+        The PanelOS design system, assembled. Views merge nothing themselves:
+        App.xaml merges this one file and every screen resolves its brushes,
+        type styles, converters and component templates from here.
+
+        The split is by kind, not by screen, so a second theme would only have
+        to replace Palette.xaml:
+
+            Palette      colour, spacing, shape
+            Icons        geometry, drawn rather than fetched from a font
+            Typography   the type scale
+            Converters   every value converter the application uses
+            Controls     the component vocabulary built on all of the above
+    -->
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Palette.xaml" />
+        <ResourceDictionary Source="Icons.xaml" />
+        <ResourceDictionary Source="Typography.xaml" />
+        <ResourceDictionary Source="Converters.xaml" />
+        <ResourceDictionary Source="Controls.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

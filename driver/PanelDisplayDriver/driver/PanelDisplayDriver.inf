@@ -1,0 +1,121 @@
+;
+; PanelDisplayDriver.inf
+;
+; UMDF 2 indirect display driver (IddCx) for the PanelOS virtual monitor.
+;
+; There is no physical hardware. For development, DevGen creates a software
+; device (SWD\DEVGEN\PanelDisplayDriver) carrying the hardware id below. The
+; software devnode intentionally does not persist across a reboot.
+;
+; DriverVer is filled in by stampinf during the build - do not hand-edit it.
+;
+
+[Version]
+PnpLockDown=1
+Signature="$Windows NT$"
+ClassGUID={4D36E968-E325-11CE-BFC1-08002BE10318}
+Class=Display
+ClassVer=2.0
+Provider=%ManufacturerName%
+CatalogFile=PanelDisplayDriver.cat
+DriverVer=
+
+[Manufacturer]
+%ManufacturerName%=Standard,NT$ARCH$.10.0...22000
+
+; IddCx UMDF drivers of this shape are supported from Windows 11 (build 22000)
+; onwards; the decoration keeps the package from installing on older systems.
+[Standard.NT$ARCH$.10.0...22000]
+%DeviceName%=PanelDisplay_Install, Root\PanelDisplayDriver
+
+[SourceDisksFiles]
+PanelDisplayDriver.dll=1
+
+[SourceDisksNames]
+1=%DiskName%
+
+; =================== UMDF Device ==================================
+
+[PanelDisplay_Install.NT]
+Include=WUDFRD.inf
+Needs=WUDFRD.NT
+CopyFiles=UMDriverCopy
+
+[PanelDisplay_Install.NT.hw]
+Include=WUDFRD.inf
+Needs=WUDFRD.NT.HW
+AddReg=PanelDisplay_HardwareDeviceSettings
+
+[PanelDisplay_HardwareDeviceSettings]
+; IndirectKmd is the kernel-mode half of the indirect display stack; IddCx
+; requires it as an upper filter on the device.
+HKR,,"UpperFilters",%REG_MULTI_SZ%,"IndirectKmd"
+; Own host process group, so a fault here cannot take other UMDF drivers down.
+HKR,"WUDF","DeviceGroupId",%REG_SZ%,"PanelDisplayDriverGroup"
+
+; --- Device security -------------------------------------------------------
+;
+; Without this, nothing overrides the default security of the software-device
+; PDO that devgen creates, and the device interface cannot be opened at all -
+; CreateFile fails with ERROR_ACCESS_DENIED even for an elevated administrator
+; and even when asking for an access mask of zero.
+;
+; The OS derives the device interface's security descriptor from the device's
+; PDO, and DDInstall.HW is the documented place for a driver package to set it.
+;
+; %PANEL_SDDL% below is SDDL_DEVOBJ_SYS_ALL_ADM_ALL from wdmsec.h, ACE by ACE:
+;
+;   D:            a DACL follows
+;   P             PROTECTED - do not inherit ACEs from the parent. Without this
+;                 a permissive parent could silently widen access again.
+;   (A;;GA;;;SY)  Allow GENERIC_ALL to SY = NT AUTHORITY\SYSTEM. Required: the
+;                 PnP manager and the UMDF host/reflector touch the stack as
+;                 LocalSystem, and the device would not start without it.
+;   (A;;GA;;;BA)  Allow GENERIC_ALL to BA = BUILTIN\Administrators. This is what
+;                 lets an elevated PanelDisplayCtl (later PanelHost) open the
+;                 interface and issue the control IOCTLs.
+;
+; There is deliberately no ACE for WD (Everyone) or IU (Interactive Users), so a
+; non-elevated process cannot create or destroy monitors.
+;
+HKR,,"Security",,%PANEL_SDDL%
+; FILE_DEVICE_SECURE_OPEN (0x100): apply the same descriptor to opens of names
+; *inside* the device namespace, so the ACL cannot be sidestepped by appending a
+; path to the interface name.
+HKR,,"DeviceCharacteristics",0x10001,0x0100
+
+[PanelDisplay_Install.NT.Services]
+Include=WUDFRD.inf
+Needs=WUDFRD.NT.Services
+
+[PanelDisplay_Install.NT.Wdf]
+UmdfService=PanelDisplayDriver,PanelDisplayDriver_Install
+UmdfServiceOrder=PanelDisplayDriver
+UmdfKernelModeClientPolicy=AllowKernelModeClients
+
+[PanelDisplayDriver_Install]
+UmdfLibraryVersion=$UMDFVERSION$
+ServiceBinary=%12%\UMDF\PanelDisplayDriver.dll
+; IddCx class extension version. Must match the IddCx version the driver was
+; compiled against - see README.md, "Environment actually used".
+UmdfExtensions=IddCx0102
+
+[DestinationDirs]
+UMDriverCopy=12,UMDF ; %SystemRoot%\System32\drivers\UMDF
+
+[UMDriverCopy]
+PanelDisplayDriver.dll
+
+; =================== Strings ==================================
+
+[Strings]
+ManufacturerName="PanelOS"
+DiskName="PanelDisplayDriver Installation Disk"
+DeviceName="PanelOS Virtual Display"
+
+; SDDL_DEVOBJ_SYS_ALL_ADM_ALL - see the commentary in
+; [PanelDisplay_HardwareDeviceSettings] for what each ACE grants and why.
+PANEL_SDDL="D:P(A;;GA;;;SY)(A;;GA;;;BA)"
+
+REG_MULTI_SZ=0x00010000
+REG_SZ=0x00000000

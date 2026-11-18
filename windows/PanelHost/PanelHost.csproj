@@ -1,0 +1,70 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <InformationalVersion>$(PanelBuildIdentity)</InformationalVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyMetadata Include="PanelBuildNumber" Value="$(PanelBuildNumber)" />
+  </ItemGroup>
+
+  <Target Name="WritePanelHostBuildIdentity" AfterTargets="Build">
+    <WriteLinesToFile
+      File="$(TargetDir)panelhost-build-identity.json"
+      Lines="{&quot;buildIdentity&quot;:&quot;$(PanelBuildIdentity)&quot;,&quot;buildNumber&quot;:$(PanelBuildNumber),&quot;protocolVersion&quot;:1}"
+      Overwrite="true"
+      Encoding="UTF-8" />
+  </Target>
+
+  <!--
+    The Stream Deck domain, its configuration store and the action executor live
+    in PanelOS.Windows and are shared with the Control Center. PanelHost invokes
+    them; it does not re-implement them.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\PanelDisplayBroker\PanelDisplayBroker.csproj"
+                      ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\PanelOS.DisplayBroker.Protocol\PanelOS.DisplayBroker.Protocol.csproj" />
+    <ProjectReference Include="..\PanelOS.DriverInterop\PanelOS.DriverInterop.csproj" />
+    <ProjectReference Include="..\PanelOS.Telemetry\PanelOS.Telemetry.csproj" />
+    <ProjectReference Include="..\PanelOS.Windows\PanelOS.Windows.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Version pinned in windows/Directory.Build.props, shared with the probe. -->
+    <PackageReference Include="LibreHardwareMonitorLib"
+                      Version="$(LibreHardwareMonitorLibVersion)" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0" />
+    <!-- Vortice 3.8.3 uses the net8-compatible System.Text.Json 9 API surface. -->
+    <PackageReference Include="System.Text.Json" Version="9.0.1" />
+    <PackageReference Include="Vortice.MediaFoundation" Version="3.8.3" />
+  </ItemGroup>
+
+  <Target Name="CopyPanelDisplayBroker" AfterTargets="Build">
+    <ItemGroup>
+      <_PanelDisplayBrokerFiles Include="..\PanelDisplayBroker\bin\$(Configuration)\net8.0-windows10.0.19041.0\PanelDisplayBroker.exe" />
+      <_PanelDisplayBrokerFiles Include="..\PanelDisplayBroker\bin\$(Configuration)\net8.0-windows10.0.19041.0\PanelDisplayBroker.dll" />
+      <_PanelDisplayBrokerFiles Include="..\PanelDisplayBroker\bin\$(Configuration)\net8.0-windows10.0.19041.0\PanelDisplayBroker.deps.json" />
+      <_PanelDisplayBrokerFiles Include="..\PanelDisplayBroker\bin\$(Configuration)\net8.0-windows10.0.19041.0\PanelDisplayBroker.runtimeconfig.json" />
+      <_PanelDisplayBrokerFiles Include="..\PanelDisplayBroker\bin\$(Configuration)\net8.0-windows10.0.19041.0\PanelOS.DisplayBroker.Protocol.dll" />
+      <_PanelDisplayBrokerFiles Include="..\PanelDisplayBroker\bin\$(Configuration)\net8.0-windows10.0.19041.0\PanelOS.DriverInterop.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_PanelDisplayBrokerFiles)"
+          DestinationFolder="$(TargetDir)"
+          SkipUnchangedFiles="true" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="3.1.8" />
+  </ItemGroup>
+</Project>
+

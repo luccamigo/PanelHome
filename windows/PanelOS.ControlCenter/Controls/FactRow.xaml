@@ -1,0 +1,65 @@
+<UserControl x:Class="PanelOS.ControlCenter.Controls.FactRow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Name="Root">
+    <Grid Margin="0,5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding LabelWidth, ElementName=Root}" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Column="0"
+                   Text="{Binding Label, ElementName=Root}"
+                   Style="{StaticResource PanelMutedText}"
+                   VerticalAlignment="Top"
+                   Margin="0,0,14,0" />
+
+        <StackPanel Grid.Column="1">
+            <StackPanel Orientation="Horizontal">
+                <!--
+                    The mark is only drawn for a fact that has a state. A path
+                    or a version number has no severity, and a grey dot beside
+                    it would imply one.
+                -->
+                <Path Data="{Binding Level,
+                                     ElementName=Root,
+                                     Converter={StaticResource StatusLevelToGeometry}}"
+                      Fill="{Binding Level,
+                                     ElementName=Root,
+                                     Converter={StaticResource StatusLevelToBrush}}"
+                      Style="{StaticResource PanelStatusMark}"
+                      VerticalAlignment="Top"
+                      Margin="0,3,8,0"
+                      Visibility="{Binding ShowMark,
+                                           ElementName=Root,
+                                           Converter={StaticResource BooleanToVisibility}}" />
+
+                <TextBlock Text="{Binding Value, ElementName=Root}"
+                           TextWrapping="Wrap">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock"
+                               BasedOn="{StaticResource PanelValueText}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsMono, ElementName=Root}"
+                                             Value="True">
+                                    <Setter Property="FontFamily"
+                                            Value="Consolas, Cascadia Mono, Courier New" />
+                                    <Setter Property="FontSize" Value="12" />
+                                    <Setter Property="Foreground"
+                                            Value="{StaticResource PanelTextMutedBrush}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+
+            <TextBlock Text="{Binding Hint, ElementName=Root}"
+                       Style="{StaticResource PanelCaptionText}"
+                       Margin="0,3,0,0"
+                       Visibility="{Binding Hint,
+                                            ElementName=Root,
+                                            Converter={StaticResource TextToVisibility}}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

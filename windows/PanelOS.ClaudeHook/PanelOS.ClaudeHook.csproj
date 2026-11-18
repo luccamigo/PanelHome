@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <!-- Plain net8.0, no project references: the installer copies only exe/dll/deps/runtimeconfig to the stable
+         folder, so the hook must not need any other PanelOS assembly or the Windows SDK projection (P2). -->
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Windows-only (SID-scoped named pipe) without the windows TFM, which would drag in the SDK projection assemblies. -->
+    <AssemblyAttribute Include="System.Runtime.Versioning.SupportedOSPlatformAttribute"><_Parameter1>windows</_Parameter1></AssemblyAttribute>
+  </ItemGroup>
+  <ItemGroup>
+    <!-- The same sources the Control Center and host use, compiled into the hook instead of referenced. -->
+    <Compile Include="..\PanelOS.Windows\Management\ClaudeHookProtocol.cs" Link="Shared\ClaudeHookProtocol.cs" />
+    <Compile Include="..\PanelOS.Windows\Management\PanelHostManagementProtocol.cs" Link="Shared\PanelHostManagementProtocol.cs" />
+    <Compile Include="..\PanelOS.Windows\Protocol\BoundedUtf8LineReader.cs" Link="Shared\BoundedUtf8LineReader.cs" />
+  </ItemGroup>
+</Project>

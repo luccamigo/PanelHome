@@ -1,0 +1,43 @@
+<UserControl x:Class="PanelOS.ControlCenter.Controls.BlockGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Name="Root"
+             Focusable="False"
+             IsTabStop="False">
+    <!--
+        Rows of fixed blocks (a fingerprint, or the typed code). The line break is fixed by the data, never by the width,
+        and alternating blocks use another colour so the eye keeps its place. Plain TextBlocks: not selectable, not copyable.
+    -->
+    <ItemsControl ItemsSource="{Binding Rows, ElementName=Root}" Focusable="False" IsTabStop="False">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <ItemsControl ItemsSource="{Binding Blocks}"
+                              Margin="{Binding RowMargin, ElementName=Root}"
+                              Focusable="False"
+                              IsTabStop="False">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock x:Name="Block"
+                                       Text="{Binding Text}"
+                                       FontFamily="Consolas"
+                                       FontSize="{Binding BlockFontSize, ElementName=Root}"
+                                       FontWeight="{Binding BlockFontWeight, ElementName=Root}"
+                                       Foreground="{StaticResource PanelTextBrush}"
+                                       Margin="{Binding BlockMargin, ElementName=Root}" />
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Alternate}" Value="True">
+                                    <Setter TargetName="Block" Property="Foreground" Value="{StaticResource PanelSecondaryBrush}" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</UserControl>

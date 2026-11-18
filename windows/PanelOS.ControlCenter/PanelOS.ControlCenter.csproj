@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <UseWPF>true</UseWPF>
+    <!-- Windows Forms is referenced for NotifyIcon only; WPF has no tray API. -->
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RootNamespace>PanelOS.ControlCenter</RootNamespace>
+    <AssemblyName>PanelOS.ControlCenter</AssemblyName>
+    <Product>PanelOS Control Center</Product>
+    <Version>0.1.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PanelOS.Windows\PanelOS.Windows.csproj" />
+    <ProjectReference Include="..\PanelOS.ClaudeHook\PanelOS.ClaudeHook.csproj" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+  <Target Name="CopyClaudeHook" AfterTargets="Build">
+    <ItemGroup>
+      <_ClaudeHookFiles Include="..\PanelOS.ClaudeHook\bin\$(Configuration)\net8.0\PanelOS.ClaudeHook.exe" />
+      <_ClaudeHookFiles Include="..\PanelOS.ClaudeHook\bin\$(Configuration)\net8.0\PanelOS.ClaudeHook.dll" />
+      <_ClaudeHookFiles Include="..\PanelOS.ClaudeHook\bin\$(Configuration)\net8.0\PanelOS.ClaudeHook.deps.json" />
+      <_ClaudeHookFiles Include="..\PanelOS.ClaudeHook\bin\$(Configuration)\net8.0\PanelOS.ClaudeHook.runtimeconfig.json" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_ClaudeHookFiles)" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+  </Target>
+
+  <ItemGroup>
+    <!-- MIT, no dependencies. Used only to turn the pairing text into a module matrix; drawing is ours. -->
+    <PackageReference Include="QRCoder" Version="1.6.0" />
+  </ItemGroup>
+
+</Project>

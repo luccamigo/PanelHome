@@ -1,0 +1,197 @@
+<UserControl x:Class="PanelOS.ControlCenter.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:PanelOS.ControlCenter.Controls"
+             xmlns:res="clr-namespace:PanelOS.ControlCenter.Resources">
+    <!--
+        Preferences only, grouped by what each one affects. Every switch states
+        what turns on in the label and what follows from it underneath, so an
+        option like "encerrar o PanelHost ao sair" cannot be read two ways.
+
+        Measured state does not live here: the agent's health is on Dispositivo
+        and the driver's is in Diagnóstico. The one exception is the ADB probe
+        result, which is the direct answer to the button next to it.
+    -->
+    <ScrollViewer Style="{StaticResource PanelScrollViewer}" Padding="0,0,10,0">
+        <StackPanel MaxWidth="820" HorizontalAlignment="Left">
+
+            <!-- ================= Startup and tray ================= -->
+            <HeaderedContentControl Style="{StaticResource PanelSectionCard}"
+                                    Header="{res:Loc SettingsStartupTitle}"
+                                    controls:PanelUi.Caption="{res:Loc SettingsStartupCaption}"
+                                    controls:PanelUi.IconKey="IconSettings">
+                <StackPanel>
+                    <CheckBox Style="{StaticResource PanelSwitch}"
+                              Content="{res:Loc SettingsStartWithWindows}"
+                              controls:PanelUi.Description="{res:Loc SettingsStartWithWindowsHint}"
+                              IsChecked="{Binding StartControlCenterWithWindows, Mode=TwoWay}"
+                              IsEnabled="{Binding IsControlCenterStartupSupported}" />
+                    <TextBlock Text="{Binding ControlCenterStartupUnsupportedReason}"
+                               Style="{StaticResource PanelMutedText}"
+                               Foreground="{StaticResource PanelStatusWarningBrush}"
+                               Margin="0,0,0,16"
+                               Visibility="{Binding ControlCenterStartupUnsupportedReason,
+                                                    Converter={StaticResource TextToVisibility}}" />
+
+                    <CheckBox Style="{StaticResource PanelSwitch}"
+                              Content="{res:Loc SettingsMinimizeToTray}"
+                              controls:PanelUi.Description="{res:Loc SettingsMinimizeToTrayHint}"
+                              IsChecked="{Binding MinimizeToTray, Mode=TwoWay}"
+                              Margin="0" />
+                </StackPanel>
+            </HeaderedContentControl>
+
+            <!-- ================= PanelHost ================= -->
+            <HeaderedContentControl Style="{StaticResource PanelSectionCard}"
+                                    Header="{res:Loc SettingsHostTitle}"
+                                    controls:PanelUi.Caption="{res:Loc SettingsHostCaption}"
+                                    controls:PanelUi.IconKey="IconHost"
+                                    Margin="0,14,0,0">
+                <StackPanel>
+                    <CheckBox Style="{StaticResource PanelSwitch}"
+                              Content="{res:Loc SettingsStartHost}"
+                              controls:PanelUi.Description="{res:Loc SettingsStartHostHint}"
+                              IsChecked="{Binding StartPanelHostWithControlCenter, Mode=TwoWay}" />
+
+                    <!--
+                        Named for what it does, not for a state: this one ends
+                        the panel, so it says so.
+                    -->
+                    <CheckBox Style="{StaticResource PanelSwitch}"
+                              Content="{res:Loc SettingsStopHost}"
+                              controls:PanelUi.Description="{res:Loc SettingsStopHostHint}"
+                              IsChecked="{Binding StopPanelHostOnExit, Mode=TwoWay}" />
+
+                    <CheckBox Style="{StaticResource PanelSwitch}"
+                              Content="{res:Loc SettingsRestartHost}"
+                              controls:PanelUi.Description="{res:Loc SettingsRestartHostHint}"
+                              IsChecked="{Binding RestartPanelHostAfterCrash, Mode=TwoWay}"
+                              Margin="0" />
+
+                    <Border Style="{StaticResource PanelDivider}" Margin="0,16" />
+
+                    <!--
+                        The carrier is a launch argument, not a command: the
+                        agent picks it at start and keeps it, so the line under
+                        the picker says when a change takes effect.
+                    -->
+                    <TextBlock Text="{res:Loc SettingsTransportLabel}"
+                               Style="{StaticResource PanelCardLabelText}"
+                               Margin="0,0,0,5" />
+                    <ComboBox ItemsSource="{Binding TransportOptions}"
+                              SelectedItem="{Binding PanelHostTransport, Mode=TwoWay}"
+                              IsSynchronizedWithCurrentItem="False"
+                              HorizontalAlignment="Left"
+                              MinWidth="280"
+                              AutomationProperties.Name="{res:Loc SettingsTransportLabel}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Label}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock Text="{Binding PanelHostTransport.Description}"
+                               Style="{StaticResource PanelCaptionText}"
+                               Margin="0,6,0,0" />
+                    <TextBlock Text="{res:Loc SettingsTransportHint}"
+                               Style="{StaticResource PanelCaptionText}"
+                               Margin="0,4,0,0" />
+                </StackPanel>
+            </HeaderedContentControl>
+
+            <!-- ================= Development ================= -->
+            <HeaderedContentControl Style="{StaticResource PanelSectionCard}"
+                                    Header="{res:Loc SettingsDevelopmentTitle}"
+                                    controls:PanelUi.Caption="{res:Loc SettingsDevelopmentCaption}"
+                                    controls:PanelUi.IconKey="IconDiagnostics"
+                                    Margin="0,14,0,0">
+                <StackPanel>
+                    <CheckBox Style="{StaticResource PanelSwitch}"
+                              Content="{res:Loc SettingsDevelopmentMode}"
+                              controls:PanelUi.Description="{res:Loc SettingsDevelopmentModeHint}"
+                              IsChecked="{Binding DevelopmentMode, Mode=TwoWay}"
+                              Margin="0" />
+
+                    <StackPanel Visibility="{Binding DevelopmentMode,
+                                                     Converter={StaticResource BooleanToVisibility}}">
+                        <Border Style="{StaticResource PanelDivider}" Margin="0,16" />
+
+                        <!--
+                            Two steps, in order, and no terminal: check that a
+                            device is there, then start. What the second button
+                            does is spelled out, because it starts a process and
+                            mints a credential.
+                        -->
+                        <TextBlock Text="{res:Loc SettingsAdbTitle}"
+                                   Style="{StaticResource PanelCardLabelText}" />
+                        <controls:StatusBadge Level="{Binding AdbLevel}"
+                                              Text="{Binding AdbSummary}"
+                                              HorizontalAlignment="Left" />
+                        <TextBlock Text="{Binding AdbDetail}"
+                                   Style="{StaticResource PanelMonoText}"
+                                   Margin="0,8,0,0"
+                                   TextWrapping="Wrap"
+                                   Visibility="{Binding AdbDetail,
+                                                        Converter={StaticResource TextToVisibility}}" />
+
+                        <WrapPanel Margin="0,14,0,0">
+                            <Button Content="{res:Loc SettingsProbeAdb}"
+                                    Command="{Binding ProbeAdbCommand}"
+                                    Style="{StaticResource PanelButton}"
+                                    Margin="0,0,8,0" />
+                            <Button Content="{res:Loc SettingsStartDevelopment}"
+                                    Command="{Binding ConfigureUsbTransportCommand}"
+                                    Style="{StaticResource PanelPrimaryButton}" />
+                        </WrapPanel>
+
+                        <Border Style="{StaticResource PanelWell}"
+                                Padding="14,12"
+                                Margin="0,14,0,0">
+                            <StackPanel>
+                                <TextBlock Text="{res:Loc SettingsDevelopmentStepsTitle}"
+                                           Style="{StaticResource PanelBodyText}"
+                                           FontWeight="SemiBold"
+                                           Margin="0,0,0,8" />
+                                <TextBlock Text="{res:Loc SettingsDevelopmentStep1}"
+                                           Style="{StaticResource PanelMutedText}"
+                                           Margin="0,0,0,4" />
+                                <TextBlock Text="{res:Loc SettingsDevelopmentStep2}"
+                                           Style="{StaticResource PanelMutedText}"
+                                           Margin="0,0,0,4" />
+                                <TextBlock Text="{res:Loc SettingsDevelopmentStep3}"
+                                           Style="{StaticResource PanelMutedText}" />
+                                <TextBlock Text="{res:Loc SettingsDevelopmentTokenNote}"
+                                           Style="{StaticResource PanelCaptionText}"
+                                           Margin="0,10,0,0" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </HeaderedContentControl>
+
+            <!-- ================= Files ================= -->
+            <HeaderedContentControl Style="{StaticResource PanelSectionCard}"
+                                    Header="{res:Loc SettingsFilesTitle}"
+                                    controls:PanelUi.Caption="{res:Loc SettingsFilesCaption}"
+                                    controls:PanelUi.IconKey="IconLogs"
+                                    Margin="0,14,0,0">
+                <StackPanel>
+                    <controls:FactRow Label="{res:Loc SettingsPreferencesFileLabel}"
+                                      Value="{Binding SettingsLocation}"
+                                      LabelWidth="190"
+                                      IsMono="True" />
+                    <controls:FactRow Label="{res:Loc SettingsExecutableLabel}"
+                                      Value="{Binding PanelHostExecutableText}"
+                                      LabelWidth="190"
+                                      IsMono="True" />
+                </StackPanel>
+            </HeaderedContentControl>
+
+            <TextBlock Text="{Binding StatusMessage}"
+                       Style="{StaticResource PanelMutedText}"
+                       Margin="0,14,0,0"
+                       Visibility="{Binding StatusMessage,
+                                            Converter={StaticResource TextToVisibility}}" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

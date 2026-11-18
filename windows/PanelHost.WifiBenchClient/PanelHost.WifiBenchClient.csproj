@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Bench-only client for the PanelOS WiFi session listener. It is a separate executable so that nothing
+    client-side ships inside PanelHost.exe. It reads a public bench offer, holds its device key in a
+    non-exportable CNG key, and exercises the positive path and the refusals. It never listens.
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RootNamespace>PanelHost.WifiBenchClient</RootNamespace>
+    <AssemblyName>PanelHost.WifiBenchClient</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PanelHost\PanelHost.csproj" />
+  </ItemGroup>
+
+</Project>

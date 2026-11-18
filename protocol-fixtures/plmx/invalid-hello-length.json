@@ -1,0 +1,1 @@
+{"name": "invalid-hello-length", "description": "HELLO whose payload length is not 32; must be rejected.", "hex": "504c4d58020001000c000000010000007a31c28800000000504e5452020000001f000000"}

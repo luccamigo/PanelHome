@@ -1,0 +1,304 @@
+<UserControl x:Class="PanelOS.ControlCenter.Views.WifiView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:PanelOS.ControlCenter.Controls"
+             xmlns:vm="clr-namespace:PanelOS.ControlCenter.ViewModels"
+             xmlns:res="clr-namespace:PanelOS.ControlCenter.Resources">
+    <!--
+        Wi-Fi is off by default and this page says so (a neutral mark: off is the normal state, not a failure). When a bench
+        window is open it shows, top to bottom: the window, ONE of (the invitation: QR beside its instructions, or the typed
+        code) or (the request waiting for a decision, which takes the invitation's place and counts down 60 s), and the
+        paired devices. The QR and the code are one-use secrets: they appear only while the invitation is open and are
+        plain text and drawings, never selectable, never copied, logged or written.
+    -->
+    <Grid>
+        <ScrollViewer Style="{StaticResource PanelScrollViewer}" Padding="0,0,10,0">
+            <StackPanel>
+
+                <!-- ================= Off ================= -->
+                <Border Style="{StaticResource PanelCard}"
+                        Visibility="{Binding IsOff, Converter={StaticResource BooleanToVisibility}}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{Binding Source={x:Static vm:PanelStatusLevel.Neutral}, Converter={StaticResource StatusLevelToGeometry}}"
+                                  Fill="{StaticResource PanelStatusNeutralBrush}"
+                                  Style="{StaticResource PanelStatusMark}"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,8,0" />
+                            <TextBlock Text="{res:Loc WifiOffTitle}" Style="{StaticResource PanelCardTitleText}" />
+                        </StackPanel>
+                        <TextBlock Text="{res:Loc WifiOffBody}"
+                                   Style="{StaticResource PanelMutedText}"
+                                   TextWrapping="Wrap"
+                                   Margin="0,6,0,0" />
+                    </StackPanel>
+                </Border>
+
+                <StackPanel Visibility="{Binding IsAvailable, Converter={StaticResource BooleanToVisibility}}">
+
+                    <!-- ================= Window and actions (hidden while an invitation is open, so the QR fits) ================= -->
+                    <Border Style="{StaticResource PanelCard}"
+                            Visibility="{Binding ShowWindowCard, Converter={StaticResource BooleanToVisibility}}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding WindowText}" Style="{StaticResource PanelCardTitleText}" />
+                            <TextBlock Text="{Binding EndpointText}"
+                                       Style="{StaticResource PanelMutedText}"
+                                       Margin="0,4,0,0" />
+                            <StackPanel Visibility="{Binding HasHostFingerprint, Converter={StaticResource BooleanToVisibility}}">
+                                <TextBlock Text="{res:Loc WifiHostFingerprintCaption}"
+                                           Style="{StaticResource PanelCaptionText}"
+                                           TextWrapping="Wrap"
+                                           Margin="0,12,0,4" />
+                                <controls:BlockGrid Rows="{Binding HostFingerprintRows}"
+                                                    BlockFontSize="18"
+                                                    BlockFontWeight="SemiBold"
+                                                    BlockMargin="0,0,20,0"
+                                                    RowMargin="0,0,0,6"
+                                                    HorizontalAlignment="Left" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,14,0,0">
+                                <Button Content="{res:Loc WifiAddDevice}"
+                                        Command="{Binding OpenQrCommand}"
+                                        Style="{StaticResource PanelPrimaryButton}" />
+                                <Button Content="{res:Loc WifiUseTypedCode}"
+                                        Command="{Binding OpenCodeCommand}"
+                                        Style="{StaticResource PanelButton}"
+                                        Margin="10,0,0,0" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <TextBlock Text="{Binding ErrorText}"
+                               Foreground="{StaticResource PanelStatusBadBrush}"
+                               TextWrapping="Wrap"
+                               Margin="2,10,0,0"
+                               Visibility="{Binding HasError, Converter={StaticResource BooleanToVisibility}}" />
+                    <TextBlock Text="{Binding OutcomeText}"
+                               Style="{StaticResource PanelBodyText}"
+                               TextWrapping="Wrap"
+                               Margin="2,10,0,0"
+                               Visibility="{Binding HasOutcome, Converter={StaticResource BooleanToVisibility}}" />
+
+                    <!-- ================= Open invitation ================= -->
+                    <Border Style="{StaticResource PanelCard}"
+                            Margin="0,14,0,0"
+                            Visibility="{Binding ShowInvitation, Converter={StaticResource BooleanToVisibility}}">
+                        <Grid>
+                            <!-- QR: the code on the left, in a square that never scrolls out of view, the words on the right. -->
+                            <Grid Visibility="{Binding IsQr, Converter={StaticResource BooleanToVisibility}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="24" />
+                                    <ColumnDefinition Width="280" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" HorizontalAlignment="Left">
+                                    <controls:QrCodeControl Modules="{Binding QrModules}"
+                                                            HorizontalAlignment="Left" />
+                                    <Button Content="{res:Loc WifiEnlarge}"
+                                            Command="{Binding EnlargeCommand}"
+                                            Style="{StaticResource PanelButton}"
+                                            HorizontalAlignment="Left"
+                                            Margin="0,10,0,0" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="{Binding InvitationInstruction}"
+                                               Style="{StaticResource PanelBodyText}"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding InvitationExpiresText}"
+                                               Style="{StaticResource PanelMutedText}"
+                                               Margin="0,8,0,0" />
+                                    <TextBlock Text="{res:Loc WifiQrHint}"
+                                               Style="{StaticResource PanelMutedText}"
+                                               TextWrapping="Wrap"
+                                               Margin="0,12,0,0" />
+                                    <Button Content="{res:Loc WifiCancelInvitation}"
+                                            Command="{Binding CancelCommand}"
+                                            Style="{StaticResource PanelGhostButton}"
+                                            HorizontalAlignment="Left"
+                                            Margin="0,16,0,0" />
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Typed code: 20 groups of 5, five per line. -->
+                            <StackPanel Visibility="{Binding IsCode, Converter={StaticResource BooleanToVisibility}}">
+                                <TextBlock Text="{Binding InvitationInstruction}"
+                                           Style="{StaticResource PanelBodyText}"
+                                           TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding InvitationExpiresText}"
+                                           Style="{StaticResource PanelMutedText}"
+                                           Margin="0,6,0,14" />
+                                <controls:BlockGrid Rows="{Binding TypedCodeRows}"
+                                                    BlockFontSize="16"
+                                                    BlockMargin="0,0,18,0"
+                                                    RowMargin="0,0,0,8"
+                                                    HorizontalAlignment="Left" />
+                                <Button Content="{res:Loc WifiCancelInvitation}"
+                                        Command="{Binding CancelCommand}"
+                                        Style="{StaticResource PanelGhostButton}"
+                                        HorizontalAlignment="Left"
+                                        Margin="0,10,0,0" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- ================= Request waiting for a decision (replaces the invitation; no modal) ================= -->
+                    <Border x:Name="ApprovalCard"
+                            Style="{StaticResource PanelCardRaised}"
+                            BorderBrush="{StaticResource PanelAccentBrush}"
+                            BorderThickness="1"
+                            Margin="0,14,0,0"
+                            AutomationProperties.LiveSetting="Assertive"
+                            AutomationProperties.Name="{Binding PendingAnnouncement}"
+                            Visibility="{Binding HasPending, Converter={StaticResource BooleanToVisibility}}">
+                        <StackPanel>
+                            <!-- Keyboard focus lands here, not on "Aprovar": Enter never approves by itself. -->
+                            <TextBlock x:Name="ApprovalTitle"
+                                       Text="{res:Loc WifiApproveTitle}"
+                                       Style="{StaticResource PanelCardTitleText}"
+                                       Focusable="True" />
+
+                            <TextBlock Text="{res:Loc WifiApproveNameCaption}"
+                                       Style="{StaticResource PanelCaptionText}"
+                                       TextWrapping="Wrap"
+                                       Margin="0,12,0,2" />
+                            <TextBlock Text="{Binding PendingLabel}" Style="{StaticResource PanelValueText}" TextWrapping="Wrap" />
+
+                            <TextBlock Text="{res:Loc WifiApproveFingerprintCaption}"
+                                       Style="{StaticResource PanelCaptionText}"
+                                       Margin="0,12,0,4" />
+                            <controls:BlockGrid Rows="{Binding PendingFingerprintRows}"
+                                                BlockFontSize="18"
+                                                BlockFontWeight="SemiBold"
+                                                BlockMargin="0,0,20,0"
+                                                RowMargin="0,0,0,6"
+                                                HorizontalAlignment="Left" />
+
+                            <TextBlock Text="{res:Loc WifiApproveCompare}"
+                                       Style="{StaticResource PanelBodyText}"
+                                       TextWrapping="Wrap"
+                                       Margin="0,12,0,0" />
+                            <TextBlock Text="{res:Loc WifiApproveScope}"
+                                       Style="{StaticResource PanelMutedText}"
+                                       TextWrapping="Wrap"
+                                       Margin="0,4,0,0" />
+                            <TextBlock Text="{Binding PendingRespondText}"
+                                       Style="{StaticResource PanelMutedText}"
+                                       Margin="0,8,0,6" />
+
+                            <!-- 60 s bar: accent, warning in the last ten seconds. The text above repeats it, so colour is not the only signal. -->
+                            <ProgressBar Height="3"
+                                         Minimum="0"
+                                         Maximum="1"
+                                         Value="{Binding PendingProgress, Mode=OneWay}"
+                                         BorderThickness="0"
+                                         Background="{StaticResource PanelOutlineSubtleBrush}"
+                                         Focusable="False">
+                                <ProgressBar.Style>
+                                    <Style TargetType="ProgressBar">
+                                        <Setter Property="Foreground" Value="{StaticResource PanelAccentBrush}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding PendingIsUrgent}" Value="True">
+                                                <Setter Property="Foreground" Value="{StaticResource PanelStatusWarningBrush}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ProgressBar.Style>
+                            </ProgressBar>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,14,0,0">
+                                <Button Content="{res:Loc WifiApprove}"
+                                        Command="{Binding ApproveCommand}"
+                                        Style="{StaticResource PanelPrimaryButton}" />
+                                <!-- Neutral, not red: red on "Recusar" would push the eye to "Aprovar" as the safe choice. -->
+                                <Button Content="{res:Loc WifiDeny}"
+                                        Command="{Binding DenyCommand}"
+                                        Style="{StaticResource PanelButton}"
+                                        Margin="16,0,0,0" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- ================= Paired devices ================= -->
+                    <Border Style="{StaticResource PanelCard}" Margin="0,14,0,0">
+                        <StackPanel>
+                            <TextBlock Text="{res:Loc WifiDevicesTitle}" Style="{StaticResource PanelCardTitleText}" />
+                            <TextBlock Text="{res:Loc WifiDevicesEmpty}"
+                                       Style="{StaticResource PanelMutedText}"
+                                       Margin="0,8,0,0"
+                                       Visibility="{Binding Devices.Count, Converter={StaticResource EmptyCountToVisibility}}" />
+                            <ItemsControl ItemsSource="{Binding Devices}" Margin="0,8,0,0">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="0,6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Path Data="{Binding StateLevel, Converter={StaticResource StatusLevelToGeometry}}"
+                                                          Fill="{Binding StateLevel, Converter={StaticResource StatusLevelToBrush}}"
+                                                          Style="{StaticResource PanelStatusMark}"
+                                                          VerticalAlignment="Center"
+                                                          Margin="0,0,8,0" />
+                                                    <TextBlock Text="{Binding Name}" Style="{StaticResource PanelValueText}" />
+                                                    <TextBlock Text="{Binding StateText}"
+                                                               Style="{StaticResource PanelMutedText}"
+                                                               Margin="10,0,0,0" />
+                                                    <TextBlock Text="{res:Loc WifiDeviceConnected}"
+                                                               Foreground="{StaticResource PanelStatusGoodBrush}"
+                                                               Margin="10,0,0,0"
+                                                               Visibility="{Binding Connected, Converter={StaticResource BooleanToVisibility}}" />
+                                                </StackPanel>
+                                                <TextBlock Style="{StaticResource PanelCaptionText}" Margin="16,2,0,0">
+                                                    <Run Text="{res:Loc WifiDeviceFingerprintCaption}" />
+                                                    <Run Text="{Binding ShortFingerprint, Mode=OneWay}" FontFamily="Consolas" />
+                                                    <Run Text="{Binding CreatedText, Mode=OneWay}" />
+                                                </TextBlock>
+                                            </StackPanel>
+                                            <Button Grid.Column="1"
+                                                    Content="{res:Loc WifiRevoke}"
+                                                    Command="{Binding DataContext.RevokeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding}"
+                                                    Style="{StaticResource PanelDangerButton}"
+                                                    VerticalAlignment="Center" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <TextBlock Text="{res:Loc WifiDevicesNotice}"
+                                       Style="{StaticResource PanelMutedText}"
+                                       TextWrapping="Wrap"
+                                       Margin="0,12,0,0" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ================= "Ampliar": the QR as large as a whole number of pixels allows; Esc or a click goes back ================= -->
+        <Grid x:Name="EnlargedOverlay"
+              Background="{StaticResource PanelBackgroundBrush}"
+              Focusable="True"
+              Visibility="{Binding IsEnlarged, Converter={StaticResource BooleanToVisibility}}">
+            <Grid.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding CloseEnlargedCommand}" />
+                <KeyBinding Key="Escape" Command="{Binding CloseEnlargedCommand}" />
+            </Grid.InputBindings>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <controls:QrCodeControl Modules="{Binding QrModules}"
+                                    MaxModulePixels="48"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Margin="16" />
+            <TextBlock Grid.Row="1"
+                       Text="{res:Loc WifiEnlargeBack}"
+                       Style="{StaticResource PanelMutedText}"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,14" />
+        </Grid>
+    </Grid>
+</UserControl>

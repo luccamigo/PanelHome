@@ -1,0 +1,1 @@
+{"name": "stale-session", "description": "Well-formed frame tagged for a different session; must be dropped, not fatal.", "hex": "504c4d580201000005000000090000000badc0de000000007374616c65"}

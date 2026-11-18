@@ -1,0 +1,1 @@
+{"type":"streamdeck.layout","revision":"abc123","profile":{"id":"profile-main","name":"Principal"},"pages":[{"id":"page-main","name":"Principal","rows":3,"columns":4,"buttons":[{"id":"button-1","row":0,"column":0,"label":"Play","glyph":"media-play-pause","enabled":true},{"id":"button-2","row":0,"column":1,"label":"App","iconId":"icon-aaaaaaaaaa","enabled":false}]}]}

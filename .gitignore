@@ -1,0 +1,61 @@
+# Operating-system and editor metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.iml
+/.idea/
+/.vscode/
+/.claude/settings.local.json
+**/.vs/
+
+# Local configuration and signing material
+/local.properties
+*.pfx
+*.p12
+*.key
+*.private.pem
+*.keystore
+*.jks
+*.env
+/keystore.properties
+/scratch/
+
+# Android, Kotlin and Gradle output
+**/.gradle/
+/.kotlin/
+**/build/
+**/.externalNativeBuild/
+**/.cxx/
+/captures/
+
+# .NET output
+/windows/**/[Bb]in/
+/windows/**/[Oo]bj/
+**/TestResults/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual C++ and WDK output
+/driver/**/x64/
+/driver/**/[Dd]ebug/
+/driver/**/[Rr]elease/
+/driver/**/dist/
+*.aps
+*.VC.db
+*.VC.VC.opendb
+/driver/**/*.cat
+/driver/**/*.cer
+
+# Local build, benchmark and diagnostic artifacts
+/.artifacts/
+/.benchmark-build/
+/.codex-build/
+/.codex-obj/
+/docs/benchmarks/transport/raw/**
+*.log
+*.err
+**/dumps/
+**/logs/
+*.dmp

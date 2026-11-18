@@ -1,0 +1,37 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:PanelOS.ControlCenter.Converters">
+
+    <!--
+        Every converter the application uses, in one place, so a view never
+        declares a local one and two screens can never disagree about what
+        "empty means hidden" does.
+    -->
+
+    <!-- Status severity to the brushes and shapes that express it. -->
+    <converters:StatusLevelToBrushConverter x:Key="StatusLevelToBrush" />
+    <converters:StatusLevelToBrushConverter x:Key="StatusLevelToSoftBrush"
+                                            Soft="True" />
+    <converters:StatusLevelToBrushConverter x:Key="StatusLevelToAttentionBrush"
+                                            Soft="True"
+                                            AttentionOnly="True" />
+    <converters:StatusLevelToGeometryConverter x:Key="StatusLevelToGeometry" />
+
+    <converters:ResourceKeyToGeometryConverter x:Key="ResourceKeyToGeometry" />
+
+    <!-- Visibility. -->
+    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
+    <converters:BooleanToVisibilityConverter x:Key="InverseBooleanToVisibility"
+                                             Invert="True" />
+    <converters:TextToVisibilityConverter x:Key="TextToVisibility" />
+    <converters:NullToVisibilityConverter x:Key="NullToVisibility" />
+    <converters:NullToVisibilityConverter x:Key="NotNullToVisibility"
+                                          Invert="True" />
+    <converters:CountToVisibilityConverter x:Key="CountToVisibility" />
+    <converters:CountToVisibilityConverter x:Key="EmptyCountToVisibility"
+                                           Invert="True" />
+    <converters:EqualStringsToVisibilityConverter x:Key="EqualStringsToVisibility" />
+
+    <converters:InverseBooleanConverter x:Key="InverseBoolean" />
+
+</ResourceDictionary>

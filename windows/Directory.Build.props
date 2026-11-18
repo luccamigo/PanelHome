@@ -1,0 +1,21 @@
+<Project>
+
+  <!--
+    Single source of truth for the LibreHardwareMonitorLib build every Windows
+    project resolves. PanelHost and the sensor probe must never drift apart:
+    a probe that contradicts the host is only evidence if both loaded the same
+    binary. Pass the property on the command line to compare builds, as
+    documented in docs/telemetry-cpu-sensors.md.
+  -->
+  <PropertyGroup>
+    <LibreHardwareMonitorLibVersion
+      Condition="'$(LibreHardwareMonitorLibVersion)' == ''">0.9.6</LibreHardwareMonitorLibVersion>
+  </PropertyGroup>
+
+  <!-- Human-readable diagnostics only; protocol versions remain the contract. -->
+  <PropertyGroup>
+    <PanelBuildIdentity Condition="'$(PanelBuildIdentity)' == ''">PanelHost/1.0.0</PanelBuildIdentity>
+    <PanelBuildNumber Condition="'$(PanelBuildNumber)' == ''">1</PanelBuildNumber>
+  </PropertyGroup>
+
+</Project>

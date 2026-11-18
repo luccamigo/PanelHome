@@ -1,0 +1,43 @@
+<Application x:Class="PanelOS.ControlCenter.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewModels="clr-namespace:PanelOS.ControlCenter.ViewModels"
+             xmlns:views="clr-namespace:PanelOS.ControlCenter.Views">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme/PanelTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--
+                Section content is selected by view-model type, so the shell
+                never holds a switch over section names and a new page is one
+                template away.
+            -->
+            <DataTemplate DataType="{x:Type viewModels:OverviewViewModel}">
+                <views:OverviewView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:DashboardViewModel}">
+                <views:DeviceView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:StreamDeckEditorViewModel}">
+                <views:StreamDeckView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:WifiPairingViewModel}">
+                <views:WifiView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:IntegrationsViewModel}">
+                <views:IntegrationsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:DiagnosticsViewModel}">
+                <views:DiagnosticsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:SettingsViewModel}">
+                <views:SettingsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:LoopMediaViewModel}">
+                <views:LoopMediaView />
+            </DataTemplate>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,309 @@
+<UserControl x:Class="PanelOS.ControlCenter.Views.DeviceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:PanelOS.ControlCenter.Controls"
+             xmlns:res="clr-namespace:PanelOS.ControlCenter.Resources">
+    <!--
+        The four components in full, each with the actions that belong to it.
+        Everything shown is measured: the agent through the process manager, the
+        driver through IOCTL_PANEL_GET_STATUS, and the tablet, display and video
+        through the local management IPC. A value that was not reported is shown
+        as an em dash - never as a zero, which would read as a measurement.
+    -->
+    <ScrollViewer Style="{StaticResource PanelScrollViewer}" Padding="0,0,10,0">
+        <!--
+            Capped rather than full-bleed: a fact row whose label and value are
+            a thousand pixels apart is harder to read than one that is not.
+        -->
+        <StackPanel MaxWidth="1180" HorizontalAlignment="Left">
+
+            <!-- ================= PanelHost ================= -->
+            <HeaderedContentControl Style="{StaticResource PanelSectionCard}"
+                                    Header="{res:Loc DeviceHostTitle}"
+                                    controls:PanelUi.Caption="{res:Loc DeviceHostCaption}"
+                                    controls:PanelUi.IconKey="IconHost">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <controls:FactRow Label="{res:Loc DeviceHostStateLabel}"
+                                              Value="{Binding PanelHostStateText}"
+                                              Level="{Binding PanelHostLevel}"
+                                              ShowMark="True" />
+                            <controls:FactRow Label="{res:Loc DeviceHostProcessLabel}"
+                                              Value="{Binding PanelHostProcessText}" />
+                            <controls:FactRow Label="{res:Loc DeviceHostUptimeLabel}"
+                                              Value="{Binding PanelHostUptimeText}" />
+                            <controls:FactRow Label="{res:Loc DeviceHostOwnershipLabel}"
+                                              Value="{Binding PanelHostOwnershipText}" />
+                            <controls:FactRow Label="{res:Loc DeviceHostManagementLabel}"
+                                              Value="{Binding ManagementText}"
+                                              Level="{Binding ManagementLevel}"
+                                              ShowMark="True" />
+                        </StackPanel>
+
+                        <!--
+                            Only what the current state allows. An agent someone
+                            else started is observed here but never stopped, so
+                            its buttons are absent rather than greyed out.
+                        -->
+                        <StackPanel Grid.Column="1"
+                                    VerticalAlignment="Top"
+                                    Margin="16,0,0,0">
+                            <Button Content="{res:Loc ActionStartHost}"
+                                    Command="{Binding StartPanelHostCommand}"
+                                    Style="{StaticResource PanelPrimaryButton}"
+                                    HorizontalAlignment="Stretch"
+                                    MinWidth="120"
+                                    Margin="0,0,0,8"
+                                    Visibility="{Binding CanStartPanelHost,
+                                                         Converter={StaticResource BooleanToVisibility}}" />
+                            <Button Content="{res:Loc ActionRestartHost}"
+                                    Command="{Binding RestartPanelHostCommand}"
+                                    Style="{StaticResource PanelButton}"
+                                    HorizontalAlignment="Stretch"
+                                    MinWidth="120"
+                                    Margin="0,0,0,8"
+                                    Visibility="{Binding CanRestartPanelHost,
+                                                         Converter={StaticResource BooleanToVisibility}}" />
+                            <Button Content="{res:Loc ActionStopHost}"
+                                    Command="{Binding StopPanelHostCommand}"
+                                    Style="{StaticResource PanelDangerButton}"
+                                    HorizontalAlignment="Stretch"
+                                    MinWidth="120"
+                                    Visibility="{Binding CanStopPanelHost,
+                                                         Converter={StaticResource BooleanToVisibility}}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- A transition in progress is stated, not left to guesswork. -->
+                    <TextBlock Text="{Binding PanelHostBusyText}"
+                               Style="{StaticResource PanelBodyText}"
+                               Foreground="{StaticResource PanelStatusWarningBrush}"
+                               Margin="0,10,0,0"
+                               Visibility="{Binding PanelHostBusyText,
+                                                    Converter={StaticResource TextToVisibility}}" />
+
+                    <TextBlock Text="{res:Loc DeviceHostExternalNote}"
+                               Style="{StaticResource PanelCaptionText}"
+                               Margin="0,10,0,0"
+                               Visibility="{Binding IsPanelHostExternal,
+                                                    Converter={StaticResource BooleanToVisibility}}" />
+
+                    <!-- A routine failure is a card, not a dialog. -->
+                    <Border Style="{StaticResource PanelWell}"
+                            Padding="12,10"
+                            Margin="0,12,0,0"
+                            Visibility="{Binding PanelHostDetail,
+                                                 Converter={StaticResource TextToVisibility}}">
+                        <TextBlock Text="{Binding PanelHostDetail}"
+                                   Style="{StaticResource PanelMutedText}" />
+                    </Border>
+                </StackPanel>
+            </HeaderedContentControl>
+
+            <!-- ================= Tablet ================= -->
+            <HeaderedContentControl Style="{StaticResource PanelSectionCard}"
+                                    Header="{res:Loc DeviceTabletTitle}"
+                                    controls:PanelUi.Caption="{res:Loc DeviceTabletCaption}"
+                                    controls:PanelUi.IconKey="IconDevice"
+                                    Margin="0,14,0,0">
+                <StackPanel>
+                    <controls:StatusBadge Level="{Binding TabletLevel}"
+                                          Text="{Binding TabletStatusText}"
+                                          HorizontalAlignment="Left"
+                                          Margin="0,0,0,10" />
+
+                    <controls:FactRow Label="{res:Loc TabletControlLabel}"
+                                      Value="{Binding TabletControlText}"
+                                      Level="{Binding TabletControlLevel}"
+                                      ShowMark="True" />
+                    <controls:FactRow Label="{res:Loc TabletVideoLabel}"
+                                      Value="{Binding TabletVideoText}"
+                                      Level="{Binding TabletVideoLevel}"
+                                      ShowMark="True" />
+                    <controls:FactRow Label="{res:Loc TabletProtocolLabel}"
+                                      Value="{Binding TabletProtocolText}" />
+                    <controls:FactRow Label="{res:Loc TabletFeaturesLabel}"
+                                      Value="{Binding TabletFeaturesText}" />
+                    <controls:FactRow Label="{res:Loc TabletSessionLabel}"
+                                      Value="{Binding TabletSessionText}" />
+
+                    <!--
+                        Which physical path the tablet used - USB nativo or the
+                        network - is not part of the management snapshot, so it
+                        is reported as unpublished rather than inferred from the
+                        port the session arrived on.
+                    -->
+                    <controls:FactRow Label="{res:Loc TabletTransportLabel}"
+                                      Value="{res:Loc TabletTransportUnpublished}"
+                                      Hint="{res:Loc TabletTransportHint}" />
+
+                    <!--
+                        With a session the rows above already say everything; the
+                        explanation is only owed when there is nothing to show.
+                    -->
+                    <Border Style="{StaticResource PanelWell}"
+                            Padding="12,10"
+                            Margin="0,10,0,0"
+                            Visibility="{Binding HasTabletSession,
+                                                 Converter={StaticResource InverseBooleanToVisibility}}">
+                        <TextBlock Text="{Binding TabletDetail}"
+                                   Style="{StaticResource PanelMutedText}" />
+                    </Border>
+                </StackPanel>
+            </HeaderedContentControl>
+
+            <!-- ================= Virtual display ================= -->
+            <HeaderedContentControl Style="{StaticResource PanelSectionCard}"
+                                    Header="{res:Loc DeviceDisplayTitle}"
+                                    controls:PanelUi.Caption="{res:Loc DeviceDisplayCaption}"
+                                    controls:PanelUi.IconKey="IconDisplay"
+                                    Margin="0,14,0,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <controls:FactRow Label="{res:Loc DiagnosticsVirtualMonitor}"
+                                          Value="{Binding MonitorText}"
+                                          Level="{Binding MonitorLevel}"
+                                          ShowMark="True" />
+                        <controls:FactRow Label="{res:Loc DisplayResolutionLabel}"
+                                          Value="{Binding ResolutionText}" />
+                        <controls:FactRow Label="{res:Loc DisplayRefreshLabel}"
+                                          Value="{Binding RefreshRateText}" />
+                        <controls:FactRow Label="{res:Loc DisplayDriverLabel}"
+                                          Value="{Binding DriverAvailabilityText}"
+                                          Level="{Binding DriverAvailabilityLevel}"
+                                          ShowMark="True"
+                                          Hint="{res:Loc DriverSourceNote}" />
+                        <controls:FactRow Label="{res:Loc DisplayDriverProtocolLabel}"
+                                          Value="{Binding DriverProtocolText}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1"
+                                VerticalAlignment="Top"
+                                Margin="16,0,0,0">
+                        <Button Content="{res:Loc ActionConnectDisplay}"
+                                Command="{Binding ConnectCommand}"
+                                Style="{StaticResource PanelPrimaryButton}"
+                                HorizontalAlignment="Stretch"
+                                MinWidth="120"
+                                Margin="0,0,0,8"
+                                Visibility="{Binding CanConnect,
+                                                     Converter={StaticResource BooleanToVisibility}}" />
+                        <Button Content="{res:Loc ActionDisconnectDisplay}"
+                                Command="{Binding DisconnectCommand}"
+                                Style="{StaticResource PanelDangerButton}"
+                                HorizontalAlignment="Stretch"
+                                MinWidth="120"
+                                Visibility="{Binding CanDisconnect,
+                                                     Converter={StaticResource BooleanToVisibility}}" />
+                    </StackPanel>
+                </Grid>
+            </HeaderedContentControl>
+
+            <!-- ================= Video ================= -->
+            <HeaderedContentControl Style="{StaticResource PanelSectionCard}"
+                                    Header="{res:Loc DeviceVideoTitle}"
+                                    controls:PanelUi.Caption="{res:Loc DeviceVideoCaption}"
+                                    controls:PanelUi.IconKey="IconVideo"
+                                    Margin="0,14,0,0">
+                <StackPanel>
+                    <controls:StatusBadge Level="{Binding VideoLevel}"
+                                          Text="{Binding VideoStatusText}"
+                                          HorizontalAlignment="Left"
+                                          Margin="0,0,0,12" />
+
+                    <!-- The three rates the agent can actually observe. -->
+                    <UniformGrid Columns="3" Margin="0,0,0,12">
+                        <Border Style="{StaticResource PanelWell}"
+                                Padding="14,12"
+                                Margin="0,0,7,0">
+                            <StackPanel>
+                                <TextBlock Text="{res:Loc VideoCaptureFpsLabel}"
+                                           Style="{StaticResource PanelCardLabelText}"
+                                           Margin="0,0,0,6" />
+                                <TextBlock Text="{Binding VideoCaptureFpsText}"
+                                           Style="{StaticResource PanelMetricText}"
+                                           FontSize="19" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource PanelWell}"
+                                Padding="14,12"
+                                Margin="7,0,7,0">
+                            <StackPanel>
+                                <TextBlock Text="{res:Loc VideoReceiveFpsLabel}"
+                                           Style="{StaticResource PanelCardLabelText}"
+                                           Margin="0,0,0,6" />
+                                <TextBlock Text="{Binding VideoReceiveFpsText}"
+                                           Style="{StaticResource PanelMetricText}"
+                                           FontSize="19" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource PanelWell}"
+                                Padding="14,12"
+                                Margin="7,0,0,0">
+                            <StackPanel>
+                                <TextBlock Text="{res:Loc VideoSendFpsLabel}"
+                                           Style="{StaticResource PanelCardLabelText}"
+                                           Margin="0,0,0,6" />
+                                <TextBlock Text="{Binding VideoSendFpsText}"
+                                           Style="{StaticResource PanelMetricText}"
+                                           FontSize="19" />
+                            </StackPanel>
+                        </Border>
+                    </UniformGrid>
+
+                    <controls:FactRow Label="{res:Loc VideoCodecLabel}"
+                                      Value="{Binding VideoCodecText}" />
+                    <controls:FactRow Label="{res:Loc VideoEncoderLabel}"
+                                      Value="{Binding VideoEncoderText}" />
+                    <controls:FactRow Label="{res:Loc VideoResolutionLabel}"
+                                      Value="{Binding VideoResolutionText}" />
+                    <controls:FactRow Label="{res:Loc VideoConfiguredFpsLabel}"
+                                      Value="{Binding VideoConfiguredFpsText}" />
+                    <controls:FactRow Label="{res:Loc VideoNegotiatedFpsLabel}"
+                                      Value="{Binding VideoNegotiatedFpsText}" />
+                    <controls:FactRow Label="{res:Loc VideoDropsLabel}"
+                                      Value="{Binding VideoDropsText}"
+                                      Level="{Binding VideoDropsLevel}"
+                                      ShowMark="True" />
+
+                    <!--
+                        What the tablet draws is measured on the tablet, and
+                        Management v1 does not carry it back. Borrowing the send
+                        rate here would be presenting one measurement as another.
+                    -->
+                    <controls:FactRow Label="{res:Loc VideoRenderFpsLabel}"
+                                      Value="{Binding VideoRenderFpsText}"
+                                      Hint="{Binding VideoRenderFpsNote}" />
+                </StackPanel>
+            </HeaderedContentControl>
+
+            <!-- ================= Page actions ================= -->
+            <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                <Button Content="{res:Loc ActionRefreshState}"
+                        Command="{Binding RefreshCommand}"
+                        Style="{StaticResource PanelButton}"
+                        Margin="0,0,8,0" />
+                <Button Content="{res:Loc OverviewOpenDiagnostics}"
+                        Command="{Binding OpenLogsCommand}"
+                        Style="{StaticResource PanelButton}" />
+            </StackPanel>
+
+            <TextBlock Text="{Binding StatusMessage}"
+                       Style="{StaticResource PanelMutedText}"
+                       Margin="0,12,0,0"
+                       Visibility="{Binding StatusMessage,
+                                            Converter={StaticResource TextToVisibility}}" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

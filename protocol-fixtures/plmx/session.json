@@ -1,0 +1,12 @@
+{
+ "name": "session-constants",
+ "description": "Session nonces shared by the Kotlin and C# PLMX v2 fixture tests.",
+ "sessionId": "7a31c2884f0e41d3b6a95c7e10228fd4",
+ "sessionTag": 2294428026,
+ "otherSessionId": "0badc0de11112222333344445555666a",
+ "otherSessionTag": 3737169163,
+ "capabilities": 31,
+ "headerSize": 24,
+ "helloPayloadSize": 32,
+ "version": 2
+}

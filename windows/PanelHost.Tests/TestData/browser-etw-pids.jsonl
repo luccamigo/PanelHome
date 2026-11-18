@@ -1,0 +1,3 @@
+{"elapsedSeconds": 15.1742285, "foreground": [{"pid": 4000}, {"pid": 4000}, {"pid": 4000}, {"pid": 4000}, {"pid": 4000}, {"pid": 4000}, {"pid": 4000}, {"pid": 4000}, {"pid": 4000}, {"pid": 4000}, {"pid": 4000}, {"pid": 4000}, {"pid": 4000}, {"pid": 4000}, {"pid": 4000}]}
+{"pid": 4010, "processName": "browser", "presentEvents": 908}
+{"pid": 4900, "processName": "shell", "presentEvents": 16}

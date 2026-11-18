@@ -1,0 +1,88 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanelOS.Windows", "PanelOS.Windows\PanelOS.Windows.csproj", "{AB29ACB5-8EB7-43C2-8D87-1AE2104720B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanelHost", "PanelHost\PanelHost.csproj", "{6B1FD6C7-8C4A-4FC4-985E-64E248A5D520}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanelHost.SensorProbe", "PanelHost.SensorProbe\PanelHost.SensorProbe.csproj", "{2B662B1D-064C-4140-93A8-64F47D5FBB85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanelOS.ControlCenter", "PanelOS.ControlCenter\PanelOS.ControlCenter.csproj", "{06721B0C-E257-48AE-91EB-BAAD02AFC935}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanelHost.Tests", "PanelHost.Tests\PanelHost.Tests.csproj", "{1B2752DA-87AC-4111-A788-2535DEAA3840}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanelOS.ControlCenter.Tests", "PanelOS.ControlCenter.Tests\PanelOS.ControlCenter.Tests.csproj", "{88553F40-C630-44DC-83F8-9DA1BC77410C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanelOS.DriverInterop", "PanelOS.DriverInterop\PanelOS.DriverInterop.csproj", "{330F5722-0CBC-4776-9AC8-9B5FEFAA5A8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanelOS.Telemetry", "PanelOS.Telemetry\PanelOS.Telemetry.csproj", "{FFF45712-6DE8-44B0-9039-BF107DA80E8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanelOS.DisplayBroker.Protocol", "PanelOS.DisplayBroker.Protocol\PanelOS.DisplayBroker.Protocol.csproj", "{A12CC9F0-94DC-4E61-9BF7-9C59537BEB41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanelDisplayBroker", "PanelDisplayBroker\PanelDisplayBroker.csproj", "{B20FA87D-2A26-49A5-B798-BE76C2438E62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanelHost.WifiBenchClient", "PanelHost.WifiBenchClient\PanelHost.WifiBenchClient.csproj", "{39B84A6B-5B65-49BC-B247-F1BDA672E4DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanelOS.ClaudeHook", "PanelOS.ClaudeHook\PanelOS.ClaudeHook.csproj", "{87DD6328-01AA-4D81-8087-012410AADFF6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB29ACB5-8EB7-43C2-8D87-1AE2104720B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB29ACB5-8EB7-43C2-8D87-1AE2104720B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB29ACB5-8EB7-43C2-8D87-1AE2104720B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB29ACB5-8EB7-43C2-8D87-1AE2104720B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B1FD6C7-8C4A-4FC4-985E-64E248A5D520}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B1FD6C7-8C4A-4FC4-985E-64E248A5D520}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B1FD6C7-8C4A-4FC4-985E-64E248A5D520}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B1FD6C7-8C4A-4FC4-985E-64E248A5D520}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B662B1D-064C-4140-93A8-64F47D5FBB85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B662B1D-064C-4140-93A8-64F47D5FBB85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B662B1D-064C-4140-93A8-64F47D5FBB85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B662B1D-064C-4140-93A8-64F47D5FBB85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06721B0C-E257-48AE-91EB-BAAD02AFC935}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06721B0C-E257-48AE-91EB-BAAD02AFC935}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06721B0C-E257-48AE-91EB-BAAD02AFC935}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06721B0C-E257-48AE-91EB-BAAD02AFC935}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B2752DA-87AC-4111-A788-2535DEAA3840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B2752DA-87AC-4111-A788-2535DEAA3840}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B2752DA-87AC-4111-A788-2535DEAA3840}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B2752DA-87AC-4111-A788-2535DEAA3840}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88553F40-C630-44DC-83F8-9DA1BC77410C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88553F40-C630-44DC-83F8-9DA1BC77410C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88553F40-C630-44DC-83F8-9DA1BC77410C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88553F40-C630-44DC-83F8-9DA1BC77410C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{330F5722-0CBC-4776-9AC8-9B5FEFAA5A8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{330F5722-0CBC-4776-9AC8-9B5FEFAA5A8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{330F5722-0CBC-4776-9AC8-9B5FEFAA5A8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{330F5722-0CBC-4776-9AC8-9B5FEFAA5A8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFF45712-6DE8-44B0-9039-BF107DA80E8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFF45712-6DE8-44B0-9039-BF107DA80E8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFF45712-6DE8-44B0-9039-BF107DA80E8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFF45712-6DE8-44B0-9039-BF107DA80E8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A12CC9F0-94DC-4E61-9BF7-9C59537BEB41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A12CC9F0-94DC-4E61-9BF7-9C59537BEB41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A12CC9F0-94DC-4E61-9BF7-9C59537BEB41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A12CC9F0-94DC-4E61-9BF7-9C59537BEB41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B20FA87D-2A26-49A5-B798-BE76C2438E62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B20FA87D-2A26-49A5-B798-BE76C2438E62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B20FA87D-2A26-49A5-B798-BE76C2438E62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B20FA87D-2A26-49A5-B798-BE76C2438E62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39B84A6B-5B65-49BC-B247-F1BDA672E4DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39B84A6B-5B65-49BC-B247-F1BDA672E4DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39B84A6B-5B65-49BC-B247-F1BDA672E4DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39B84A6B-5B65-49BC-B247-F1BDA672E4DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87DD6328-01AA-4D81-8087-012410AADFF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87DD6328-01AA-4D81-8087-012410AADFF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87DD6328-01AA-4D81-8087-012410AADFF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87DD6328-01AA-4D81-8087-012410AADFF6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

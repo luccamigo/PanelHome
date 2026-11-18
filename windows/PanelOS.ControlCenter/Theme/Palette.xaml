@@ -1,0 +1,104 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+
+    <!--
+        Colour, spacing and shape for the whole application. Nothing else in the
+        Control Center may name a hex value, a pixel margin or a corner radius;
+        a view that needs one takes it from here.
+
+        Direction: dark, quiet, technical. Few surface levels, one accent, and
+        colour reserved for meaning - a coloured mark says something is right or
+        wrong, never that a card exists.
+
+        This file is the only one that would have to change to add a second
+        theme later, which is why it holds no styles.
+    -->
+
+    <!-- ==================== Surfaces ==================== -->
+    <!-- Shared with PanelHome (app/src/main/java/.../ui/theme/Color.kt). -->
+    <Color x:Key="PanelBackgroundColor">#FF070B11</Color>
+    <Color x:Key="PanelSurfaceColor">#FF101720</Color>
+    <Color x:Key="PanelSurfaceElevatedColor">#FF172230</Color>
+    <Color x:Key="PanelAccentColor">#FF75D6FF</Color>
+    <Color x:Key="PanelOutlineColor">#FF344253</Color>
+
+    <SolidColorBrush x:Key="PanelBackgroundBrush" Color="#FF070B11" />
+    <SolidColorBrush x:Key="PanelSurfaceBrush" Color="#FF101720" />
+    <SolidColorBrush x:Key="PanelSurfaceElevatedBrush" Color="#FF172230" />
+    <!-- Recessed: log output, previews, anything the eye should read as "inside". -->
+    <SolidColorBrush x:Key="PanelSurfaceSunkenBrush" Color="#FF0A0F16" />
+
+    <!-- ==================== Accent ==================== -->
+    <SolidColorBrush x:Key="PanelAccentBrush" Color="#FF75D6FF" />
+    <SolidColorBrush x:Key="PanelAccentMutedBrush" Color="#FF4A93B8" />
+    <!-- Tinted fill behind an accented element; never used as a text colour. -->
+    <SolidColorBrush x:Key="PanelAccentSoftBrush" Color="#2675D6FF" />
+    <SolidColorBrush x:Key="PanelSecondaryBrush" Color="#FF9CAEFF" />
+    <SolidColorBrush x:Key="PanelOnAccentBrush" Color="#FF002433" />
+
+    <!-- ==================== Text ==================== -->
+    <SolidColorBrush x:Key="PanelTextBrush" Color="#FFF2F6FC" />
+    <SolidColorBrush x:Key="PanelTextMutedBrush" Color="#FFA8B3C2" />
+    <!-- Third level: units, hints, timestamps. Still passes on the surfaces. -->
+    <SolidColorBrush x:Key="PanelTextFaintBrush" Color="#FF7A879A" />
+
+    <!-- ==================== Lines ==================== -->
+    <SolidColorBrush x:Key="PanelOutlineBrush" Color="#FF344253" />
+    <SolidColorBrush x:Key="PanelOutlineSubtleBrush" Color="#FF1E2937" />
+
+    <!-- ==================== Status ==================== -->
+    <!--
+        Status colours carry meaning; nothing decorative uses them. Each level
+        also has a soft fill for chips and banners, so a state reads at a glance
+        without the saturated colour taking over the layout.
+    -->
+    <SolidColorBrush x:Key="PanelStatusGoodBrush" Color="#FF6EE7A8" />
+    <SolidColorBrush x:Key="PanelStatusWarningBrush" Color="#FFFFC46B" />
+    <SolidColorBrush x:Key="PanelStatusBadBrush" Color="#FFFF7A85" />
+    <SolidColorBrush x:Key="PanelStatusNeutralBrush" Color="#FFA8B3C2" />
+
+    <SolidColorBrush x:Key="PanelStatusGoodSoftBrush" Color="#246EE7A8" />
+    <SolidColorBrush x:Key="PanelStatusWarningSoftBrush" Color="#26FFC46B" />
+    <SolidColorBrush x:Key="PanelStatusBadSoftBrush" Color="#26FF7A85" />
+    <SolidColorBrush x:Key="PanelStatusNeutralSoftBrush" Color="#18A8B3C2" />
+
+    <!-- Danger outline, for the one action that stops or destroys something. -->
+    <SolidColorBrush x:Key="PanelDangerOutlineBrush" Color="#FF4A2B31" />
+
+    <!-- ==================== Spacing ==================== -->
+    <!--
+        One scale, used everywhere. A margin that is not on it is a mistake, not
+        a decision.
+    -->
+    <system:Double x:Key="Space1">4</system:Double>
+    <system:Double x:Key="Space2">8</system:Double>
+    <system:Double x:Key="Space3">12</system:Double>
+    <system:Double x:Key="Space4">16</system:Double>
+    <system:Double x:Key="Space5">20</system:Double>
+    <system:Double x:Key="Space6">24</system:Double>
+    <system:Double x:Key="Space8">32</system:Double>
+
+    <Thickness x:Key="CardPadding">18</Thickness>
+    <Thickness x:Key="CardPaddingTight">14</Thickness>
+    <!-- Room to breathe at 1920, still comfortable at 1366. -->
+    <Thickness x:Key="PagePadding">28,22,28,24</Thickness>
+    <Thickness x:Key="GapRow">0,0,0,8</Thickness>
+    <Thickness x:Key="GapBlock">0,0,0,12</Thickness>
+    <Thickness x:Key="GapSection">0,0,0,16</Thickness>
+    <Thickness x:Key="GapPageSection">0,24,0,0</Thickness>
+    <!-- Half a gutter on each side, so a grid of cards has even gaps. -->
+    <Thickness x:Key="CardGutter">0,0,14,14</Thickness>
+
+    <!-- ==================== Shape ==================== -->
+    <!--
+        Every shape is a rectangle with rounded corners. Nothing rounds to half
+        its own height: a chip or a toggle that does reads as an oval sitting
+        next to square-shouldered cards, and the corner stops being a corner.
+    -->
+    <CornerRadius x:Key="RadiusXs">4</CornerRadius>
+    <CornerRadius x:Key="RadiusSm">6</CornerRadius>
+    <CornerRadius x:Key="RadiusMd">10</CornerRadius>
+    <CornerRadius x:Key="RadiusLg">14</CornerRadius>
+
+</ResourceDictionary>

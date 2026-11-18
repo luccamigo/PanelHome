@@ -1,0 +1,10 @@
+{
+  "description": "Synthetic typed pairing code (PIN mode). hostId/pairId are the same bytes as proof-v1.json; no secret.",
+  "hostId": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+  "pairId": "404142434445464748494a4b4c4d4e4f",
+  "ip": "192.168.15.4",
+  "pairPort": 40001,
+  "sessionPort": 40002,
+  "pin": "004217",
+  "code": "AEQCC-IRDEQ-SSMJZ-IFEVC-WLBNF-YXTAM-JSGM2-DKNRX-HA4TU-OZ4HU-7D6QC-BIJBU-IRKGI-5EESS-SLJRG-U4T6A-VAHQJ-HCBTR-BAAED-ZN2IA"
+}

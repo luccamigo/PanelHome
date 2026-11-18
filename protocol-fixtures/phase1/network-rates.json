@@ -1,0 +1,1 @@
+{"type":"network_rates","sampledAtUnixMs":1800000000000,"downloadBytesPerSecond":1024,"uploadBytesPerSecond":null,"adapters":[{"id":"opaque-id","name":"Ethernet","downloadBytesPerSecond":1024,"uploadBytesPerSecond":null}]}
