@@ -142,15 +142,15 @@ class Phase1ScreenshotsTest {
         fun permission(request: ClaudePermissionRequest) = state.copy(permissionCount = 1,
             permission = PermissionUi(request, now + 60_000, shownAt = now - 1_000, stage = PermissionStage.ACTIVE))
         val scenes: List<Pair<String, @Composable () -> Unit>> = listOf(
-            "pan9-avisos-valores" to { NoticesScreen(state, ConnectionStatus.CONNECTED, pages, {}, {}) },
-            "pan9-desligado" to { NoticesScreen(state.copy(enabled = false, values = emptyList(), history = emptyList()), ConnectionStatus.CONNECTED, pages, {}, {}) },
+            "pan9-avisos-valores" to { NoticesScreen(state, ConnectionStatus.CONNECTED, pages, {}, {}, {}, {}) },
+            "pan9-desligado" to { NoticesScreen(state.copy(enabled = false, values = emptyList(), history = emptyList()), ConnectionStatus.CONNECTED, pages, {}, {}, {}, {}) },
             "pan9-banner" to { Box(Modifier.fillMaxSize()) {
-                NoticesScreen(state, ConnectionStatus.CONNECTED, pages, {}, {})
+                NoticesScreen(state, ConnectionStatus.CONNECTED, pages, {}, {}, {}, {})
                 NoticeBanner(state.copy(banner = notice), false, pages, {}, {}, {})
             } },
             "pan6-resumo-incompleto" to { PermissionOverlay(permission(request), {}, { _, _ -> }) },
             "pan6-completo" to { PermissionOverlay(permission(request.copy(tool = "Bash", head = "echo demonstracao", omitted = 0, contentHidden = false)), {}, { _, _ -> }) },
-            "pan14-processos" to { ProcessesScreen(processes, MockPanelData.initial, ConnectionStatus.CONNECTED, {}, {}) },
+            "pan14-processos" to { ProcessesScreen(processes, MockPanelData.initial, {}, {}, connectionStatus = ConnectionStatus.CONNECTED) },
         )
         try {
             ActivityScenario.launch(MainActivity::class.java).use { scenario ->
