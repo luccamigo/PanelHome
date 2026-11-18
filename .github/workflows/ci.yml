@@ -25,6 +25,8 @@ jobs:
         run: sdkmanager "platforms;android-37.0" "build-tools;37.0.0"
       - name: Unit tests and shared protocol fixtures
         run: ./gradlew testDebugUnitTest
+      - name: Compile instrumented tests (catches stale androidTest code without an emulator)
+        run: ./gradlew compileDebugAndroidTestKotlin
       - name: Lint
         run: ./gradlew lintDebug
       - name: Assemble debug APK
@@ -76,6 +78,9 @@ jobs:
       - name: Install Android SDK platform
         shell: pwsh
         run: sdkmanager "platforms;android-37.0" "build-tools;37.0.0"
+      # O script espera so 45 s pelo host C#; compilar antes evita estourar esse prazo num runner frio.
+      - name: Build C# host before the live session
+        run: dotnet build windows/PanelHost.Tests/PanelHost.Tests.csproj
       - name: C# host to Kotlin client over loopback
         shell: pwsh
         run: ./scripts/run-cross-language-live-session.ps1
