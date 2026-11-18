@@ -1,0 +1,3 @@
+# The Gradle wrapper and shell scripts run on Linux runners: keep LF endings.
+gradlew text eol=lf
+*.sh text eol=lf

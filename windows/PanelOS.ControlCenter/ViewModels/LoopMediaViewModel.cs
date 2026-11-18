@@ -28,7 +28,7 @@ public sealed class LoopMediaViewModel : ObservableObject
     public AsyncRelayCommand RemoveCommand { get; }
     public string FileName => _current.OriginalFileName ?? Strings.Get("LoopMediaNone");
     public string Details => _current.MediaId is null ? string.Empty :
-        $"{(_current.Kind == "gif" ? "GIF" : "MP4")} · {_current.SizeBytes:N0} bytes";
+        $"{(_current.Kind == "gif" ? "GIF" : "MP4")} · {_current.SizeBytes?.ToString("N0", Strings.FormatCulture)} bytes";
     public string Error
     {
         get => _error;

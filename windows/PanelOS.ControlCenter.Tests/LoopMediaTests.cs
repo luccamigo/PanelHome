@@ -146,6 +146,32 @@ public sealed class LoopMediaTests
         Assert.IsFalse(logs[0].Contains(_directory));
     }
 
+    // The text is Portuguese, so the size is grouped as pt-BR ("1.500") whatever the machine culture is (a CI runner is en-US).
+    [DataTestMethod]
+    [DataRow("en-US")]
+    [DataRow("de-DE")]
+    [DataRow("")]
+    [DataRow("pt-BR")]
+    public async Task ViewModelFormatsTheSizeAsPortugueseWhateverTheMachineCulture(string machineCulture)
+    {
+        var picker = new Picker();
+        var viewModel = new LoopMediaViewModel(_store, picker);
+        await viewModel.LoadAsync(_token);
+        picker.Path = await SourceAsync("sized.gif", [.. "GIF89a"u8.ToArray(), .. new byte[1494]]);
+        await viewModel.ChooseCommand.ExecuteAsync(_token);
+        var previous = System.Globalization.CultureInfo.CurrentCulture;
+        try
+        {
+            System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo(machineCulture);
+
+            Assert.AreEqual("GIF · 1.500 bytes", viewModel.Details);
+        }
+        finally
+        {
+            System.Globalization.CultureInfo.CurrentCulture = previous;
+        }
+    }
+
     [TestMethod]
     public async Task ViewModelReportsImportRemoveFormatSizeAndReadErrorsInline()
     {

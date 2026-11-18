@@ -13,13 +13,16 @@ public sealed class WifiBenchClientTests
 {
     private static WifiBenchOffer Offer(WifiCoreTests.IdentityFixture fixture, out CngKey key)
     {
+        // Issuing the offer runs the real bench admin, which the host refuses in an elevated process (GitHub's Windows runners are administrators).
+        ElevatedRunnerGuard.RequireNonElevatedProcess();
         key = fixture.CreateDeviceKey();
         using var signer = new ECDsaCng(key);
         var spki = signer.ExportSubjectPublicKeyInfo();
         var spkiPath = Path.Combine(fixture.Directory, "device.spki"); var offerPath = Path.Combine(fixture.Directory, "offer.json");
         File.WriteAllBytes(spkiPath, spki);
+        var issueError = new StringWriter();
         Assert.AreEqual(WifiBenchAdmin.Ok, WifiBenchAdmin.Run(new(WifiAdminCommand.IssuePeer, spkiPath, Convert.ToHexString(SHA256.HashData(spki)),
-            offerPath, "192.168.1.2", 40002), fixture.Store, TextWriter.Null, TextWriter.Null));
+            offerPath, "192.168.1.2", 40002), fixture.Store, TextWriter.Null, issueError), issueError.ToString());
         return WifiBenchOffer.Decode(File.ReadAllBytes(offerPath));
     }
 
