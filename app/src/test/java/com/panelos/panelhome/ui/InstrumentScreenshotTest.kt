@@ -23,6 +23,9 @@ import com.panelos.panelhome.ui.monitoring.*
 import com.panelos.panelhome.ui.streamdeck.StreamDeckPageScreen
 import com.panelos.panelhome.ui.theme.*
 import java.io.File
+import java.util.TimeZone
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -36,6 +39,12 @@ import org.robolectric.annotation.GraphicsMode
 @Config(sdk = [35], qualifiers = "w960dp-h600dp-tvdpi")
 class InstrumentScreenshotTest {
     @get:Rule val compose = createComposeRule()
+
+    // The goldens were recorded with the chart axis label "desde 21:00" (epoch + 1 s in America/Sao_Paulo).
+    // SimpleDateFormat follows the JVM zone, so a UTC runner would render "desde 00:00". Pin the zone here.
+    private var previousZone: TimeZone? = null
+    @Before fun pinTimeZone() { previousZone = TimeZone.getDefault(); TimeZone.setDefault(TimeZone.getTimeZone("America/Sao_Paulo")) }
+    @After fun restoreTimeZone() { previousZone?.let(TimeZone::setDefault) }
     private val layout = HomeLayout(1, hasComputer = true, hasAlerts = true, hasMedia = true)
     private val series = List(120) { (110 + 30 * kotlin.math.sin(it / 9.0)).toFloat() }
     private val measuring = FpsState.Measuring("Stellar Drift", 144, series)
