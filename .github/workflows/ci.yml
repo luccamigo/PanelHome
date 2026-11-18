@@ -18,9 +18,9 @@ jobs:
           distribution: temurin
           java-version: '25'
           cache: gradle
-      - uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4.0.4
       - name: Install Android SDK platform
-        run: sdkmanager "platforms;android-37" "build-tools;37.0.0"
+        run: sdkmanager "platforms;android-37.0" "build-tools;37.0.0"
       - name: Unit tests and shared protocol fixtures
         run: ./gradlew testDebugUnitTest
       - name: Lint
@@ -66,10 +66,10 @@ jobs:
           global-json-file: global.json
           cache: true
           cache-dependency-path: '**/*.csproj'
-      - uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4.0.4
       - name: Install Android SDK platform
         shell: pwsh
-        run: sdkmanager "platforms;android-37" "build-tools;37.0.0"
+        run: sdkmanager "platforms;android-37.0" "build-tools;37.0.0"
       - name: C# host to Kotlin client over loopback
         shell: pwsh
         run: ./scripts/run-cross-language-live-session.ps1
@@ -89,9 +89,9 @@ jobs:
           distribution: temurin
           java-version: '25'
           cache: gradle
-      - uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4.0.4
       - name: Install Android SDK platform
-        run: sdkmanager "platforms;android-37" "build-tools;37.0.0"
+        run: sdkmanager "platforms;android-37.0" "build-tools;37.0.0"
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
