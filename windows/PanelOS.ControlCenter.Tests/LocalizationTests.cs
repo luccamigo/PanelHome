@@ -19,6 +19,30 @@ public sealed class LocalizationTests
         "PanelOS.ControlCenter.Resources.ControlCenterStrings",
         typeof(LocExtension).Assembly);
 
+    /// <summary>
+    /// The text is Portuguese, so numbers are formatted as pt-BR whatever the machine's regional settings are
+    /// (a CI runner is en-US). Without this an en-US PC shows "59.4 FPS" inside Portuguese text.
+    /// </summary>
+    [DataTestMethod]
+    [DataRow("en-US")]
+    [DataRow("de-DE")]
+    [DataRow("")]
+    [DataRow("pt-BR")]
+    public void NumbersInTextUseTheTextLanguageNotTheMachineCulture(string machineCulture)
+    {
+        var previous = CultureInfo.CurrentCulture;
+        try
+        {
+            CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo(machineCulture);
+
+            Assert.AreEqual("59,4 FPS", ControlCenterStrings.Format("FpsFormat", 59.4));
+        }
+        finally
+        {
+            CultureInfo.CurrentCulture = previous;
+        }
+    }
+
     [TestMethod]
     public void EveryEntryHasText()
     {

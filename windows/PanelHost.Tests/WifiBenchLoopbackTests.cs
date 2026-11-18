@@ -16,6 +16,10 @@ namespace PanelHost.Tests;
 [TestClass]
 public sealed class WifiBenchLoopbackTests
 {
+    // Every test here starts the real Wi-Fi bench code path, which the host refuses in an elevated process.
+    [TestInitialize]
+    public void RequireNonElevatedHost() => ElevatedRunnerGuard.RequireNonElevatedProcess();
+
     private sealed class Rig : IAsyncDisposable
     {
         public readonly WifiCoreTests.IdentityFixture Fixture = new();

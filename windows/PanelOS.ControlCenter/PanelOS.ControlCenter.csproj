@@ -18,6 +18,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="PanelOS.ControlCenter.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PanelOS.Windows\PanelOS.Windows.csproj" />
     <ProjectReference Include="..\PanelOS.ClaudeHook\PanelOS.ClaudeHook.csproj" ReferenceOutputAssembly="false" />
   </ItemGroup>

@@ -12,6 +12,10 @@ namespace PanelHost.Tests;
 [TestClass]
 public sealed class WifiBenchAdminTests
 {
+    // Every test here starts the real Wi-Fi bench code path, which the host refuses in an elevated process.
+    [TestInitialize]
+    public void RequireNonElevatedHost() => ElevatedRunnerGuard.RequireNonElevatedProcess();
+
     private sealed record Run(int Code, string Output, string Error);
 
     private static Run Execute(WifiBenchAdminOptions options, WifiIdentityStore store, DateTimeOffset? now = null)

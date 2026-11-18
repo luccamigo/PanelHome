@@ -60,6 +60,7 @@ public sealed class WifiCoreTests
     [TestMethod]
     public async Task Schannel_tls13_mtls_and_alpn_work_over_memory_without_listeners()
     {
+        ElevatedRunnerGuard.RequireNonElevatedProcess();
         using var fixture = new IdentityFixture();
         using var root = WifiIdentityStore.OpenCertificate(fixture.State.RootDer, fixture.State.RootKey);
         using var server = WifiIdentityStore.OpenCertificate(fixture.State.ServerDer, fixture.State.ServerKey);

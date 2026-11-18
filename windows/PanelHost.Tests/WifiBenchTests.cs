@@ -81,6 +81,7 @@ public sealed class WifiBenchTests
     [DataRow("media_play_pause")]
     public async Task Real_listener_pipeline_requires_mtls_wifi_limits_and_refuses_every_command(string command)
     {
+        ElevatedRunnerGuard.RequireNonElevatedProcess();
         using var fixture = new WifiCoreTests.IdentityFixture();
         using var root = WifiIdentityStore.OpenCertificate(fixture.State.RootDer, fixture.State.RootKey);
         using var server = WifiIdentityStore.OpenCertificate(fixture.State.ServerDer, fixture.State.ServerKey);

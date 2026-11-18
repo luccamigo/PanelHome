@@ -444,6 +444,7 @@ public sealed class WifiPairingSessionTests
     [TestMethod]
     public async Task A_paired_certificate_opens_the_session_listener_once_and_is_active_afterwards()
     {
+        ElevatedRunnerGuard.RequireNonElevatedProcess();
         await using var rig = PairRig.Start();
         using var key = rig.Fixture.CreateDeviceKey();
         using var signer = new ECDsaCng(key);

@@ -257,7 +257,7 @@ public sealed class WifiPairingViewModel : ObservableObject
             },
             device.State switch { "Active" => PanelStatusLevel.Good, "Issued" => PanelStatusLevel.Warning, _ => PanelStatusLevel.Neutral },
             device.Connected,
-            device.CreatedAt is { } created ? created.ToLocalTime().ToString("g", CultureInfo.CurrentCulture) : string.Empty,
+            device.CreatedAt is { } created ? created.ToLocalTime().ToString("g", Resources.ControlCenterStrings.FormatCulture) : string.Empty,
             device.State != "Revoked")).ToArray();
         if (Devices.SequenceEqual(next)) return;
         Devices.Clear();

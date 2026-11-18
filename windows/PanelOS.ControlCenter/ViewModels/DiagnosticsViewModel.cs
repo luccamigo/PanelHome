@@ -871,7 +871,7 @@ public sealed class DiagnosticsViewModel : ObservableObject
 
     private static string Format(double? value, string format, string suffix) =>
         value is { } measured
-            ? measured.ToString(format) + suffix
+            ? measured.ToString(format, Strings.FormatCulture) + suffix
             : Strings.Get("NotAvailableSymbol");
 
     private static string FormatFps(double? value) =>

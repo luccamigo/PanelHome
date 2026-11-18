@@ -197,8 +197,8 @@ public sealed class IntegrationsViewModel : ObservableObject
         _keyGeneration = result.KeyGeneration;
         Available = true; NoticesEnabled = result.Enabled; Port = result.Port.ToString(CultureInfo.InvariantCulture);
         KeyLabel = result.KeySuffix is null ? "Não criada" : "panelos_••••••••••••" + result.KeySuffix;
-        LastRequest = result.LastRequestUnixMs is long timestamp ? DateTimeOffset.FromUnixTimeMilliseconds(timestamp).ToLocalTime().ToString("g", CultureInfo.CurrentCulture) : "—";
-        RejectedToday = result.RejectedAuthenticationToday.ToString(CultureInfo.CurrentCulture);
+        LastRequest = result.LastRequestUnixMs is long timestamp ? DateTimeOffset.FromUnixTimeMilliseconds(timestamp).ToLocalTime().ToString("g", Resources.ControlCenterStrings.FormatCulture) : "—";
+        RejectedToday = result.RejectedAuthenticationToday.ToString(Resources.ControlCenterStrings.FormatCulture);
         PermissionTimeout = result.PermissionTimeoutSeconds;
         ProcessReviewed = result.ProcessTerminationReviewed; ProcessesEnabled = result.ProcessTerminationEnabled;
         OnPropertyChanged(nameof(ProcessReason));

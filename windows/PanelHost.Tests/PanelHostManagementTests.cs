@@ -178,6 +178,7 @@ public sealed class PanelHostManagementTests
     [TestMethod]
     public async Task PipeSupportsSnapshotAndConcurrentSubscriptions()
     {
+        ElevatedRunnerGuard.RequireNonElevatedProcess();
         var pipeName = $"PanelOS.Host.Tests.{Guid.NewGuid():N}";
         using var state = new PanelHostRuntimeState(processId: 777, version: "test");
         state.ControlConnected(1, ["desktop", "stream_deck"]);
@@ -221,6 +222,7 @@ public sealed class PanelHostManagementTests
     [TestMethod]
     public async Task Medium_management_client_controls_desktop_through_host_lifecycle()
     {
+        ElevatedRunnerGuard.RequireNonElevatedProcess();
         var pipeName = $"PanelOS.Host.Tests.{Guid.NewGuid():N}";
         using var state = new PanelHostRuntimeState();
         await using var desktop = new FakeDesktopService(TimeSpan.Zero);
@@ -246,6 +248,7 @@ public sealed class PanelHostManagementTests
     [TestMethod]
     public async Task SlowSubscriberDoesNotBlockNewSnapshotClients()
     {
+        ElevatedRunnerGuard.RequireNonElevatedProcess();
         var pipeName = $"PanelOS.Host.Tests.{Guid.NewGuid():N}";
         using var state = new PanelHostRuntimeState();
         var server = new PanelHostManagementServer(state, pipeName);
